@@ -242,6 +242,12 @@
                                                 </a>
                                             </li>
                                             <li>
+                                                <a href="{{route($route_user.'duplicate-price', [$seaSchedule->id])}}"
+                                                   class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                    <span>Duplicate</span>
+                                                </a>
+                                            </li>
+                                            <li>
                                                 <form
                                                     action="{{route($route_user.'sea-schedules.destroy', [$seaSchedule->id])}}"
                                                     method="post">

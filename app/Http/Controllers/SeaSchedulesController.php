@@ -87,14 +87,16 @@ class SeaSchedulesController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
             $route_user = 'employee.';
-        }  else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
             $route = "suppliers.";
             $route_user = 'supplier.';
         }
 
 
-        return view($route . 'sea_schedules.index',
-            compact('seaSchedules', 'companies', 'origin', 'destination', 'company', 'eta', 'etd', 'route_user'));
+        return view(
+            $route . 'sea_schedules.index',
+            compact('seaSchedules', 'companies', 'origin', 'destination', 'company', 'eta', 'etd', 'route_user')
+        );
     }
 
     /**
@@ -114,8 +116,10 @@ class SeaSchedulesController extends Controller
         }
 
         $container_sizes = ContainerSizes::get();
-        return view($route . 'sea_schedules.create',
-            compact('companies', 'container_sizes'));
+        return view(
+            $route . 'sea_schedules.create',
+            compact('companies', 'container_sizes')
+        );
     }
 
     /**
@@ -123,10 +127,10 @@ class SeaSchedulesController extends Controller
      */
     public function store(Request $request)
     {
-		$company = Company::find($request->company_id);
-		$origin = Location::find($request->origin_id);
-		$destination = Location::find($request->destination_id);
-		
+        $company = Company::find($request->company_id);
+        $origin = Location::find($request->origin_id);
+        $destination = Location::find($request->destination_id);
+
         $seaSchedule = new SeaSchedule();
         $seaSchedule->origin_id = $request->origin_id;
         $seaSchedule->destination_id = $request->destination_id;
@@ -136,11 +140,11 @@ class SeaSchedulesController extends Controller
         $seaSchedule->origin_charges = isset($request->origin_charges_included) ? 0 : $request->origin_charges;
         $seaSchedule->origin_charges_included = isset($request->origin_charges_included) ? 1 : 0;
         $seaSchedule->ocean_freight = $request->ocean_freight;
-		$seaSchedule->our_charges = $request->our_charges;
+        $seaSchedule->our_charges = $request->our_charges;
         $seaSchedule->destination_charges = isset($request->destination_charges_included) ? 0 : $request->destination_charges;
         $seaSchedule->destination_charges_included = isset($request->destination_charges_included) ? 1 : 0;
         $seaSchedule->delivery_charges = isset($request->delivery_charges) && $request->delivery_charges != null ? $request->delivery_charges : 0;
-		$seaSchedule->reference_no = strtoupper(substr(str_replace(' ', '', $company->name), 0, 6).$origin->code.$destination->code.date("YmdHis")); 
+        $seaSchedule->reference_no = strtoupper(substr(str_replace(' ', '', $company->name), 0, 6) . $origin->code . $destination->code . date("YmdHis"));
         $seaSchedule->save();
 
         $seaSchedule->details()->create([
@@ -179,8 +183,10 @@ class SeaSchedulesController extends Controller
         }
 
         $container_sizes = ContainerSizes::get();
-        return view($route . 'sea_schedules.edit',
-            compact('companies', 'container_sizes', 'seaSchedule'));
+        return view(
+            $route . 'sea_schedules.edit',
+            compact('companies', 'container_sizes', 'seaSchedule')
+        );
     }
 
     /**
@@ -196,7 +202,7 @@ class SeaSchedulesController extends Controller
         $seaSchedule->origin_charges = isset($request->origin_charges_included) ? 0 : $request->origin_charges;
         $seaSchedule->origin_charges_included = isset($request->origin_charges_included) ? 1 : 0;
         $seaSchedule->ocean_freight = $request->ocean_freight;
-		$seaSchedule->our_charges = $request->our_charges;
+        $seaSchedule->our_charges = $request->our_charges;
         $seaSchedule->destination_charges = isset($request->destination_charges_included) ? 0 : $request->destination_charges;
         $seaSchedule->destination_charges_included = isset($request->destination_charges_included) ? 1 : 0;
         $seaSchedule->delivery_charges = isset($request->delivery_charges) && $request->delivery_charges != null ? $request->delivery_charges : 0;
@@ -217,7 +223,7 @@ class SeaSchedulesController extends Controller
             $route = "superadmin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employee.";
-        }  else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
             $route = "supplier.";
         }
 
@@ -255,12 +261,12 @@ class SeaSchedulesController extends Controller
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             Log::debug($failures);
-//            foreach ($failures as $failure) {
-//                $failure->row(); // row that went wrong
-//                $failure->attribute(); // either heading key (if using heading row concern) or column index
-//                $failure->errors(); // Actual error messages from Laravel validator
-//                $failure->values(); // The values of the row that has failed.
-//            }
+            //            foreach ($failures as $failure) {
+            //                $failure->row(); // row that went wrong
+            //                $failure->attribute(); // either heading key (if using heading row concern) or column index
+            //                $failure->errors(); // Actual error messages from Laravel validator
+            //                $failure->values(); // The values of the row that has failed.
+            //            }
         }
 
         $route = null;
@@ -272,7 +278,32 @@ class SeaSchedulesController extends Controller
             $route = "supplier";
         }
 
-        return redirect()->route($route . '.sea-schedules.index',
-            ['imported_rows' => $seaPricingsImport->imported_rows_count]);
+        return redirect()->route(
+            $route . '.sea-schedules.index',
+            ['imported_rows' => $seaPricingsImport->imported_rows_count]
+        );
+    }
+
+    public function duplicatePrice(SeaSchedule $seaSchedule)
+    {
+        // Clone the SeaSchedule instance
+        $duplicateSchedule = $seaSchedule->replicate();
+        // Save the duplicated schedule
+        $duplicateSchedule->save();
+
+        // Duplicate the associated SeaScheduleDetails
+        foreach ($seaSchedule->details as $detail) {
+            // Clone the detail instance
+            $duplicateDetail = $detail->replicate();
+
+            // Associate the duplicated detail with the duplicated schedule
+            $duplicateDetail->sea_schedule_id = $duplicateSchedule->id;
+
+            // Save the duplicated detail
+            $duplicateDetail->save();
+        }
+
+        // Redirect or return a response
+        return redirect()->back()->with('success', 'SeaSchedule duplicated successfully!');
     }
 }

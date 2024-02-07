@@ -1,25 +1,26 @@
 <?php
 
-use App\Http\Controllers\BookingAddonsController;
-use App\Http\Controllers\BookingsController;
-use App\Http\Controllers\ContainerSizesController;
-use App\Http\Controllers\QuickRequestFormController;
-use App\Http\Controllers\InvoicesController;
-use App\Http\Controllers\LandSchedulesController;
-use App\Http\Controllers\LocationsController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\PickAndDeliverySchedulesController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\TruckTypesController;
-use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\HotDealsController;
 use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LocationsController;
+use App\Http\Controllers\TruckTypesController;
 use App\Http\Controllers\SeaSchedulesController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\BookingAddonsController;
+use App\Http\Controllers\LandSchedulesController;
+use App\Http\Controllers\ContainerSizesController;
 use App\Http\Controllers\WorkWithUsFormsController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuickRequestFormController;
+use App\Http\Controllers\PickAndDeliverySchedulesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -198,6 +199,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('sea-schedules/{seaSchedule}/edit', [SeaSchedulesController::class, 'edit'])->name('sea-schedules.edit');
         Route::put('sea-schedules/{seaSchedule}', [SeaSchedulesController::class, 'update'])->name('sea-schedules.update');
         Route::delete('sea-schedules/{seaSchedule}', [SeaSchedulesController::class, 'destroy'])->name('sea-schedules.destroy');
+        
+        //Duplicate Price
+        Route::get('/sea-schedule/{seaSchedule}/duplicate', [SeaSchedulesController::class, 'duplicatePrice'])->name('duplicate-price');
 
         // Pick and Delivery Schedules
         Route::get('pick-and-delivery-schedules',
@@ -364,6 +368,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::put('sea-schedules/{seaSchedule}', [SeaSchedulesController::class, 'update'])->name('sea-schedules.update');
         Route::delete('sea-schedules/{seaSchedule}', [SeaSchedulesController::class, 'destroy'])->name('sea-schedules.destroy');
 
+        //Duplicate Price
+        Route::get('/sea-schedule/{seaSchedule}/duplicate', [SeaSchedulesController::class, 'duplicatePrice'])->name('duplicate-price');
+
         // Pick and Delivery Schedules
         Route::get('pick-and-delivery-schedules',
             [PickAndDeliverySchedulesController::class, 'index'])->name('pick-and-delivery-schedules.index');
@@ -509,6 +516,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('sea-schedules/{seaSchedule}/edit', [SeaSchedulesController::class, 'edit'])->name('sea-schedules.edit');
         Route::put('sea-schedules/{seaSchedule}', [SeaSchedulesController::class, 'update'])->name('sea-schedules.update');
         Route::delete('sea-schedules/{seaSchedule}', [SeaSchedulesController::class, 'destroy'])->name('sea-schedules.destroy');
+
+        //Duplicate Price
+        Route::get('/sea-schedule/{seaSchedule}/duplicate', [SeaSchedulesController::class, 'duplicatePrice'])->name('duplicate-price');
 
         // Pick and Delivery Schedules
         Route::get('pick-and-delivery-schedules',
