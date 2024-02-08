@@ -15,9 +15,11 @@
                     <a href="{{route('employee.company.index')}}" class="default-button-v2 outline-button">
                         <span>Back</span>
                     </a>
+					@if($company_details->status != config('constants.COMPANY_REGISTRATION_STATUS_REJECTED') )
 					<a href="{{route('employee.company.edit', ['companyID' =>$company_details->id ])}}" class="default-button-v2 outline-button">
                         <span>Edit</span>
                     </a>
+					@endif
                 </div>
             </header>
 
@@ -63,6 +65,11 @@
                             @if($company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT') )
                                 <span class="badge cancel">
                         Re-submit Request
+                    </span>
+                            @endif
+							@if($company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_REJECTED') )
+                                <span class="badge cancel">
+                        Rejected
                     </span>
                             @endif
                         </div>
@@ -248,70 +255,7 @@
                 <div class="flex justify-between items-center w-full border-b-2 border-gray-300 pb-1 mb-4 ">
                     <p class="text-sm primary-font-medium primary-color uppercase">documents </p>
                 </div>
-			{{--@if(isset($company_details) && $company_details->status == config("constants.COMPANY_REGISTRATION_STATUS_RESUBMIT") )
-                    <div class="w-9/12">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="form-field">
-                                <span class="uppercase text-gray-400 text-xs block">Document Type</span>
-                                <select name="document_type" class="form-input small-input mt-2 w-9/12 block" <?php echo
-                                (isset($company_details) && $company_details->status ==
-                                    config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')) ? '' : 'required' ?> >
-                                    <option value="">Select Document</option>
-                                    @foreach (config('constants.COMPANY_DOCUMENTS') as $option)
-                                        <option value="{{$option->value}}">{{$option->label}}</option>
-                                    @endforeach
-                                </select>
-                                @error('document_type')
-                                <span class="error-field">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-field">
-                                <span class="uppercase text-gray-400 text-xs block">Upload Document</span>
-                                <input multiple type="file" name="documents[]" id="documents" class="mt-4 w-9/12"
-                                       accept="application/pdf"
-                                        <?php echo (isset($company_details) && $company_details->status ==
-                                    config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')) ? '' : 'required' ?> />
-
-                                @error('documents')
-                                <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-				@elseif(isset($company_details) && $company_details->status == config("constants.COMPANY_REGISTRATION_STATUS_PENDING") )
-                    <div class="w-9/12">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="form-field">
-                                <span class="uppercase text-gray-400 text-xs block">Document Type</span>
-                                <select name="document_type" class="form-input small-input mt-2 w-9/12 block" <?php echo
-                                (isset($company_details) && $company_details->status ==
-                                    config('constants.COMPANY_REGISTRATION_STATUS_PENDING')) ? '' : 'required' ?> >
-                                    <option value="">Select Document</option>
-                                    @foreach (config('constants.COMPANY_DOCUMENTS') as $option)
-                                        <option value="{{$option->value}}">{{$option->label}}</option>
-                                    @endforeach
-                                </select>
-                                @error('document_type')
-                                <span class="error-field">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="form-field">
-                                <span class="uppercase text-gray-400 text-xs block">Upload Document</span>
-                                <input multiple type="file" name="documents[]" id="documents" class="mt-4 w-9/12"
-                                       accept="application/pdf"
-                                        <?php echo (isset($company_details) && $company_details->status ==
-                                    config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')) ? '' : 'required' ?> />
-
-                                @error('documents')
-                                <span class="error">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                @endif --}}
-
+				
                 <div class="detail-body">
                     @if(isset($company_details) && isset($company_details->documents) && count($company_details->documents) > 0 )
                         @foreach ( $company_details->documents as $option)
@@ -353,60 +297,159 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         @endforeach
 
                     @endif
                 </div>
-            </div>
+				
+				@if(isset($company_details) && $company_details->status == config("constants.COMPANY_REGISTRATION_STATUS_RESUBMIT") )
+				<br />
+				<div class="flex justify-between items-center w-full border-b-2 border-gray-300 pb-1 mb-4 ">
+                    <p class="text-sm primary-font-medium primary-color uppercase">Message: </p>
+                </div>
+				<div class="text-left mt-5">
+                    <div class="form-field">
+                        <span class="value">{{ $company_status_history->message}}</span>
+                    </div>
+                </div>
+				@endif
+				
+		{{--@if(isset($company_details) && $company_details->status == config("constants.COMPANY_REGISTRATION_STATUS_RESUBMIT") )
+					<br />
+                    <div class="w-9/12">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <span class="uppercase text-gray-400 text-xs block">Document Type</span>
+                                <select name="document_type" class="form-input small-input mt-2 w-9/12 block" <?php echo
+                                (isset($company_details) && $company_details->status ==
+                                    config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')) ? '' : 'required' ?> >
+                                    <option value="">Select Document</option>
+                                    @foreach (config('constants.COMPANY_DOCUMENTS') as $option)
+                                        <option value="{{$option->value}}">{{$option->label}}</option>
+                                    @endforeach
+                                </select>
+                                @error('document_type')
+                                <span class="error-field">{{ $message }}</span>
+                                @enderror
+                            </div>
 
+                            <div class="form-field">
+                                <span class="uppercase text-gray-400 text-xs block">Upload Document</span>
+                                <input multiple type="file" name="documents[]" id="documents" class="mt-4 w-9/12"
+                                       accept="application/pdf"
+                                        <?php echo (isset($company_details) && $company_details->status ==
+                                    config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')) ? '' : 'required' ?> />
+
+                                @error('documents')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+				
+				@elseif(isset($company_details) && $company_details->status == config("constants.COMPANY_REGISTRATION_STATUS_PENDING") )
+					<br />
+                    <div class="w-9/12">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="form-field">
+                                <span class="uppercase text-gray-400 text-xs block">Document Type</span>
+                                <select name="document_type" class="form-input small-input mt-2 w-9/12 block" <?php echo
+                                (isset($company_details) && $company_details->status ==
+                                    config('constants.COMPANY_REGISTRATION_STATUS_PENDING')) ? '' : 'required' ?> >
+                                    <option value="">Select Document</option>
+                                    @foreach (config('constants.COMPANY_DOCUMENTS') as $option)
+                                        <option value="{{$option->value}}">{{$option->label}}</option>
+                                    @endforeach
+                                </select>
+                                @error('document_type')
+                                <span class="error-field">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="form-field">
+                                <span class="uppercase text-gray-400 text-xs block">Upload Document</span>
+                                <input multiple type="file" name="documents[]" id="documents" class="mt-4 w-9/12"
+                                       accept="application/pdf"
+                                        <?php echo (isset($company_details) && $company_details->status ==
+                                    config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')) ? '' : 'required' ?> />
+
+                                @error('documents')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+				@endif--}} 
+            </div>
+			
             <section class="mt-20">
                 @if(isset($company_details))
 
                     @if($company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_PENDING') ||
-                    $company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT'))
+                    $company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT') ||
+                    $company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_REJECTED'))
                         <div class="flex">
-                            <form action="{{route('employee.company.delete', ["company" =>$company_details->id])}}"
-                                  method="post">
-                                @csrf
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button class="default-button-v2 outline-button" type="submit">
-                                    <span>Delete</span>
-                                </button>
-                            </form>
+							@if($company_details->status != config('constants.COMPANY_REGISTRATION_STATUS_REJECTED'))
+								<form action="{{route('employee.companyReject.reject',$company_details->id )}}"
+									  method="post">
+									@csrf
+									<button class="default-button-v2 outline-button ml-4" type="submit">
+										<span>Reject</span>
+									</button>
+								</form>
+							@else
+								<form action="{{route('employee.companyPending.activate',$company_details->id )}}"
+									  method="post">
+									@csrf
+									<button class="default-button-v2 outline-button ml-4" type="submit">
+										<span>Activate</span>
+									</button>
+								</form>
+							@endif
+							@if($company_details->status != config('constants.COMPANY_REGISTRATION_STATUS_REJECTED'))
                             <form method="POST"
                                   action="{{route('employee.companyStatus.update',$company_details->id )}}"
                                   class="default-form">
                                 @csrf
-
-                                <button type="submit" name="status" class="default-button-v2 ml-4"
-                                        value="{{config('constants.COMPANY_REGISTRATION_STATUS_APPROVED')}}">
-                                    <span>Approve</span>
-                                </button>
-                                {{--<button type="button" id="rejectBtn" class="default-button-v2 outline-button ml-4">
-                                    <span>Resubmit</span>
-                                </button>
+								@if($company_details->status != config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT'))
+									<button type="submit" name="status" class="default-button-v2 ml-4" value="{{config('constants.COMPANY_REGISTRATION_STATUS_APPROVED')}}">
+										<span>Approve</span>
+									</button>
+									<button type="button" id="rejectBtn" class="default-button-v2 outline-button ml-4">
+										<span>Resubmit</span>
+									</button>
+								@else
+									<button type="submit" name="status" class="default-button-v2 outline-button ml-4" value="{{config('constants.COMPANY_REGISTRATION_STATUS_APPROVED')}}">
+										<span>Approve</span>
+									</button>
+									<button type="submit" name="reuploadedstatus" class="default-button-v2 ml-4" value="{{config('constants.COMPANY_REGISTRATION_STATUS_PENDING')}}">
+										<span>Reuploaded</span>
+									</button>
+								@endif
 
                                 <div id="rejectFields" style="display: none;" class="text-left mt-10">
                                     <div class="form-field">
                                         <label for="message" class="form-label">Message:</label>
-                                        <textarea name="message" id="message" class="form-input resize-none w-5/12 h-32"
+                                        <textarea name="message" id="message" style="height: 300px; width: 700px;" 
                                                   required> </textarea>
                                     </div>
-                                    <div class="form-field">
+                                    <div class="form-field" style="margin-top: 5px">
                                         <button type="submit" name="status" class="default-button-v2 small-button"
                                                 value="{{config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')}}">
                                             <span>Submit</span>
                                         </button>
+										<button type="button" id="cancelBtn" class="default-button-v2 small-button">
+											<span>Cancel</span>
+										</button>
                                     </div>
-                                </div>--}}
+                                </div>
                             </form>
+							@endif
                         </div>
                     @endif
                 @endif
             </section>
-
 
             {{-- <section class="status-section mt-14">
                 <div class="flex justify-between items-center w-full border-b-2 border-gray-300 pb-2 mb-4">
@@ -485,11 +528,17 @@
 
     <script>
         const rejectBtn = document.getElementById('rejectBtn');
+		const cancelBtn = document.getElementById('cancelBtn');
         const rejectFields = document.getElementById('rejectFields');
 
         rejectBtn.addEventListener('click', function () {
             rejectFields.style.display = 'block';
         });
+		
+		cancelBtn.addEventListener('click', function () {
+            rejectFields.style.display = 'none';
+        });
+		
     </script>
 
 @endsection
