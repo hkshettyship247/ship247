@@ -51,7 +51,7 @@ $selected_industry = explode(',', $company_details->industry);
 								</label>
 							</div>
                             <div class="form-field">
-								<label for="first_name" class="form-label">Assigned User</label>
+								<label for="first_name" class="form-label">Assigned User (Change)</label>
                                 <select name="assigned_user" id="assigned_user" class="form-input w-full">
 								
 										<option 'selected' value="no">Change Assigned User</option>
@@ -100,7 +100,6 @@ $selected_industry = explode(',', $company_details->industry);
                                 <label for="user_email" class="form-label">Email</label>
                                 <input name="user_email" type="email" id="user_email" class="form-input small-input w-full" value="{{$vendor_admin->email}}" required>
                             </div>
-        
                         </div>
                     </section>
         
@@ -205,6 +204,17 @@ $selected_industry = explode(',', $company_details->industry);
 
 							@endif
 						</div>
+						@if(isset($company_details) && $company_details->status == config("constants.COMPANY_REGISTRATION_STATUS_RESUBMIT") )
+						<br />
+						<div class="flex justify-between items-center w-full border-b-2 border-gray-300 pb-1 mb-4 ">
+							<p class="text-sm primary-font-medium primary-color uppercase">Message: </p>
+						</div>
+						<div class="text-left mt-5">
+							<div class="form-field">
+								<span class="value">{{ $company_status_history->message}}</span>
+							</div>
+						</div>
+						@endif
 						<br />
                         <div class="w-9/12">
                             <div class="grid grid-cols-2 gap-6">
@@ -237,6 +247,9 @@ $selected_industry = explode(',', $company_details->industry);
                         <button type="submit" class="default-button-v2">
                             <span>Save</span>
                         </button>
+						<a href="{{route('employee.company.details', ['companyID' =>$company_details->id ])}}" class="default-button-v2 outline-button">
+							<span>Cancel</span>
+						</a>
                     </div>
                 </form>
             </div>

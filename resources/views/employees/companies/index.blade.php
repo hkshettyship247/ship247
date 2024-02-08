@@ -31,7 +31,7 @@ $completedCompaniesCount = count(array_filter($companiesData['data'], function (
             </div>
 
             <div class="w-6/12 md:justify-end flex">
-                <a href="/superadmin/companies/create" class="default-button-v2">
+                <a href="/employee/companies/create" class="default-button-v2">
                     <span>add VENDORS</span>
                 </a>
             </div>
@@ -128,6 +128,11 @@ $completedCompaniesCount = count(array_filter($companiesData['data'], function (
                             @if($company->status == config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT') )
                             <span class="badge cancel">
                                 Re-submit
+                            </span>
+                            @endif
+							@if($company->status == config('constants.COMPANY_REGISTRATION_STATUS_REJECTED') )
+                            <span class="badge cancel">
+                                Rejected
                             </span>
                             @endif
                         </div>
