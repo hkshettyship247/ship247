@@ -99,7 +99,9 @@ class CompanyController extends Controller
             $company_details->read_at = Carbon::now();
             $company_details->save();
         }
-
+		
+		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		
         $users = User::where('company_id', $request->companyID)->get();
 
         $route = null;
@@ -108,7 +110,7 @@ class CompanyController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         }
-        return view($route . 'companies.detail', compact('company_details', 'users'));
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'));
     }
 	
 	public function setCompanyDetails(Request $request)
@@ -121,7 +123,9 @@ class CompanyController extends Controller
             $company_details->read_at = Carbon::now();
             $company_details->save();
         }
-
+		
+		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		
 		$vendor_admin = User::where('company_id', $request->companyID)->first();
 		
         $route = null;
@@ -130,7 +134,7 @@ class CompanyController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         }
-        return view($route . 'companies.edit', compact('company_details', 'vendor_admin', 'countries', 'industries', 'our_employees'));
+        return view($route . 'companies.edit', compact('company_details', 'vendor_admin', 'countries', 'industries', 'our_employees', 'company_status_history'));
     }
 	
     /**
@@ -313,6 +317,8 @@ class CompanyController extends Controller
 			}
 			$company->save();
             $companyId = $company->id;
+			
+			$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
 
             // Create a directory for the company's documents using the company ID
             if ($request->hasFile('documents')) {
@@ -401,7 +407,57 @@ class CompanyController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         }
-        return view($route . 'companies.detail', compact('company_details', 'users'))->with('success', 'Company details saved successfully.');
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'))->with('success', 'Company details saved successfully.');
+    }
+	
+	public function rejectCompany(Request $request)
+    {
+		$company_details = Company::with('related_assigned_user')->findOrFail($request->companyID);
+		$company_details->status = config('constants.COMPANY_REGISTRATION_STATUS_REJECTED');
+        if(is_null($company_details->read_at)) {
+            $company_details->read_at = Carbon::now();
+            $company_details->save();
+        }
+		else{
+			$company_details->save();
+		}
+		
+		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		
+        $users = User::where('company_id', $request->companyID)->get();
+
+        $route = null;
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+        }
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'));
+    }
+	
+	public function activateCompany(Request $request)
+    {
+		$company_details = Company::with('related_assigned_user')->findOrFail($request->companyID);
+		$company_details->status = config('constants.COMPANY_REGISTRATION_STATUS_PENDING');
+        if(is_null($company_details->read_at)) {
+            $company_details->read_at = Carbon::now();
+            $company_details->save();
+        }
+		else{
+			$company_details->save();
+		}
+		
+		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		
+        $users = User::where('company_id', $request->companyID)->get();
+
+        $route = null;
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+        }
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'));
     }
 	
     /**
@@ -447,8 +503,13 @@ class CompanyController extends Controller
     public function updateCompanyStatus(Request $request)
     {
         $company = Company::find($request->companyID);
-
-        $company->status = $request->status;
+		
+		if ($request->reuploadedstatus == config('constants.COMPANY_REGISTRATION_STATUS_PENDING')) {
+            $company->status = $request->reuploadedstatus;
+        }
+		else{
+			$company->status = $request->status;
+		}
 
         if ($request->status == config('constants.COMPANY_REGISTRATION_STATUS_APPROVED')) {
             $company->is_activated = 1;
@@ -461,7 +522,12 @@ class CompanyController extends Controller
 
         $company_status_history = new CompanyStatusHistory;
         $company_status_history->company_id = $request->companyID;
-        $company_status_history->status = $request->status;
+		if ($request->reuploadedstatus == config('constants.COMPANY_REGISTRATION_STATUS_PENDING')) {
+            $company_status_history->status = $request->reuploadedstatus;
+        }
+		else{
+			$company_status_history->status = $request->status;
+		}
         $company_status_history->message = $request->status == config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT') ? $request->message : null;
         $company_status_history->save();
 
