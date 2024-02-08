@@ -130,6 +130,11 @@ $completedCompaniesCount = count(array_filter($companiesData['data'], function (
                                 Re-submit
                             </span>
                             @endif
+							@if($company->status == config('constants.COMPANY_REGISTRATION_STATUS_REJECTED') )
+                            <span class="badge cancel">
+                                Rejected
+                            </span>
+                            @endif
                         </div>
 
                         <div class="lg:w-2/12 w-full">
