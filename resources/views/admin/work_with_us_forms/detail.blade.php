@@ -82,6 +82,10 @@ $selected_industry = explode(',', $work_with_us_form_details->industry);
                                 <span class="form-label">Status</span>
 								@if($work_with_us_form_details->status !== config('constants.WORK_WITH_US_FORM_STATUS_ACCEPTED'))
 									<select name="status" id="status" class="form-input w-full">
+										<option value="{{config('constants.WORK_WITH_US_FORM_STATUS_PENDING')}}" {{
+											$work_with_us_form_details->status ===
+											config('constants.WORK_WITH_US_FORM_STATUS_PENDING') ? 'selected' : '' }}>Pending
+										</option>
 										<option value="{{config('constants.WORK_WITH_US_FORM_STATUS_ACCEPTED')}}" {{
 											$work_with_us_form_details->status ===
 											config('constants.WORK_WITH_US_FORM_STATUS_ACCEPTED') ? 'selected' : '' }}>Accept
