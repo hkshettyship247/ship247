@@ -50,8 +50,8 @@
         </tr>
 
         <tr>
-            <td colspan="2" style="padding: 0px; line-height: 2; font-family: 'Figtree', 'Arial', sans-serif;font-size: 14px;"> 
-                <table style="width: 100%; margin-top: 20px;" border="1" cellspacing="0">
+            <td colspan="2" style="margin-bottom: 0px; padding: 0px; line-height: 2; font-family: 'Figtree', 'Arial', sans-serif; font-size: 14px;">
+                <table style="width: 100%; margin-top: 20px; margin-bottom: 20px; border-collapse: separate;border-spacing:0;" border="1">
                     <tr>
                         <td valign="middle" style="padding: 0 5px">
                             <strong>POL : </strong> {{$booking->origin->fullname}}
@@ -102,7 +102,7 @@
                 </table>
             </td>
         </tr>
-
+        
         <tr>
             <td colspan="2">
                 <table style="width: 100%; padding-top: 10px;" cellspacing="0">

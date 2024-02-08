@@ -65,6 +65,13 @@
             @if(isset($quick_request_forms) && count($quick_request_forms) > 0)
             @foreach ($quick_request_forms as $form)
             <div class="detail-box relative lg:gap-0 gap-6 flex lg:flex-row flex-col {{is_null($form->read_at) ? 'quick-requests-forms-new' : ''}}">
+                <div class="absolute -top-4 left-4">
+                    @if($form->is_quoted == 1 )
+                    <span class="badge success">
+                        QUOTED
+                    </span>
+                    @endif
+                </div>
                 <div class="w-3/12">
                     <div class="flex flex-col gap-4">
                         <div>

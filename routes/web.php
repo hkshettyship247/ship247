@@ -190,6 +190,8 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 
             Route::get('/quick-request-form/{quickRequestID}', [QuickRequestFormController::class, 'quickRequestDetailsByID'])
             ->name('quick-request-form-detail');
+            
+            Route::post('/quote-quick-request', [QuickRequestFormController::class, 'queoteQuickRequestDetailsByID'])->name('quote-quick-request');
 
         // Sea Schedules
         Route::get('sea-schedules', [SeaSchedulesController::class, 'index'])->name('sea-schedules.index');

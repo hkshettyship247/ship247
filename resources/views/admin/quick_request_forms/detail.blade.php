@@ -15,6 +15,39 @@
             </a>
         </header>
 
+        <div class="form-field mt-6">
+            <span class="form-label"><b>Quoted: <b /></span>
+            @if($quick_request_form_details->is_quoted == 1)
+                @if( isset($quick_request_form_details->user->last_name) )
+                    {{$quick_request_form_details->user->first_name." ".$quick_request_form_details->user->last_name}}
+                @else
+                 -   
+                @endif
+            @else
+                <section class="w-8/12">
+                    <form action="{{ route('superadmin.quote-quick-request') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$quick_request_form_details->id}}"/>
+                        <div class="grid grid-cols-2 gap-8 mt-6">
+                            <div class="form-field">
+                                <label for="first_name" class="form-label">Assigned User (Change)</label>
+                                <select name="assigned_user" id="assigned_user" class="form-input w-full">
+                                        @if(isset($our_employees) && count($our_employees) > 0)
+                                        @foreach ($our_employees as $k => $our_employee)
+                                        <option {{ $k == 0 ? 'selected' : '' }} value="{{ $our_employee->id }}">{{
+                                            $our_employee->first_name.' '.$our_employee->last_name}}</option>
+                                        @endforeach
+                                        @endif
+                                </select>
+                            </div>
+                            <div class="form-field mt-6">
+                                <button type="submit" class="default-button-v2">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            @endif
+
         @if(isset($quick_request_form_details))
         <div class="profile-section mt-14">
 

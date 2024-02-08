@@ -24,6 +24,8 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
         description: '',
     });
 
+    console.log("formData", priceBreakDown);
+
     // const saveBookingDetailsInSession = (data) => {
     //     storeBookingDetailsInSession(data)
     //         .then((res) => {
@@ -296,7 +298,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 </>
                             ) : (
                                 <>
-                                    <button onClick={showModal} className="book-button">
+                                    <button onClick={showModal} className="book-button 123">
                                         Get Quote
                                     </button>
 
@@ -529,7 +531,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                                    priceBreakDown={priceBreakDown}/>
                                 </>
                             ) : (
-                                <>
+                                <>Price Breakdown
+                                { formData.name && formData.email ?
+                                 (<>
                                     <button onClick={showModal} className="book-button">
                                         Get Quote
                                     </button>
@@ -628,6 +632,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                             </form>
                                         )}
                                     </Modal>
+                                    </>)
+                                    : ""
+                                }
                                 </>
                             )}
                         </div>

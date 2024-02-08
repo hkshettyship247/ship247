@@ -22,7 +22,7 @@ class InvoicesController extends Controller
             if ($addon->type === "toggle" && is_numeric($addon->value)) {
                 $addonAmount += intval($addon->value);
             } else if ($addon->value > 0 && $addon->type === "counter") {
-                if($addon->step) {
+                if ($addon->step) {
                     $addonAmount += floatval($addon->value) * floatval($addon->step);
                 } else {
                     $addonAmount += floatval($addon->value);
@@ -33,21 +33,27 @@ class InvoicesController extends Controller
         $data = [
             'booking' => $booking
         ];
-        
-        $filename = "Booking_".$booking->id."_".date("YmdHis").".pdf";
+
+        $filename = "Booking_" . $booking->id . "_" . date("YmdHis") . ".pdf";
+    
         $pdf = PDF::loadView('pdfs.booking-invoice', $data);
-        return $pdf->download($filename);   
-}
+        $pdf->setOptions([
+            'fontDir' => base_path('storage/fonts/'),
+            'fontCache' => base_path('storage/fonts/'),
+            'defaultFont' => 'figtree_normal_9535977b91b6b425175b658df2ea7634',
+        ]);
+        return $pdf->download($filename);
+    }
 
 
     public function index(Request $request)
     {
-     
+
         $perPage = $request->input('per_page', 5); // Number of records per page
         $search = $request->input('search'); // Search keyword
-        
-      
-        
+
+
+
         // Apply the user_id filter for non-admin users
         // if (auth()->user()->role_id !== 1) {
         //     $paymentsQuery->where('user_id', auth()->user()->id);
@@ -56,13 +62,13 @@ class InvoicesController extends Controller
         if (auth()->user()->role_id == 1) {
             $paymentsQuery = Payments::with(['booking.user']);
         } else {
-        
-         
+
+
             $paymentsQuery = Payments::with(['booking.user'])->whereHas('booking.user', function ($query) {
                 $query->where('id', auth()->user()->id);
             });
         }
-        
+
         // Apply search conditions if search keyword is provided
         if ($search) {
             $paymentsQuery->where(function ($query) use ($search) {
@@ -76,21 +82,20 @@ class InvoicesController extends Controller
                 });
             });
         }
-        
+
         $payments = $paymentsQuery->latest()->paginate($perPage);
-    
+
         if (auth()->user()->role_id == 1) {
             return view('admin.invoices.index', compact('payments', 'search'));
         } else {
             return view('customers.invoices.index', compact('payments', 'search'));
         }
-
     }
 
     public function getBookingInvoice(Request $request)
     {
 
-    
+
         $payment_details = Payments::with(['booking.user'])->find($request->paymentID);
         return view('admin.invoices.detail', compact("payment_details"));
     }

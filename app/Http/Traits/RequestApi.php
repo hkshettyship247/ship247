@@ -4,17 +4,20 @@ namespace App\Http\Traits;
 
 use Illuminate\Support\Facades\Http;
 
-Trait RequestApi
+interface RequestApiConstants
 {
-    const RESPONSE_TYPE_JSON = 1;
-    const RESPONSE_TYPE_PHP = 2;
+    public const RESPONSE_TYPE_JSON = 1;
+    public const RESPONSE_TYPE_PHP = 2;
+}
 
+trait RequestApi
+{
     public static function convertResponseToProperJSON($response)
     {
         return json_decode('['.rtrim(str_replace("}\n", '},',stripslashes($response)),',').']');
     }
 
-    public static function sendRequest($url, $response_type=self::RESPONSE_TYPE_JSON, $return_raw=false)
+    public static function sendRequest($url, $response_type=RequestApiConstants::RESPONSE_TYPE_JSON, $return_raw=false)
     {
         try {
             $response = self::processRequest($url);
@@ -40,7 +43,7 @@ Trait RequestApi
             ];
         }
 
-        if($response_type === self::RESPONSE_TYPE_JSON){
+        if($response_type === RequestApiConstants::RESPONSE_TYPE_JSON){
             return response()->json($return_data);
         } else {
             return $return_data;

@@ -116,10 +116,7 @@ class SeaSchedulesController extends Controller
         }
 
         $container_sizes = ContainerSizes::get();
-        return view(
-            $route . 'sea_schedules.create',
-            compact('companies', 'container_sizes')
-        );
+        return view($route . 'sea_schedules.create', compact('companies', 'container_sizes'));
     }
 
     /**
@@ -291,19 +288,20 @@ class SeaSchedulesController extends Controller
         // Save the duplicated schedule
         $duplicateSchedule->save();
 
-        // Duplicate the associated SeaScheduleDetails
-        foreach ($seaSchedule->details as $detail) {
-            // Clone the detail instance
-            $duplicateDetail = $detail->replicate();
-
-            // Associate the duplicated detail with the duplicated schedule
-            $duplicateDetail->sea_schedule_id = $duplicateSchedule->id;
-
-            // Save the duplicated detail
-            $duplicateDetail->save();
+        $route = null;
+        $route_user = '';
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+            $route_user = 'superadmin.';
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+            $route_user = 'employee.';
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+            $route = "suppliers.";
+            $route_user = 'supplier.';
         }
-
         // Redirect or return a response
-        return redirect()->back()->with('success', 'SeaSchedule duplicated successfully!');
+        return redirect()->route($route_user.'sea-schedules.edit', [$duplicateSchedule->id]);
+        // return redirect()->back()->with('success', 'SeaSchedule duplicated successfully!');
     }
 }
