@@ -2,25 +2,26 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingAddonsController;
+use App\Http\Controllers\BookingsController;
+use App\Http\Controllers\ContainerSizesController;
+use App\Http\Controllers\QuickRequestFormController;
+use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\LandSchedulesController;
+use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PickAndDeliverySchedulesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TruckTypesController;
 use App\Http\Controllers\WebsiteController;
-use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\HotDealsController;
 use App\Http\Controllers\IndustryController;
-use App\Http\Controllers\InvoicesController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\LocationsController;
-use App\Http\Controllers\TruckTypesController;
 use App\Http\Controllers\SeaSchedulesController;
-use App\Http\Controllers\BookingAddonsController;
-use App\Http\Controllers\LandSchedulesController;
-use App\Http\Controllers\ContainerSizesController;
 use App\Http\Controllers\WorkWithUsFormsController;
-use App\Http\Controllers\QuickRequestFormController;
-use App\Http\Controllers\PickAndDeliverySchedulesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -131,6 +132,8 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::post('/assign/companies', [CompanyController::class, 'assignCompaniesToCustomer'])->name('assign.companies');
 		
 		Route::post('/companies/{companyID}/', [CompanyController::class, 'updateCompany'])->name('companyUpdate.update');
+		Route::post('/companies/{companyID}/reject-status', [CompanyController::class, 'rejectCompany'])->name('companyReject.reject');
+		Route::post('/companies/{companyID}/pending-status', [CompanyController::class, 'activateCompany'])->name('companyPending.activate');
 
         Route::post('/companies/{companyID}/update-status', [CompanyController::class, 'updateCompanyStatus'])->name('companyStatus.update');
         Route::post('/bookings/{bookingId}/update-status', [BookingsController::class, 'updatebookingDetails'])->name('bookingDetails.update');
@@ -301,6 +304,8 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::post('/assign/companies', [CompanyController::class, 'assignCompaniesToCustomer'])->name('assign.companies');
 		
 		Route::post('/companies/{companyID}/', [CompanyController::class, 'updateCompany'])->name('companyUpdate.update');
+		Route::post('/companies/{companyID}/reject-status', [CompanyController::class, 'rejectCompany'])->name('companyReject.reject');
+		Route::post('/companies/{companyID}/pending-status', [CompanyController::class, 'activateCompany'])->name('companyPending.activate');
 		
         Route::post('/companies/{companyID}/update-status', [CompanyController::class, 'updateCompanyStatus'])->name('companyStatus.update');
         Route::post('/bookings/{bookingId}/update-status', [BookingsController::class, 'updatebookingDetails'])->name('bookingDetails.update');
