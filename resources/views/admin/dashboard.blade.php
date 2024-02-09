@@ -267,3 +267,58 @@
         </div>
     </section>
 @endsection
+
+@section('footer-scripts')    
+{{-- <script>
+    // Function to update ship icon position
+    function updateShipPosition(locationsArray) {
+        var trackingBarWidth = $('#tracking-bar').width();
+
+        // Loop through locationsArray
+        Object.values(locationsArray).forEach(function(location) {
+            var latitude = parseFloat(location.lat);
+            var longitude = parseFloat(location.lon);
+            
+            // Calculate ship position based on latitude and longitude
+            var shipPosition = (longitude + 180) / 360 * trackingBarWidth; // Assuming longitude ranges from -180 to 180
+
+            // Create ship icon element dynamically
+            var shipIcon = $('<img src="/images/ship-icon.svg" alt="Ship Icon" class="ship-icon">')
+                .attr('id', 'ship-icon-' + location.portId)
+                .addClass('top-[-40px] z-10');
+            console.log(shipIcon)
+            // Append ship icon to container
+            $('#ship-icon-container').append(shipIcon);
+
+            // Update ship icon position
+            shipIcon.css('left', shipPosition + 'px');
+        });
+    }
+
+    // Call the function with the locationsArray data
+    // var locationsArray = {!! json_encode($track_booking_response['data']->locationsArray) !!};
+    // Example locationsArray data
+    var locationsArray = {
+        "102": {
+            "portId": 102,
+            "locationName": "JEBEL ALI",
+            "locationCountry": "UNITED ARAB EMIRATES",
+            "lat": "25.00328",
+            "lon": "55.05206",
+            "UNLocationCode": "AEJEA",
+            "localTimeOffset": 4
+        },
+        "236": {
+            "portId": 236,
+            "locationName": "BARCELONA",
+            "locationCountry": "SPAIN",
+            "lat": "41.35238",
+            "lon": "2.158441",
+            "UNLocationCode": "ESBCN",
+            "localTimeOffset": 1
+        }
+    };
+    updateShipPosition(locationsArray);
+</script> --}}
+
+@endsection

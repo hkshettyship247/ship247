@@ -67,18 +67,17 @@ class DashboardController extends Controller
 					} else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
 						if (intval(auth()->user()->company_id) === intval($track_booking->company_id)) {
                             $track_booking_response = MarineTrafficAPI::getTrackingInformation($track_booking->marinetraffic_id);
+
                         } else {
                             $track_booking_response = [
                                 'success' => false,
                                 'data' => "Booking Not Found!",
                             ];
                         }
-                    } else if (in_array(auth()->user()->role_id, [
-                        config('constants.USER_TYPE_EMPLOYEE'), config('constants.USER_TYPE_SUPERADMIN')
-                    ])
-                    ) {
+                    } else if (in_array(auth()->user()->role_id, [config('constants.USER_TYPE_EMPLOYEE'), config('constants.USER_TYPE_SUPERADMIN')])) {
                         $track_booking_response = MarineTrafficAPI::getTrackingInformation($track_booking->marinetraffic_id);
                     }
+
                     if($track_booking_response['success']) {
                         $locations = [];
                         foreach ($track_booking_response['data']?->transportationPlan?->locations as $location) {

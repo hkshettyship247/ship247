@@ -14,7 +14,6 @@
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
             })(window, document, "clarity", "script", "j8vcxubafz");
     </script>
-
 </head>
 <body>
     <main class="dashboard-app">

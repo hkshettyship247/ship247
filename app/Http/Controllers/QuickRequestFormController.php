@@ -68,7 +68,18 @@ class QuickRequestFormController extends Controller
             $quick_request_form_details->read_at = Carbon::now();
             $quick_request_form_details->save();
         }
-        return view('admin.quick_request_forms.detail', compact('quick_request_form_details', 'our_employees'));
+        $route_user = '';
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+            $route_user = 'superadmin.';
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+            $route_user = 'employee.';
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+            $route = "suppliers.";
+            $route_user = 'supplier.';
+        }
+        return view('admin.quick_request_forms.detail', compact('quick_request_form_details', 'our_employees', 'route_user'));
     }
 
 

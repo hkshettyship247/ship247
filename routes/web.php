@@ -351,20 +351,20 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 
         Route::resource('news', NewsController::class)->except('show');
 
-        Route::get('/work-with-us-forms', [WorkWithUsFormsController::class, 'index'])
-            ->name('work-with-us-forms.index');
+        Route::get('/work-with-us-forms', [WorkWithUsFormsController::class, 'index'])->name('work-with-us-forms.index');
 
-            Route::patch('/work-with-us-forms/update_status', [WorkWithUsFormsController::class, 'updateStatus'])
-            ->name('work-with-us-forms.update_status');
+        Route::patch('/work-with-us-forms/update_status', [WorkWithUsFormsController::class, 'updateStatus'])
+        ->name('work-with-us-forms.update_status');
 
-            Route::get('/work-with-us-form/{workWithUsFormID}', [WorkWithUsFormsController::class, 'workWithUsFormDetailsByID'])
-            ->name('work-with-us-form-detail');
+        Route::get('/work-with-us-form/{workWithUsFormID}', [WorkWithUsFormsController::class, 'workWithUsFormDetailsByID'])
+        ->name('work-with-us-form-detail');
 
-            Route::get('/quick-request-forms', [QuickRequestFormController::class, 'index'])
-            ->name('quick-request-forms.index');
+        Route::get('/quick-request-forms', [QuickRequestFormController::class, 'index'])
+        ->name('quick-request-forms.index');
 
-            Route::get('/quick-request-form/{quickRequestID}', [QuickRequestFormController::class, 'quickRequestDetailsByID'])
-            ->name('quick-request-form-detail');
+        Route::get('/quick-request-form/{quickRequestID}', [QuickRequestFormController::class, 'quickRequestDetailsByID'])
+        ->name('quick-request-form-detail');
+        Route::post('/quote-quick-request', [QuickRequestFormController::class, 'queoteQuickRequestDetailsByID'])->name('quote-quick-request');
 
         // Sea Schedules
         Route::get('sea-schedules', [SeaSchedulesController::class, 'index'])->name('sea-schedules.index');
@@ -514,6 +514,7 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 
             Route::get('/quick-request-form/{quickRequestID}', [QuickRequestFormController::class, 'quickRequestDetailsByID'])
             ->name('quick-request-form-detail');
+            Route::post('/quote-quick-request', [QuickRequestFormController::class, 'queoteQuickRequestDetailsByID'])->name('quote-quick-request');
 
         // Sea Schedules
         Route::get('sea-schedules', [SeaSchedulesController::class, 'index'])->name('sea-schedules.index');

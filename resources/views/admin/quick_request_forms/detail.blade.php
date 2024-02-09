@@ -25,7 +25,7 @@
                 @endif
             @else
                 <section class="w-8/12">
-                    <form action="{{ route('superadmin.quote-quick-request') }}" method="post">
+                    <form action="{{ route($route_user.'quote-quick-request') }}" method="post">
                         @csrf
                         <input type="hidden" name="id" value="{{$quick_request_form_details->id}}"/>
                         <div class="grid grid-cols-2 gap-8 mt-6">

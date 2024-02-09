@@ -580,11 +580,11 @@ body {
         width: 14px;
         border-radius: 50%;
         background-color: #C6C6C6; }
-      .search-result-box footer .tracking .track:nth-child(2):after {
+        .search-result-box footer .tracking .bold:after {
+          background-color: var(--primary-color); }
+      .search-result-box footer .tracking .track .circle-bold{
         background-color: var(--primary-color); }
-      .search-result-box footer .tracking .track:nth-child(2) .circle {
-        background-color: var(--primary-color); }
-      .search-result-box footer .tracking .track:nth-child(2) .text {
+      /* .search-result-box footer .tracking .track:nth-child(2) .text {
         left: -12px;
         top: auto;
         bottom: -26px; }
@@ -593,7 +593,7 @@ body {
       .search-result-box footer .tracking .track:nth-child(3) .text {
         left: -12px;
         top: auto;
-        bottom: -26px; }
+        bottom: -26px; } */
       .search-result-box footer .tracking .track:last-child .text {
         right: 0;
         left: auto;
@@ -1573,3 +1573,17 @@ table.price-breakdown-table {
 }
 
 /*# sourceMappingURL=app.css.map */
+.default-form .form-field.checkbox-field .form-checkbox, .default-form .form-field.radio-field .form-radio {
+  height: 2.25rem !important;
+  width: 2.25rem !important;
+}
+.default-form .form-field.checkbox-field .form-checkbox:focus, .default-form .form-field.checkbox-field .form-checkbox:checked {
+  background-color: #ffffff;
+}
+/* .default-form .form-field.checkbox-field .form-checkbox:checked {
+  background-image: url(data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='#d43031' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e);
+} */
+
+.form-checkbox:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='red' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}

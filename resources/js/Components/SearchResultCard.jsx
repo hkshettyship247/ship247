@@ -24,7 +24,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
         description: '',
     });
 
-    console.log("formData", priceBreakDown);
+  
 
     // const saveBookingDetailsInSession = (data) => {
     //     storeBookingDetailsInSession(data)
@@ -418,8 +418,8 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
         const destination_code = result?.destination_code;
         const delivery_name = result?.delivery_name;
         const tt = result?.tt;
-        const valid_till = result?.valid_till ? dayjs(result?.valid_till).format('DD/MM/YYYY') : '';
-
+        const valid_till = result?.valid_till ? dayjs(result?.valid_till).format('DD/MM/YYYY') : ''
+        
         return <div key={`search-result-card-${result.company.id}-${result.index}`}>
             <div className="shadow-box small-box mb-5">
                 <div className="search-result-box">
@@ -485,32 +485,31 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
 
                     <footer>
                         <div className="tracking">
-                            <div className="track">
-                                <div
-                                    className="text">{pickup_name}</div>
-                                <div className="circle"></div>
+                            <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked || priceBreakDown?.["Origin Charges"]?.isChecked?"track bold":"track"}`}>
+                                <div className="text">{pickup_name}</div>
+                                <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className="track">
+                            <div className="track bold">
                                 <div className="text">{origin_code}</div>
-                                <div className="circle"></div>
+                                <div className="circle circle-bold"></div>
                                 <div className="icon">
                                     <img src="/images/svg/ship-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className="track">
+                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
                                 <div className="text">{destination_code}</div>
-                                <div className="circle"></div>
+                                <div className="circle circle-bold"></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className="track">
+                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
                                 <div
                                     className="text">{delivery_name}</div>
-                                <div className="circle"></div>
+                                <div className={`${priceBreakDown?.["Delivery Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
                             </div>
                             {/* <ol>
                     <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
@@ -531,7 +530,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                                    priceBreakDown={priceBreakDown}/>
                                 </>
                             ) : (
-                                <>Price Breakdown
+                                <>Price Breakdown 2121
                                 { formData.name && formData.email ?
                                  (<>
                                     <button onClick={showModal} className="book-button">

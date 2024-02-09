@@ -288,7 +288,6 @@ class SeaSchedulesController extends Controller
         // Save the duplicated schedule
         $duplicateSchedule->save();
 
-        $route = null;
         $route_user = '';
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";

@@ -116,8 +116,8 @@
                 </div>
 
                 <div class="tracking-bar w-full bg-black h-[4px] relative mt-[10px]">
-                    <div class="absolute left-0 top-[-26px] z-10">
-                        <img src="/images/ship-icon.svg" alt="" class="w-[20px]">
+                    <div class="absolute left-0 top-[-26px] z-10" id="ship-icon-container">
+                        <img src="/images/ship-icon.svg" alt="" class="w-[20px]" id="ship-icon">
                     </div>
                 </div>
 

@@ -163,7 +163,7 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
             data: [{name: "Delivery Charges", amount: 0, message: 'Amount will be shared later'}]
         });
     }
-console.log(charges,filterChargeTypes,price_details)
+// console.log(charges,price_details)
     return ((charges.length > 0) && <Accordion className="product-price-breakdown">
         <AccordionItem>
             <AccordionHeader className={`accordion-head`}>
