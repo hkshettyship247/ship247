@@ -644,12 +644,39 @@ class WebsiteController extends Controller
 				// invalid data
 				if(!isset($maersk_response['data']) || json_encode($maersk_response['data']) == '[]'){
 					Cache::forget($cache_key);
+					
+					$cache_key_schedules=$request->api.$origin->code.$destination->code.$container_size->value.$request->departure_date;
+					if (Cache::has($cache_key_schedules."m")) {
+						Cache::forget($cache_key_schedules."m");
+					}
+				}
+				else{
+					$cache_key_schedules=$request->api.$origin->code.$destination->code.$container_size->value.$request->departure_date;
+					
+					if (Cache::has($cache_key_schedules."m")) {
+						
+						$maersk_response_schedules = Cache::get($cache_key_schedules."m");
+						
+						if(count($maersk_response['data'][0]->data->schedules) != count($maersk_response_schedules['data'])){
+							
+							Cache::forget($cache_key_schedules."m");
+							Cache::forget($cache_key);
+							
+						}
+						
+					}
+	
 				}
 					
             }
 			else{
 					
 				Cache::forget($cache_key);
+				
+				$cache_key_schedules=$request->api.$origin->code.$destination->code.$container_size->value.$request->departure_date;
+				if (Cache::has($cache_key_schedules."m")) {
+					Cache::forget($cache_key_schedules."m");
+				}
 					
 			}
 			
@@ -672,12 +699,40 @@ class WebsiteController extends Controller
 				// invalid data
 				if(!isset($cma_response['data']) || json_encode($cma_response['data']) == '[]'){
 					Cache::forget($cache_key);
-				}
 					
+					$cache_key_schedules=$request->api.$origin->code.$destination->code.$container_size->value.$request->departure_date;
+					if (Cache::has($cache_key_schedules."c")) {
+						Cache::forget($cache_key_schedules."c");
+					}
+					
+				}
+				else{
+					
+					$cache_key_schedules=$request->api.$origin->code.$destination->code.$container_size->value.$request->departure_date;
+					if (Cache::has($cache_key_schedules."c")) {
+						
+						$cma_response_schedules = Cache::get($cache_key_schedules."c");
+						
+						if(count($cma_response['data']) != count($cma_response_schedules['data'])){
+									
+							Cache::forget($cache_key_schedules."c");
+							Cache::forget($cache_key);
+									
+						}
+					
+					}
+					
+				}
+				
             }
 			else{
 					
 				Cache::forget($cache_key);
+				
+				$cache_key_schedules=$request->api.$origin->code.$destination->code.$container_size->value.$request->departure_date;
+				if (Cache::has($cache_key_schedules."c")) {
+					Cache::forget($cache_key_schedules."c");
+				}
 					
 			}
 			
