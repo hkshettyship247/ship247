@@ -15,7 +15,7 @@ class MarineTrafficAPI implements APIProcessRequest
 
     public static function processRequest($url)
     {
-        return Http::get($url);
+        return Http::withOptions(['verify' => false])->get($url);
     }
 
     public static function subscribe($bl_no, $scac)
