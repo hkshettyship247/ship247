@@ -278,7 +278,7 @@ function updateShipIconPosition() {
     const leftPercentage = 64.1026;
 
     // Set the new left position of the ship icon
-    shipIcon.style.left = `${leftPercentage}%`;
+    // shipIcon.style.left = `${leftPercentage}%`;
 }
 
 

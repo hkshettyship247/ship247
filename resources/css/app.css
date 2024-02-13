@@ -1105,18 +1105,18 @@ body {
   @apply -m-6 mt-4; }
   .product-price-breakdown .accordion-head {
     @apply block uppercase text-xs w-full py-1.5 px-3 text-center relative h-7;
-    background-color: #EEEEEE;
+    background-color: var(--secondary-color);
     font-family: var(--primary-font-medium); }
     .product-price-breakdown .accordion-head:after {
-      content: 'View Details';
+      content: 'View Details \25BC';
       position: absolute;
       left: 0;
       right: 0;
       top: 6px;
       font-size: 10px;
-      color: #8F8F8F; }
+      color: #fff; }
   .product-price-breakdown .accordion-head[aria-expanded="true"]:after {
-    content: 'Hide Details'; }
+    content: 'Hide Details \25B2'; }
   .product-price-breakdown .accordion-body {
     @apply py-6 px-5 text-left text-sm; }
     .product-price-breakdown .accordion-body .title {

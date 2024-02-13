@@ -118,9 +118,30 @@
                             fill-rule="nonzero"></path>
                     </svg>
                 </div>
-            
+
+                @php
+                // Assuming the timestamps are provided in the response
+                $departureTimestamp =
+                \Carbon\Carbon::parse($data['track_booking_response']['data']->originPortPredictiveDepartureUtc);
+                $arrivalTimestamp =
+                \Carbon\Carbon::parse($data['track_booking_response']['data']->finalPortPredictiveArrivalUtc);
+                $currentTimestamp = \Carbon\Carbon::now(); // Assuming this is the current time
+
+                // Calculate the total duration of the journey in seconds
+                $totalJourneyDuration = $arrivalTimestamp->diffInSeconds($departureTimestamp);
+
+                // Calculate the elapsed time since departure in seconds
+                $elapsedSinceDeparture = $currentTimestamp->diffInSeconds($departureTimestamp);
+
+                // Calculate the percentage of the journey completed
+                $percentageCompleted = ($elapsedSinceDeparture / $totalJourneyDuration) * 100;
+
+                // Calculate the left position of the ship icon
+                $left = number_format($percentageCompleted, 4) ?: 0;
+                @endphp
+
                 <div class="tracking-bar w-full bg-black h-[4px] relative mt-[10px]">
-                    <div class="absolute left-0 top-[-26px] z-10" id="ship-icon-container">
+                    <div class="absolute top-[-26px] z-10" id="ship-icon-container" style="left: {{ $left }}%;">
                         <img src="/images/ship-icon.svg" alt="" class="w-[20px]" id="ship-icon">
                     </div>
                 </div>
