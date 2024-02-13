@@ -4,6 +4,7 @@ import { AutoComplete, Select, Avatar, Button, Form, DatePicker } from "antd";
 import dayjs from "dayjs";
 import {getContainerSizes, getTruckTypes} from "../../views/network/network";
 import {usePage} from "@inertiajs/react";
+import Checkbox from "@/Components/Checkbox";
 import cityLogo from '../../../src/images/cityLogo.png';
 import portLogo from '../../../src/images/portLogo.png';
 
@@ -24,10 +25,12 @@ const SearchbarForm = (props) => {
     const [truckTypes, setTruckTypes] = useState([]);
     const [routeType, setRouteType] = useState(props.route_type ?? constants.ROUTE_TYPE_SEA);
     const [searchForm] = Form.useForm();
-
+	const [infoType, setInfoType] = useState(props.info_type === 'true' ? true : false);
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState(props.info_type === 'true' ? true : false);
+	
     const TYPE_ORIGIN = "origin";
     const TYPE_DESTINATION = "destination";
-
+	
     useEffect(() => {
         getContainerSizes()
             .then((res) => {
@@ -60,7 +63,7 @@ const SearchbarForm = (props) => {
         if (props?.destination) {
             getCitySuggestions(props?.destination.code, TYPE_DESTINATION);
         }
-
+		
         searchForm.setFieldsValue({
             origin_port: props?.origin?.fullname,
             destination_port: props?.destination?.fullname,
@@ -73,7 +76,9 @@ const SearchbarForm = (props) => {
 
 		setOrigin2(props?.origin.code, props?.origin?.is_port, props?.origin?.fullname, cityLogo, portLogo);
 		setDestination2(props?.destination.code, props?.destination?.is_port, props?.destination?.fullname, cityLogo, portLogo);
-
+		setInfoType(props.info_type === 'true' ? true : false);
+		setIsCheckboxChecked(props.info_type === 'true' ? true : false);
+		
     }, []);
 
     const mapCityList = (data) => {
@@ -133,7 +138,14 @@ const SearchbarForm = (props) => {
                 });
         }
     }
-
+	
+	function setNewInformation(isCheckboxChecked){
+		
+		setIsCheckboxChecked(!isCheckboxChecked);
+		setInfoType(!isCheckboxChecked);
+		
+	}
+	
     const handleSearchForm = () => {
         searchForm.validateFields().then((values) => {
             const data = {
@@ -141,6 +153,7 @@ const SearchbarForm = (props) => {
                 destination: destination,
                 departure_date: values.departure_date.format('YYYY-MM-DD'),
                 route_type: routeType,
+				info_type: infoType,
             };
             if(values?.container_size) {
                 data.container_size = values.container_size;
@@ -222,7 +235,20 @@ const SearchbarForm = (props) => {
             onFinish={handleSearchForm}
             className={`default-form ${parseInt(routeType) === constants.ROUTE_TYPE_SEA ? 'search-results-sea-form' :
                 parseInt(routeType) === constants.ROUTE_TYPE_LAND ? 'search-results-land-form' : 'search-results-air-form'}`}
-        >
+        >	
+			<div className="search-form mt-4">
+			 <div className="search-filter">
+				<div>
+					<input id="info_type" name="info_type" type="checkbox" className='form-checkbox'
+						checked={isCheckboxChecked}
+                        onChange={() => setNewInformation(isCheckboxChecked)} 
+                    />
+					<span style={{paddingLeft: '10px'}}>
+					FRESH INFORMATION
+					</ span>
+				</div>
+			 </div>
+			</div>
             <div className="search-form mt-4">
                 <div className="2xl:w-1/6 lg:w-auto w-full">
                     <div className="form-field">

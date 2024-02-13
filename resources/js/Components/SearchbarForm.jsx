@@ -27,6 +27,8 @@ const SearchbarForm = (props) => {
     const [searchForm] = Form.useForm();
     const [pickup, setPickup] = useState(true);
     const [delivery, setDelivery] = useState(true);
+	const [infoType, setInfoType] = useState(false);
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
     const TYPE_ORIGIN = 'origin';
     const TYPE_DESTINATION = 'destination';
@@ -132,6 +134,13 @@ const SearchbarForm = (props) => {
                 });
         }
     }
+	
+	function setNewInformation(isCheckboxChecked){
+		
+		setIsCheckboxChecked(!isCheckboxChecked);
+		setInfoType(!isCheckboxChecked);
+		
+	}
 
     const handleSearchForm = () => {
         searchForm
@@ -142,6 +151,7 @@ const SearchbarForm = (props) => {
                     destination: destination,
                     departure_date: values.departure_date.format('YYYY-MM-DD'),
                     route_type: routeType,
+					info_type: infoType,
                     pickup: Number(pickup),
                     delivery: Number(delivery)
                 };
@@ -374,6 +384,15 @@ const SearchbarForm = (props) => {
                                 </div>
                             ) : null}
                         </div>
+						<div>
+							<input id="info_type" name="info_type" type="checkbox" className='form-checkbox'
+								checked={isCheckboxChecked}
+                                onChange={() => setNewInformation(isCheckboxChecked)} 
+                            />
+							<span style={{paddingLeft: '10px'}}>
+							FRESH INFORMATION
+							</ span>
+						</div>
                     </div>
                     <div className="search-form mt-4">
 

@@ -114,6 +114,7 @@ const SearchResults = ({
                            searched_container_size,
                            searched_truck_type,
                            searched_route_type,
+						   searched_info_type,
                            hot_deals_collection,
                            container_sizes,
                            truck_types,
@@ -219,6 +220,7 @@ const SearchResults = ({
             container_size: containerSize,
             departure_date: searched_departure_date,
             route_type: searched_route_type,
+			info_type: searched_info_type,
         })
     }
 
@@ -230,7 +232,8 @@ const SearchResults = ({
             destination: searched_destination?.code,
             truck_type: truckType,
             departure_date: searched_departure_date,
-            route_type: searched_route_type
+            route_type: searched_route_type,
+			info_type: searched_info_type
         })
     }
 
@@ -272,6 +275,7 @@ const SearchResults = ({
             truck_type: searched_truck_type?.id,
             departure_date: searched_departure_date,
             route_type: searched_route_type,
+			info_type: searched_info_type,
             api: api
         });
 
@@ -345,6 +349,7 @@ const SearchResults = ({
                 label: searched_container_size?.display_label
             }),
             departure_date: searched_departure_date,
+			info_type: searched_info_type,
             cma_departure_dates: JSON.stringify(cmaDepartureDates),
             api: api
         });
@@ -503,6 +508,7 @@ const SearchResults = ({
                                                 container_size={searched_container_size}
                                                 truck_type={searched_truck_type}
                                                 route_type={searched_route_type}
+												info_type={searched_info_type}
                             />
                         </div>
                     </div>
