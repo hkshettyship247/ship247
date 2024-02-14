@@ -135,6 +135,16 @@ $completedCompaniesCount = count(array_filter($companiesData['data'], function (
                                 Rejected
                             </span>
                             @endif
+							@if($company->status == config('constants.COMPANY_REGISTRATION_STATUS_INACTIVE') )
+                            <span class="badge cancel">
+                                Inactive
+                            </span>
+                            @endif
+							@if($company->status == config('constants.COMPANY_REGISTRATION_STATUS_TERMINATED') )
+                            <span class="badge cancel">
+                                Terminated
+                            </span>
+                            @endif
                         </div>
 
                         <div class="lg:w-2/12 w-full">
