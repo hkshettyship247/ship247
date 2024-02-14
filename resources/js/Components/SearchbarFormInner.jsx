@@ -27,6 +27,7 @@ const SearchbarForm = (props) => {
     const [searchForm] = Form.useForm();
 	const [infoType, setInfoType] = useState(props.info_type === 'true' ? true : false);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(props.info_type === 'true' ? true : false);
+	const [showCheckbox, setShowCheckbox] = useState('none');
 	
     const TYPE_ORIGIN = "origin";
     const TYPE_DESTINATION = "destination";
@@ -73,7 +74,8 @@ const SearchbarForm = (props) => {
             container_size: props?.container_size?.value,
             truck_type: props?.truck_type?.id,
         });
-
+		
+		calcCheckBox(props);
 		setOrigin2(props?.origin.code, props?.origin?.is_port, props?.origin?.fullname, cityLogo, portLogo);
 		setDestination2(props?.destination.code, props?.destination?.is_port, props?.destination?.fullname, cityLogo, portLogo);
 		setInfoType(props.info_type === 'true' ? true : false);
@@ -143,6 +145,26 @@ const SearchbarForm = (props) => {
 		
 		setIsCheckboxChecked(!isCheckboxChecked);
 		setInfoType(!isCheckboxChecked);
+		
+	}
+	
+	function calcCheckBox(props){
+		
+		if(props.user_details == null) {
+			
+			setShowCheckbox('none');
+			
+		}
+		else{
+			
+			if(props.user_details.role_id == 1 || props.user_details.role_id == 3) {
+				setShowCheckbox('block');
+			}
+			else{
+				setShowCheckbox('none');
+			}
+			
+		}
 		
 	}
 	
@@ -236,7 +258,7 @@ const SearchbarForm = (props) => {
             className={`default-form ${parseInt(routeType) === constants.ROUTE_TYPE_SEA ? 'search-results-sea-form' :
                 parseInt(routeType) === constants.ROUTE_TYPE_LAND ? 'search-results-land-form' : 'search-results-air-form'}`}
         >	
-			<div className="search-form mt-4">
+			<div className="search-form mt-4" style={{display: showCheckbox}}>
 			 <div className="search-filter">
 				<div>
 					<input id="info_type" name="info_type" type="checkbox" className='form-checkbox'

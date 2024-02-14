@@ -29,10 +29,14 @@ const SearchbarForm = (props) => {
     const [delivery, setDelivery] = useState(true);
 	const [infoType, setInfoType] = useState(false);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-
+	const [showCheckbox, setShowCheckbox] = useState('none');
+	
     const TYPE_ORIGIN = 'origin';
     const TYPE_DESTINATION = 'destination';
-
+	
+	//alert(props?.user_details?.role_id ?? null);
+	//alert(showCheckbox);
+	
     useEffect(() => {
         getContainerSizes()
             .then((res) => {
@@ -74,7 +78,9 @@ const SearchbarForm = (props) => {
             pickup: true,
             delivery: true
         });
-
+		
+		calcCheckBox(props);
+		
         document.addEventListener("click", handleClickOutside);
     }, []);
 
@@ -141,7 +147,27 @@ const SearchbarForm = (props) => {
 		setInfoType(!isCheckboxChecked);
 		
 	}
-
+	
+	function calcCheckBox(props){
+		
+		if(props.user_details == null) {
+			
+			setShowCheckbox('none');
+			
+		}
+		else{
+			
+			if(props.user_details.role_id == 1 || props.user_details.role_id == 3) {
+				setShowCheckbox('block');
+			}
+			else{
+				setShowCheckbox('none');
+			}
+			
+		}
+		
+	}
+	
     const handleSearchForm = () => {
         searchForm
             .validateFields()
@@ -384,7 +410,7 @@ const SearchbarForm = (props) => {
                                 </div>
                             ) : null}
                         </div>
-						<div>
+						<div style={{display: showCheckbox}}>
 							<input id="info_type" name="info_type" type="checkbox" className='form-checkbox'
 								checked={isCheckboxChecked}
                                 onChange={() => setNewInformation(isCheckboxChecked)} 
