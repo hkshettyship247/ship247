@@ -509,6 +509,7 @@ const SearchResults = ({
                                                 truck_type={searched_truck_type}
                                                 route_type={searched_route_type}
 												info_type={searched_info_type}
+												user_details={user_details ?? null}
                             />
                         </div>
                     </div>
