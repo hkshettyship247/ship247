@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\WorkWithUsForm;
 use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -101,16 +102,16 @@ class CompanyController extends Controller
         }
 		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
-		
         $users = User::where('company_id', $request->companyID)->get();
-
+		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
+		
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         }
-        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'));
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history', 'work_with_us_form_detail'));
     }
 	
 	public function setCompanyDetails(Request $request)
@@ -400,14 +401,15 @@ class CompanyController extends Controller
         }
 
         $users = User::where('company_id', $request->companyID)->get();
-
+		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
+		
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         }
-        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'))->with('success', 'Company details saved successfully.');
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history', 'work_with_us_form_detail'))->with('success', 'Company details saved successfully.');
     }
 	
 	public function rejectCompany(Request $request)
@@ -423,7 +425,36 @@ class CompanyController extends Controller
 		}
 		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
+        $users = User::where('company_id', $request->companyID)->get();
 		
+        $route = null;
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+        }
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history', 'work_with_us_form_detail'));
+    }
+	
+	public function deactivateCompanyStatus(Request $request)
+    {
+		$company_details = Company::with('related_assigned_user')->findOrFail($request->companyID);
+		$company_details->status = config('constants.COMPANY_REGISTRATION_STATUS_INACTIVE');
+        if(is_null($company_details->read_at)) {
+            $company_details->read_at = Carbon::now();
+            $company_details->save();
+        }
+		else{
+			$company_details->save();
+		}
+		
+		$vendor_user = User::where('company_id', $request->companyID)->where('position', 'vendor admin')->first();
+		$vendor_user->status = config('constants.USER_STATUS_INACTIVE');
+		$vendor_user->save();
+		
+		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
         $users = User::where('company_id', $request->companyID)->get();
 
         $route = null;
@@ -432,7 +463,65 @@ class CompanyController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         }
-        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'));
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history', 'work_with_us_form_detail'));
+    }
+	
+	public function terminateCompanyStatus(Request $request)
+    {
+		$company_details = Company::with('related_assigned_user')->findOrFail($request->companyID);
+		$company_details->status = config('constants.COMPANY_REGISTRATION_STATUS_TERMINATED');
+        if(is_null($company_details->read_at)) {
+            $company_details->read_at = Carbon::now();
+            $company_details->save();
+        }
+		else{
+			$company_details->save();
+		}
+		
+		$vendor_user = User::where('company_id', $request->companyID)->where('position', 'vendor admin')->first();
+		$vendor_user->status = config('constants.USER_STATUS_INACTIVE');
+		$vendor_user->save();
+		
+		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
+        $users = User::where('company_id', $request->companyID)->get();
+
+        $route = null;
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+        }
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history', 'work_with_us_form_detail'));
+    }
+	
+	public function reactivateCompanyStatus(Request $request)
+    {
+		$company_details = Company::with('related_assigned_user')->findOrFail($request->companyID);
+		$company_details->status = config('constants.COMPANY_REGISTRATION_STATUS_APPROVED');
+        if(is_null($company_details->read_at)) {
+            $company_details->read_at = Carbon::now();
+            $company_details->save();
+        }
+		else{
+			$company_details->save();
+		}
+		
+		$vendor_user = User::where('company_id', $request->companyID)->where('position', 'vendor admin')->first();
+		$vendor_user->status = config('constants.USER_STATUS_ACTIVE');
+		$vendor_user->save();
+		
+		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
+		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
+        $users = User::where('company_id', $request->companyID)->get();
+
+        $route = null;
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+        }
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history', 'work_with_us_form_detail'));
     }
 	
 	public function activateCompany(Request $request)
@@ -448,7 +537,7 @@ class CompanyController extends Controller
 		}
 		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
-		
+		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
         $users = User::where('company_id', $request->companyID)->get();
 
         $route = null;
@@ -457,7 +546,7 @@ class CompanyController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         }
-        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history'));
+        return view($route . 'companies.detail', compact('company_details', 'users', 'company_status_history', 'work_with_us_form_detail'));
     }
 	
     /**

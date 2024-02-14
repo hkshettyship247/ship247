@@ -33,13 +33,14 @@ class WebsiteController extends Controller
     {
         $hot_deals = HotDeal::valid()->latest()->limit(6)->get();
         $hot_deals_collection = HotDealResource::collection($hot_deals);
-
+		$user_details = Auth::user() != null ? User::with('company')->find(Auth::user()->id) : null;
+		
         $news_listing = News::published()
             ->orderBy('published_date', 'DESC')
             ->take(6)
             ->get();
 
-        return Inertia::render("Home", compact('hot_deals_collection', 'news_listing'));
+        return Inertia::render("Home", compact('hot_deals_collection', 'news_listing', 'user_details'));
     }
 
     public function benefits()
@@ -337,9 +338,13 @@ class WebsiteController extends Controller
 				}
 				else{
 					Cache::forget($cache_key."m");
-					$maersk_response = MaerskAPI::getPointToPointSchedules($request->origin_code, $request->origin_name, $request->origin_geolocation_id,
-					$request->destination_code, $request->destination_name, $request->destination_geolocation_id,
-					$request->container_size, $request->departure_date);
+					$maersk_response = Cache::remember($cache_key."m", $cache_time, function () use ($request) {
+					
+						return MaerskAPI::getPointToPointSchedules($request->origin_code, $request->origin_name, $request->origin_geolocation_id,
+						$request->destination_code, $request->destination_name, $request->destination_geolocation_id,
+						$request->container_size, $request->departure_date);
+						
+					});
 				}
 				/**/
 					
@@ -371,8 +376,12 @@ class WebsiteController extends Controller
 				}
 				else{
 					Cache::forget($cache_key."c");
-					$cma_response = CMAAPI::getPointToPointSchedules($request->origin_code, $request->origin_name,
-					$request->destination_code, $request->destination_name, $request->departure_date);
+					$cma_response = Cache::remember($cache_key."c", $cache_time, function () use ($request) {
+						
+						return CMAAPI::getPointToPointSchedules($request->origin_code, $request->origin_name,
+						$request->destination_code, $request->destination_name, $request->departure_date);
+					
+					});
 				}
 				/**/
 				
@@ -403,7 +412,11 @@ class WebsiteController extends Controller
 				}
 				else{
 					Cache::forget($cache_key."h");
-					$hapag_response = HapagAPI::getPointToPointSchedulesWithPricing($origin, $destination, $container_size->hapag_value, $request->departure_date);
+					$hapag_response = Cache::remember($cache_key."h", $cache_time, function () use ($origin, $destination, $container_size, $request) {
+					
+						return HapagAPI::getPointToPointSchedulesWithPricing($origin, $destination, $container_size->hapag_value, $request->departure_date);
+					
+					});
 				}
 				/**/
 				
@@ -434,7 +447,11 @@ class WebsiteController extends Controller
 				}
 				else{
 					Cache::forget($cache_key."ms");
-					$msc_response = MSCAPI::getPointToPointSchedulesWithPricing($origin, $destination, $container_size->msc_value, $request->departure_date);
+					$msc_response = Cache::remember($cache_key."ms", $cache_time, function () use ($origin, $destination, $container_size, $request) {
+					
+						return MSCAPI::getPointToPointSchedulesWithPricing($origin, $destination, $container_size->msc_value, $request->departure_date);
+					
+					});
 				}
 				/**/
 				
@@ -669,11 +686,15 @@ class WebsiteController extends Controller
 			}
 			else{
 				Cache::forget($cache_key);
-				$maersk_response = MaerskAPI::scrapePriceByOriginDestination(
-				$origin->city ? $origin->city . ', ' . $origin->country : $origin->port . ', ' . $origin->country,
-				$destination->city ? $destination->city . ', ' . $destination->country : $destination->port . ', ' . $destination->country,
-				$container_size->label,
-				$request->departure_date);
+				$maersk_response = Cache::remember($cache_key, $cache_time, function () use ($origin, $destination, $container_size, $request) {
+				
+					return MaerskAPI::scrapePriceByOriginDestination(
+					$origin->city ? $origin->city . ', ' . $origin->country : $origin->port . ', ' . $origin->country,
+					$destination->city ? $destination->city . ', ' . $destination->country : $destination->port . ', ' . $destination->country,
+					$container_size->label,
+					$request->departure_date);
+					
+				});
 			}
 			/**/
 
@@ -696,7 +717,8 @@ class WebsiteController extends Controller
 						
 						$maersk_response_schedules = Cache::get($cache_key_schedules."m");
 						
-						if(count($maersk_response['data'][0]->data->schedules) != count($maersk_response_schedules['data'])){
+						//if(count($maersk_response['data'][0]->data->schedules) != count($maersk_response_schedules['data'])){
+						if( !(count($maersk_response['data'][0]->data->schedules) > 0) ){
 							
 							Cache::forget($cache_key_schedules."m");
 							Cache::forget($cache_key);
@@ -734,8 +756,12 @@ class WebsiteController extends Controller
 			}
 			else{
 				Cache::forget($cache_key);
-				$cma_response = CMAAPI::getPrices($origin->code, $destination->code, json_decode($request->cma_departure_dates),
-				$container_size_obj->cma_value);
+				$cma_response = Cache::remember($cache_key, $cache_time, function () use ($origin, $destination, $request, $container_size_obj) {
+				
+					return CMAAPI::getPrices($origin->code, $destination->code, json_decode($request->cma_departure_dates),
+					$container_size_obj->cma_value);
+					
+				});
 			}
 			/**/
 			
@@ -759,7 +785,8 @@ class WebsiteController extends Controller
 						
 						$cma_response_schedules = Cache::get($cache_key_schedules."c");
 						
-						if(count($cma_response['data']) != count($cma_response_schedules['data'])){
+						//if(count($cma_response['data']) != count($cma_response_schedules['data'])){
+						if( !(count($cma_response['data']) > 0) ){
 									
 							Cache::forget($cache_key_schedules."c");
 							Cache::forget($cache_key);
