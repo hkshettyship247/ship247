@@ -7,7 +7,7 @@ import ClientsLogo from '@/Includes/ClientLogos';
 import TopDealSlider from '@/Includes/TopDealSlider';
 import SearchbarForm from "@/Components/SearchbarForm";
 
-export default function Home({hot_deals_collection, news_listing}) {
+export default function Home({hot_deals_collection, news_listing, user_details}) {
     const handleSearchbarFormCallback = (values) => {
         const query = new URLSearchParams(values);
         window.location = route('pages.searchresults') + '?' + query.toString();
@@ -28,7 +28,7 @@ export default function Home({hot_deals_collection, news_listing}) {
                         </div>
 
                         <div className="search-panel">
-                            <SearchbarForm callback={handleSearchbarFormCallback}/>
+                            <SearchbarForm callback={handleSearchbarFormCallback} user_details={user_details ?? null}/>
                         </div>
                     </div>
                 </section>
