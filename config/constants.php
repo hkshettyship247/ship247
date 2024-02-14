@@ -53,6 +53,8 @@ return [
     'COMPANY_REGISTRATION_STATUS_APPROVED' => 2,
     'COMPANY_REGISTRATION_STATUS_RESUBMIT' => 3,
     'COMPANY_REGISTRATION_STATUS_REJECTED' => 4,
+	'COMPANY_REGISTRATION_STATUS_INACTIVE' => 5,
+	'COMPANY_REGISTRATION_STATUS_TERMINATED' => 6,
 
     'COMPANY_STATUSES' => [
         'COMPANY_REGISTRATION_STATUS_PENDING' => [
@@ -70,6 +72,14 @@ return [
         'COMPANY_REGISTRATION_STATUS_REJECTED' => [
             'value' => 4,
             'label' => 'REJECTED',
+        ],
+		'COMPANY_REGISTRATION_STATUS_INACTIVE' => [
+            'value' => 5,
+            'label' => 'INACTIVE',
+        ],
+		'COMPANY_REGISTRATION_STATUS_TERMINATED' => [
+            'value' => 6,
+            'label' => 'TERMINATED',
         ]
     ],
 
@@ -80,6 +90,10 @@ return [
     'USER_TYPE_EMPLOYEE' => 3,
     'USER_TYPE_SUPPLIER' => 4,
     'USER_TYPE_SHIPPER' => 4,
+	
+	//user statuses
+    'USER_STATUS_ACTIVE' => 1,
+    'USER_STATUS_INACTIVE' => 2,
 
     'COMPANY_BUSINESS_TYPE' => [
         (object) ['value' => 'insurance', 'label' => 'Insurance'],
