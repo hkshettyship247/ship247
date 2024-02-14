@@ -136,6 +136,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 		Route::post('/companies/{companyID}/pending-status', [CompanyController::class, 'activateCompany'])->name('companyPending.activate');
 
         Route::post('/companies/{companyID}/update-status', [CompanyController::class, 'updateCompanyStatus'])->name('companyStatus.update');
+		Route::get('/companies/{companyID}/deactivate-status', [CompanyController::class, 'deactivateCompanyStatus'])->name('companyStatus.deactivate');
+		Route::get('/companies/{companyID}/terminate-status', [CompanyController::class, 'terminateCompanyStatus'])->name('companyStatus.terminate');
+		Route::get('/companies/{companyID}/reactivate-status', [CompanyController::class, 'reactivateCompanyStatus'])->name('companyStatus.reactivate');
         Route::post('/bookings/{bookingId}/update-status', [BookingsController::class, 'updatebookingDetails'])->name('bookingDetails.update');
 
         // Route::get('/news',[CompanyController::class, 'getNews'])->name('news.index');
@@ -308,6 +311,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 		Route::post('/companies/{companyID}/pending-status', [CompanyController::class, 'activateCompany'])->name('companyPending.activate');
 		
         Route::post('/companies/{companyID}/update-status', [CompanyController::class, 'updateCompanyStatus'])->name('companyStatus.update');
+		Route::get('/companies/{companyID}/deactivate-status', [CompanyController::class, 'deactivateCompanyStatus'])->name('companyStatus.deactivate');
+		Route::get('/companies/{companyID}/terminate-status', [CompanyController::class, 'terminateCompanyStatus'])->name('companyStatus.terminate');
+		Route::get('/companies/{companyID}/reactivate-status', [CompanyController::class, 'reactivateCompanyStatus'])->name('companyStatus.reactivate');
         Route::post('/bookings/{bookingId}/update-status', [BookingsController::class, 'updatebookingDetails'])->name('bookingDetails.update');
 
         // Route::get('/news',[CompanyController::class, 'getNews'])->name('news.index');
