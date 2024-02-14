@@ -102,8 +102,9 @@ class WorkWithUsFormsController extends Controller
         }
         $industries = Industry::pluck('name')->toArray();
 		$our_employees =  User::where('role_id', config('constants.USER_TYPE_EMPLOYEE'))->orWhere('role_id', config('constants.USER_TYPE_SUPERADMIN'))->where('deleted_at', null)->get();
-
-         $route = null;
+		$company_details = Company::where('wwuforms_id', $request->workWithUsFormID)->first();
+		
+        $route = null;
         if(auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')){
             $route = "admin.";
         }
@@ -111,8 +112,8 @@ class WorkWithUsFormsController extends Controller
         else if(auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')){
             $route = "employees.";
         }
-
-        return view($route.'work_with_us_forms.detail', compact('work_with_us_form_details', 'industries', 'our_employees'));
+		
+		return view($route.'work_with_us_forms.detail', compact('work_with_us_form_details', 'industries', 'our_employees', 'company_details'));
     }
 
     /**
@@ -142,6 +143,7 @@ class WorkWithUsFormsController extends Controller
 			$company->contact_no = $updated_form->phone_number;
 			$company->business_type = $updated_form->industry;
 			$company->industry = $updated_form->industry;
+			$company->wwuforms_id = $request->id;
 
 			$company->country = "";
 			$company->city = "";
@@ -164,6 +166,8 @@ class WorkWithUsFormsController extends Controller
 			$user->country = ""; // need to add from form, after changing work for us form - vendors
 			$user->phone_number = $company->contact_no; // need to change
 			$user->email = $company->email; // need to change
+			$user->status = config('constants.USER_STATUS_INACTIVE');
+			$user->position = 'vendor admin';
 			
 			$user->company_id = $companyId;
 			

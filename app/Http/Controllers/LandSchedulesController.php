@@ -10,6 +10,7 @@ use App\Models\Location;
 use App\Models\TruckType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
 
 class LandSchedulesController extends Controller
 {
@@ -136,10 +137,10 @@ class LandSchedulesController extends Controller
         $landSchedule->tt = $request->tt;
         $landSchedule->detention_charges_per_hour = $request->detention_charges_per_hour;
         $landSchedule->valid_till = $request->valid_till;
-		$landSchedule->reference_no = strtoupper(substr(str_replace(' ', '', $company->name), 0, 6).$origin->code.$destination->code.date("YmdHis")); 
+		$now = new Carbon();
+		$landSchedule->reference_no = strtoupper(substr(str_replace(' ', '', $company->name), 0, 6).$origin->code.$destination->code.(auth()->user()->id).$now->format("YmdHisv"));
         $landSchedule->save();
-
-
+		
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "superadmin.";
