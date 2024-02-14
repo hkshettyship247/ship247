@@ -12,14 +12,25 @@ $selected_industry = explode(',', $work_with_us_form_details->industry);
             <h2 class="title">
                 Work With Us Detail
             </h2>
-            <a href="{{route('superadmin.work-with-us-forms.index')}}" class="default-button-v2 outline-button">
-                <span>Back</span>
-            </a>
+            
+			<div class="form-field">
+                <span class="primary-color primary-font-medium block mt-2 view-personal-mode">
+					<a href="{{route('superadmin.work-with-us-forms.index')}}" class="default-button-v2 outline-button">
+						<span>Back</span>
+					</a>
+					@if(isset($company_details) && $work_with_us_form_details->status == config('constants.WORK_WITH_US_FORM_STATUS_ACCEPTED'))
+					<a href="{{route('superadmin.company.details', ['companyID' =>$company_details->id ])}}" class="default-button-v2">
+						<span>Vendor</span>
+					</a>
+					@endif
+				</span>
+            </div>
+		
         </header>
-
+					
         @if(isset($work_with_us_form_details))
         <div class="profile-section mt-14">
-
+			
             <div class="flex justify-between items-center w-full border-b-2 border-gray-300 pb-1 mb-4 ">
                 <p class="text-sm primary-font-medium primary-color uppercase">information</p>
             </div>
@@ -27,6 +38,7 @@ $selected_industry = explode(',', $work_with_us_form_details->industry);
 
             <div class="flex md:w-6/12">
                 <div class="grid gap-6">
+					
                     <div class="form-field">
                         <span class="form-label">Full name</span>
                         <span class="primary-color primary-font-medium block mt-2 view-personal-mode">{{
@@ -116,9 +128,9 @@ $selected_industry = explode(',', $work_with_us_form_details->industry);
 										-
 									@endif
 								@endif
+								@if($work_with_us_form_details->status !== config('constants.WORK_WITH_US_FORM_STATUS_ACCEPTED'))
 								<br /><br />
                                 <span class="form-label">Assigned User (Change)</span>
-								@if($work_with_us_form_details->status !== config('constants.WORK_WITH_US_FORM_STATUS_ACCEPTED'))
 									<select name="assigned_user" id="assigned_user" class="form-input w-full">
 								
 										<option 'selected' value="no">Change Assigned User</option>
@@ -130,20 +142,6 @@ $selected_industry = explode(',', $work_with_us_form_details->industry);
 										@endforeach
 										@endif
 									</select>
-								@else
-									@if( isset($work_with_us_form_details->related_assigned_user->first_name) )
-										@if( isset($work_with_us_form_details->related_assigned_user->last_name) )
-											{{$work_with_us_form_details->related_assigned_user->first_name." ".$work_with_us_form_details->related_assigned_user->last_name}}
-										@else
-											{{$work_with_us_form_details->related_assigned_user->first_name}}
-										@endif
-									 @else
-										@if( isset($work_with_us_form_details->related_assigned_user->last_name) )
-											{{$work_with_us_form_details->related_assigned_user->last_name}}
-										@else
-											-
-										@endif
-									 @endif
 								@endif
                             </div>
 							
