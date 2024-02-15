@@ -12,6 +12,11 @@
                 </div>
 
                 <div class="md:w-6/12 md:justify-end flex">
+					@if(isset($work_with_us_form_detail))
+					<a href="{{route('superadmin.work-with-us-form-detail', ['workWithUsFormID' => $work_with_us_form_detail->id ])}}" class="default-button-v2">
+						<span>Form</span>
+					</a>
+					@endif
                     <a href="{{route('superadmin.company.index')}}" class="default-button-v2 outline-button">
                         <span>Back</span>
                     </a>
@@ -70,6 +75,16 @@
 							@if($company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_REJECTED') )
                                 <span class="badge cancel">
                         Rejected
+                    </span>
+                            @endif
+							@if($company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_INACTIVE') )
+                                <span class="badge cancel">
+                        Inactive
+                    </span>
+                            @endif
+							@if($company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_TERMINATED') )
+                                <span class="badge cancel">
+                        Terminated
                     </span>
                             @endif
                         </div>
@@ -243,6 +258,14 @@
                                         <span class="uppercase text-gray-400 text-xs block">job title</span>
                                         <span class="primary-color primary-font-medium block mt-2 view-personal-mode">{{
                                 $user->job_title }}</span>
+                                    </div>
+									
+									<div class="form-field">
+                                        <span class="uppercase text-gray-400 text-xs block">Status</span>
+                                        <span class="primary-color primary-font-medium block mt-2 view-personal-mode">
+											<?php 
+												echo $user->status == 1 ? "ACTIVE" : "INACTIVE"; 
+											?> </span>
                                     </div>
                                 </div>
                             </div>
@@ -447,6 +470,21 @@
                             </form>
 							@endif
                         </div>
+					@else
+						<div class="md:w-6/12 flex">
+							@if($company_details->status == config('constants.COMPANY_REGISTRATION_STATUS_APPROVED'))
+								<a href="{{route('superadmin.companyStatus.deactivate',$company_details->id )}}" class="default-button-v2">
+									<span>De-activate</span>
+								</a>
+								<a href="{{route('superadmin.companyStatus.terminate',$company_details->id )}}" class="default-button-v2 outline-button">
+									<span>Terminate</span>
+								</a>
+							@else
+								<a href="{{route('superadmin.companyStatus.reactivate',$company_details->id )}}" class="default-button-v2 outline-button">
+									<span>Re-activate</span>
+								</a>
+							@endif
+						</div>
                     @endif
                 @endif
             </section>
