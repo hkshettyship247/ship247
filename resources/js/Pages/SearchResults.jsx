@@ -458,13 +458,14 @@ const SearchResults = ({
                     return item1.tt - item2.tt
                 });
             } else if (sortBy === SORT_BY_CHEAPEST) {
-                _processedResults = _processedResults?.filter((result) => result.price_amount > 0)
+                _processedResults = _processedResults?.filter((result) => Math.abs(result.price_amount) > 0)
                     ?.sort((item1, item2) => {
+						console.log(item1.price_amount);
                         return item1.price_amount - item2.price_amount
                     });
 				//_processedResultOthers = _processedResults?.filter((result) => result.price_amount === undefined);
 				_processedResultOthers.forEach((_processedResultOther, index) => {
-					//console.log(_processedResultOther.price_amount);
+					console.log(_processedResultOther.price_amount);
 					if(_processedResultOther.price_amount == null){
                     _processedResults.push(_processedResultOther);
 					}
