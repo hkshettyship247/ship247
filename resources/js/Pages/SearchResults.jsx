@@ -458,7 +458,9 @@ const SearchResults = ({
                     return item1.tt - item2.tt
                 });
             } else if (sortBy === SORT_BY_CHEAPEST) {
-                _processedResults = _processedResults?.filter((result) => Math.abs(result.price_amount) > 0)
+                //_processedResults = _processedResults?.filter((result) => result.price_amount > 0)
+				//_processedResults = _processedResults?.filter((result) => Math.abs(result.price_amount) > 0)
+				_processedResults = _processedResults?.filter((result) => result.price_amount != null)
                     ?.sort((item1, item2) => {
 						console.log(item1.price_amount);
                         return item1.price_amount - item2.price_amount
