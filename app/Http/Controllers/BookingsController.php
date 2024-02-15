@@ -85,6 +85,8 @@ class BookingsController extends Controller
             $booking->save();
         }
 
+        // return view('customers.bookings.new_show', compact("booking"));
+        
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             return view('admin.bookings.show', compact("booking"));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
