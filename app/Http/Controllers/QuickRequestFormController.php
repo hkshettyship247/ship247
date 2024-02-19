@@ -135,7 +135,7 @@ class QuickRequestFormController extends Controller
     public function queoteQuickRequestDetailsByID(Request $request)
     {
         $quick_request_form_details = QuickRequestForms::findOrFail($request->id);
-        $quick_request_form_details->user_id = $request->assigned_user;
+        $quick_request_form_details->quoted_by = $request->assigned_user;
         $quick_request_form_details->is_quoted = 1;
         $quick_request_form_details->save();
 
