@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('quick_request_forms', function (Blueprint $table) {
-            $table->foreignId('user_id');
             $table->integer('is_quoted')->default(0)->after('etd');
+            $table->unsignedBigInteger('quoted_by')->nullable()->after('is_quoted');
+            $table->foreign('quoted_by')->references('id')->on('users');
+        
         });
     }
 
@@ -24,10 +26,10 @@ return new class extends Migration
     {
         Schema::table('quick_request_forms', function (Blueprint $table) {
             // Drop the foreign key constraint first
-            $table->dropForeign(['user_id']);
+            $table->dropForeign(['quoted_by']);
 
             // Then, drop the column
-            $table->dropColumn('user_id');
+            $table->dropColumn('quoted_by');
             $table->dropColumn('is_quoted');
         });
     }
