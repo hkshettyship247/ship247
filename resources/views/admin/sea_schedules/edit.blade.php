@@ -66,7 +66,7 @@
                         <div class="form-field">
                             <label for="origin_charges" class="form-label">Origin Charges</label>
                             <input type="number" id="origin_charges" name="origin_charges"
-                                class="form-input small-input mt-2 w-full block" required
+                                class="form-input small-input mt-2 w-full block" min="0" required
                                 value="{{ $seaSchedule->origin_charges }}">
                             @error('origin_charges')
                             <span>{{ $message }}</span>
@@ -92,7 +92,7 @@
 
                         <div class="form-field">
                             <label for="our_charges" class="form-label">Our Charges</label>
-                            <input type="number" id="our_charges" name="our_charges" required
+                            <input type="number" id="our_charges" min="0" name="our_charges" required
                                 class="form-input small-input mt-2 w-full block"
                                 value="{{ $seaSchedule->our_charges }}">
                             @error('our_charges')

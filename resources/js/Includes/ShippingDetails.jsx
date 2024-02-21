@@ -166,7 +166,7 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
 // console.log(charges,price_details)
     return ((charges.length > 0) && <Accordion className="product-price-breakdown">
         <AccordionItem>
-            <AccordionHeader className={`accordion-head`}>
+            <AccordionHeader className={`accordion-head land-accordion-head`}>
             </AccordionHeader>
 
             <AccordionBody>

@@ -11,6 +11,9 @@ class Booking extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const LAND = 'Land';
+    const SHIP = 'Ship';
+
     public function addons()
     {
         return $this->hasMany(BookingAddonDetails::class,'booking_id','id');

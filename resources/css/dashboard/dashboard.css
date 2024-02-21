@@ -478,6 +478,10 @@ body {
   .badge.small-badge {
     @apply px-4 py-1 text-[10px] tracking-widest;
     font-family: var(--primary-font-medium); }
+    .badge.defualt {
+      background-color: #6c757d;
+      color: var(--primary-color); 
+    }
 
 table.shipping-details {
   @apply w-full my-6; }
@@ -719,3 +723,7 @@ form.disabled-form select {
   opacity: 0.6; }
 
 /*# sourceMappingURL=dashboard.css.map */
+.badge.defualt {
+  background-color: #6c757d;
+  color: var(--primary-color); 
+}

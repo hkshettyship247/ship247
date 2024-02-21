@@ -252,9 +252,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
 
                     <footer>
                         <div className="tracking">
-                            <div className="track land">
+                            <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked || priceBreakDown?.["Origin Charges"]?.isChecked?"track bold land":"track land"}`}>
                                 <div className="text">{origin_name}</div>
-                                <div className="circle"></div>
+                                <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
@@ -273,18 +273,18 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div> */}
-                            <div className="track">
+                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
                                 <div
                                     className="text">{destination_name}</div>
-                                <div className="circle"></div>
+                                <div className={`${priceBreakDown?.["Delivery Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
                             </div>
                             {/* <ol>
-                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                    {result.transportLegs.slice(1).map((transportLeg, index) => {
-                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                    })}
-                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                </ol> */}
+                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                                {result.transportLegs.slice(1).map((transportLeg, index) => {
+                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                                })}
+                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                            </ol> */}
                         </div>
 
                         <div className="price">
@@ -512,12 +512,12 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 <div className={`${priceBreakDown?.["Delivery Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
                             </div>
                             {/* <ol>
-                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                    {result.transportLegs.slice(1).map((transportLeg, index) => {
-                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                    })}
-                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                </ol> */}
+                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                                {result.transportLegs.slice(1).map((transportLeg, index) => {
+                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                                })}
+                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                            </ol> */}
                         </div>
 
                         <div className="price">

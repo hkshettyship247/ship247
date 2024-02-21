@@ -1115,6 +1115,18 @@ body {
       top: 6px;
       font-size: 10px;
       color: #fff; }
+  .product-price-breakdown .land-accordion-head {
+    @apply block uppercase text-xs w-full py-1.5 px-3 text-center relative h-7;
+    background-color: #48C272 !important;
+    font-family: var(--primary-font-medium); }
+    .product-price-breakdown .accordion-head:after {
+      content: 'View Details \25BC';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 6px;
+      font-size: 10px;
+      color: #fff; }
   .product-price-breakdown .accordion-head[aria-expanded="true"]:after {
     content: 'Hide Details \25B2'; }
   .product-price-breakdown .accordion-body {
@@ -1593,4 +1605,3 @@ table.price-breakdown-table .checkbox-field .form-checkbox:checked{
 table.price-breakdown-table tr td {
   font-size: 11px;
 }
-

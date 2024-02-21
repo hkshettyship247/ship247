@@ -195,7 +195,7 @@ class SeaSchedulesController extends Controller
         $seaSchedule->company_id = $request->company_id;
         $seaSchedule->container_size = $request->container_size;
         $seaSchedule->pickup_charges = isset($request->pickup_charges) && $request->pickup_charges != null ? $request->pickup_charges : 0;
-        $seaSchedule->origin_charges = isset($request->origin_charges_included) ? 0 : $request->origin_charges;
+        $seaSchedule->origin_charges = isset($request->origin_charges_included) ? 0 : (!empty($request->origin_charges) ? $request->origin_charges : 0);
         $seaSchedule->origin_charges_included = isset($request->origin_charges_included) ? 1 : 0;
         $seaSchedule->ocean_freight = $request->ocean_freight;
 		$seaSchedule->our_charges = $request->our_charges;

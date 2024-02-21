@@ -1,5 +1,19 @@
 @extends('layouts.admin')
 
+
+@section('style')
+<style>
+    #ship-icon-container {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        margin-left: -20px;
+        bottom: 0;
+    }
+</style>
+@endsection
 @section('content')
 
 <?php

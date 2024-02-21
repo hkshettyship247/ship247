@@ -63,9 +63,9 @@ class BookingsController extends Controller
             $bookingsQuery->where('company_id', $request->company_id);
         }
 
-//        $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
+        //        $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
         $bookings = $bookingsQuery->latest()->get();
-
+        
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             return view('admin.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
@@ -84,11 +84,14 @@ class BookingsController extends Controller
             $booking->read_at = Carbon::now();
             $booking->save();
         }
+        if($booking->marinetraffic_id) {
+            $track_booking_response = MarineTrafficAPI::getTrackingInformation($booking->marinetraffic_id);
+        }
 
-        return view('customers.bookings.new_show', compact("booking"));
         
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-            return view('admin.bookings.show', compact("booking"));
+            return view('customers.bookings.new_show', compact("booking"));
+            // return view('admin.bookings.show', compact("booking"));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             return view('employees.bookings.show', compact("booking"));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER') && $booking->user_id === Auth::user()->id) {
