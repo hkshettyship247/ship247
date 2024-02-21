@@ -252,9 +252,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
 
                     <footer>
                         <div className="tracking">
-                            <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked || priceBreakDown?.["Origin Charges"]?.isChecked?"track bold land":"track land"}`}>
+                            <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked? "track bold land" : "track land"}`}>
                                 <div className="text">{origin_name}</div>
-                                <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                                <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked? "circle circle-bold" : "circle"}`}></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
@@ -273,10 +273,10 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div> */}
-                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
+                            <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked ? "track bold" : "track"}`}>
                                 <div
                                     className="text">{destination_name}</div>
-                                <div className={`${priceBreakDown?.["Delivery Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                                <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked?"circle circle-bold":"circle"}`}></div>
                             </div>
                             {/* <ol>
                                 <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
