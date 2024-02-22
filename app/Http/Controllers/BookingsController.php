@@ -84,13 +84,14 @@ class BookingsController extends Controller
             $booking->read_at = Carbon::now();
             $booking->save();
         }
+        $track_booking_response = '';
         if($booking->marinetraffic_id) {
             $track_booking_response = MarineTrafficAPI::getTrackingInformation($booking->marinetraffic_id);
         }
 
         
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-            return view('customers.bookings.new_show', compact("booking"));
+            return view('customers.bookings.new_show', compact('booking', 'track_booking_response'));
             // return view('admin.bookings.show', compact("booking"));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             return view('employees.bookings.show', compact("booking"));
