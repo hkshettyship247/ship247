@@ -298,6 +298,8 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 </>
                             ) : (
                                 <>
+                                { formData.name && formData.email ?
+                                 (<>
                                     <button onClick={showModal} className="book-button 123">
                                         Get Quote
                                     </button>
@@ -393,6 +395,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                                 </div>
                                             </form>)}
                                     </Modal>
+                                    </>)
+                                    : ""
+                                }
                                 </>
                             )}
                         </div>

@@ -163,11 +163,10 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
             data: [{name: "Delivery Charges", amount: 0, message: 'Amount will be shared later'}]
         });
     }
-// console.log(charges,price_details)
+
     return ((charges.length > 0) && <Accordion className="product-price-breakdown">
         <AccordionItem>
-            <AccordionHeader className={`accordion-head land-accordion-head`}>
-            </AccordionHeader>
+        <AccordionHeader className={`${parseInt(params.get('route_type')) === constants.ROUTE_TYPE_LAND ? 'land-accordion-head' : 'accordion-head'}`} />
 
             <AccordionBody>
                 <div className="accordion-body">
