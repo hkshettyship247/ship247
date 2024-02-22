@@ -530,7 +530,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                                    priceBreakDown={priceBreakDown}/>
                                 </>
                             ) : (
-                                <>Price Breakdown 2121
+                                <>
                                 { formData.name && formData.email ?
                                  (<>
                                     <button onClick={showModal} className="book-button">
