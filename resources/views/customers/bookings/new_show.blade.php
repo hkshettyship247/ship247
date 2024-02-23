@@ -356,16 +356,6 @@
                         <div class="step-content-1">
                             <div class="mb-2 d-flex rouded-circle">
                                 <h4><strong>{{isset($booking->origin->fullname) ? $booking->origin->fullname : ''}}</strong></h4>
-                                <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="502" height="19" viewBox="0 0 502 19">
-                                    <g id="Component_24_2" data-name="Component 24 – 2" transform="translate(0 1)">
-                                        <g id="upload-icon" transform="translate(487.429 0)">
-                                        <path id="Path_1222" data-name="Path 1222" d="M10.1,7.9a.646.646,0,1,1-.913.913L7.714,7.335v4.879a.643.643,0,1,1-1.286,0V7.335L4.957,8.814A.646.646,0,0,1,4.044,7.9L6.615,5.329a.643.643,0,0,1,.913,0Zm4.043-2.938V16.071A1.928,1.928,0,0,1,12.214,18H1.929A1.928,1.928,0,0,1,0,16.071V1.929A1.928,1.928,0,0,1,1.929,0H9.681a1.929,1.929,0,0,1,1.485.694l2.526,3.034a1.928,1.928,0,0,1,.45,1.234ZM10.286,3.214a.643.643,0,0,0,.643.643h1.2L10.286,1.646Zm2.571,1.929H10.929A1.928,1.928,0,0,1,9,3.214V1.286H1.929a.643.643,0,0,0-.643.643V16.071a.643.643,0,0,0,.643.643H12.214a.643.643,0,0,0,.643-.643Z" fill="#d43031"/>
-                                        </g>
-                                        <text id="Please_upload_the_document_confirming_this_part_of_the_delivery_is_done." data-name="Please upload the document confirming this part of the delivery is done." transform="translate(502 14)" fill="#2c1e3f" font-size="14" font-family="SegoeUI, Segoe UI" opacity="0"><tspan x="-445.566" y="0">Please upload the document confirming this part of the delivery is done.</tspan></text>
-                                    </g>
-                                    </svg>
-                                </a>                              
                             </div>
                             <div class="flex">
                                 <div class="w-2/12">
@@ -403,7 +393,8 @@
                                         <div>
                                             <span class="head mb-4">Trip Number</span>
                                             <span class="value flex">
-                                                316W</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->transportDocumentId : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -412,7 +403,8 @@
                                         <div>
                                             <span class="head mb-4">Transport Name</span>
                                             <span class="value flex">
-                                                MAERSK INNOSHIMA</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->carrier : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -429,17 +421,7 @@
                         </div>
                         <div class="step-content-1">
                             <div class="mb-2 d-flex rouded-circle">
-                                <h4><strong>{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</strong></h4>
-                                <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="502" height="19" viewBox="0 0 502 19">
-                                    <g id="Component_24_2" data-name="Component 24 – 2" transform="translate(0 1)">
-                                        <g id="upload-icon" transform="translate(487.429 0)">
-                                        <path id="Path_1222" data-name="Path 1222" d="M10.1,7.9a.646.646,0,1,1-.913.913L7.714,7.335v4.879a.643.643,0,1,1-1.286,0V7.335L4.957,8.814A.646.646,0,0,1,4.044,7.9L6.615,5.329a.643.643,0,0,1,.913,0Zm4.043-2.938V16.071A1.928,1.928,0,0,1,12.214,18H1.929A1.928,1.928,0,0,1,0,16.071V1.929A1.928,1.928,0,0,1,1.929,0H9.681a1.929,1.929,0,0,1,1.485.694l2.526,3.034a1.928,1.928,0,0,1,.45,1.234ZM10.286,3.214a.643.643,0,0,0,.643.643h1.2L10.286,1.646Zm2.571,1.929H10.929A1.928,1.928,0,0,1,9,3.214V1.286H1.929a.643.643,0,0,0-.643.643V16.071a.643.643,0,0,0,.643.643H12.214a.643.643,0,0,0,.643-.643Z" fill="#d43031"/>
-                                        </g>
-                                        <text id="Please_upload_the_document_confirming_this_part_of_the_delivery_is_done." data-name="Please upload the document confirming this part of the delivery is done." transform="translate(502 14)" fill="#2c1e3f" font-size="14" font-family="SegoeUI, Segoe UI" opacity="0"><tspan x="-445.566" y="0">Please upload the document confirming this part of the delivery is done.</tspan></text>
-                                    </g>
-                                    </svg>
-                                </a>                              
+                                <h4><strong>{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</strong></h4>                            
                             </div>
                             <div class="flex">
                                 <div class="w-2/12">
@@ -486,7 +468,8 @@
                                         <div>
                                             <span class="head mb-4">Transport Name</span>
                                             <span class="value flex">
-                                                MAERSK INNOSHIMA</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->carrier : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -502,17 +485,7 @@
                         @else
                         <div class="step-content-1">
                             <div class="mb-2 d-flex rouded-circle">
-                                <h4><strong>{{isset($booking->origin->port) ? $booking->origin->port : ''}}</strong></h4>
-                                <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="502" height="19" viewBox="0 0 502 19">
-                                    <g id="Component_24_2" data-name="Component 24 – 2" transform="translate(0 1)">
-                                        <g id="upload-icon" transform="translate(487.429 0)">
-                                        <path id="Path_1222" data-name="Path 1222" d="M10.1,7.9a.646.646,0,1,1-.913.913L7.714,7.335v4.879a.643.643,0,1,1-1.286,0V7.335L4.957,8.814A.646.646,0,0,1,4.044,7.9L6.615,5.329a.643.643,0,0,1,.913,0Zm4.043-2.938V16.071A1.928,1.928,0,0,1,12.214,18H1.929A1.928,1.928,0,0,1,0,16.071V1.929A1.928,1.928,0,0,1,1.929,0H9.681a1.929,1.929,0,0,1,1.485.694l2.526,3.034a1.928,1.928,0,0,1,.45,1.234ZM10.286,3.214a.643.643,0,0,0,.643.643h1.2L10.286,1.646Zm2.571,1.929H10.929A1.928,1.928,0,0,1,9,3.214V1.286H1.929a.643.643,0,0,0-.643.643V16.071a.643.643,0,0,0,.643.643H12.214a.643.643,0,0,0,.643-.643Z" fill="#d43031"/>
-                                        </g>
-                                        <text id="Please_upload_the_document_confirming_this_part_of_the_delivery_is_done." data-name="Please upload the document confirming this part of the delivery is done." transform="translate(502 14)" fill="#2c1e3f" font-size="14" font-family="SegoeUI, Segoe UI" opacity="0"><tspan x="-445.566" y="0">Please upload the document confirming this part of the delivery is done.</tspan></text>
-                                    </g>
-                                    </svg>
-                                </a>                              
+                                <h4><strong>{{isset($booking->origin->port) ? $booking->origin->port : ''}}</strong></h4>                             
                             </div>
                             <div class="flex">
                                 <div class="w-2/12">
@@ -559,7 +532,8 @@
                                         <div>
                                             <span class="head mb-4">Transport Name</span>
                                             <span class="value flex">
-                                                MAERSK INNOSHIMA</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->carrier : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -574,17 +548,7 @@
                         </div>
                         <div class="step-content-1">
                             <div class="mb-2 d-flex rouded-circle">
-                                <h4><strong>{{ $booking->origin->code }}</strong></h4>
-                                <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="502" height="19" viewBox="0 0 502 19">
-                                    <g id="Component_24_2" data-name="Component 24 – 2" transform="translate(0 1)">
-                                        <g id="upload-icon" transform="translate(487.429 0)">
-                                        <path id="Path_1222" data-name="Path 1222" d="M10.1,7.9a.646.646,0,1,1-.913.913L7.714,7.335v4.879a.643.643,0,1,1-1.286,0V7.335L4.957,8.814A.646.646,0,0,1,4.044,7.9L6.615,5.329a.643.643,0,0,1,.913,0Zm4.043-2.938V16.071A1.928,1.928,0,0,1,12.214,18H1.929A1.928,1.928,0,0,1,0,16.071V1.929A1.928,1.928,0,0,1,1.929,0H9.681a1.929,1.929,0,0,1,1.485.694l2.526,3.034a1.928,1.928,0,0,1,.45,1.234ZM10.286,3.214a.643.643,0,0,0,.643.643h1.2L10.286,1.646Zm2.571,1.929H10.929A1.928,1.928,0,0,1,9,3.214V1.286H1.929a.643.643,0,0,0-.643.643V16.071a.643.643,0,0,0,.643.643H12.214a.643.643,0,0,0,.643-.643Z" fill="#d43031"/>
-                                        </g>
-                                        <text id="Please_upload_the_document_confirming_this_part_of_the_delivery_is_done." data-name="Please upload the document confirming this part of the delivery is done." transform="translate(502 14)" fill="#2c1e3f" font-size="14" font-family="SegoeUI, Segoe UI" opacity="0"><tspan x="-445.566" y="0">Please upload the document confirming this part of the delivery is done.</tspan></text>
-                                    </g>
-                                    </svg>
-                                </a>                              
+                                <h4><strong>{{ $booking->origin->code }}</strong></h4>                            
                             </div>
                             <div class="flex">
                                 <div class="w-2/12">
@@ -628,7 +592,8 @@
                                         <div>
                                             <span class="head mb-4">Trip Number</span>
                                             <span class="value flex">
-                                                316W</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->transportDocumentId : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -637,7 +602,8 @@
                                         <div>
                                             <span class="head mb-4">Transport Name</span>
                                             <span class="value flex">
-                                                MAERSK INNOSHIMA</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->carrier : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -691,7 +657,8 @@
                                         <div>
                                             <span class="head mb-4">Trip Number</span>
                                             <span class="value flex">
-                                                316W</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->transportDocumentId : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -700,7 +667,8 @@
                                         <div>
                                             <span class="head mb-4">Transport Name</span>
                                             <span class="value flex">
-                                                MAERSK INNOSHIMA</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->carrier : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -715,17 +683,7 @@
                         </div>
                         <div class="step-content-1">
                             <div class="mb-2 d-flex rouded-circle">
-                                <h4><strong>{{isset($booking->destination->port) ? $booking->destination->port : ''}}</strong></h4>
-                                <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="502" height="19" viewBox="0 0 502 19">
-                                    <g id="Component_24_2" data-name="Component 24 – 2" transform="translate(0 1)">
-                                        <g id="upload-icon" transform="translate(487.429 0)">
-                                        <path id="Path_1222" data-name="Path 1222" d="M10.1,7.9a.646.646,0,1,1-.913.913L7.714,7.335v4.879a.643.643,0,1,1-1.286,0V7.335L4.957,8.814A.646.646,0,0,1,4.044,7.9L6.615,5.329a.643.643,0,0,1,.913,0Zm4.043-2.938V16.071A1.928,1.928,0,0,1,12.214,18H1.929A1.928,1.928,0,0,1,0,16.071V1.929A1.928,1.928,0,0,1,1.929,0H9.681a1.929,1.929,0,0,1,1.485.694l2.526,3.034a1.928,1.928,0,0,1,.45,1.234ZM10.286,3.214a.643.643,0,0,0,.643.643h1.2L10.286,1.646Zm2.571,1.929H10.929A1.928,1.928,0,0,1,9,3.214V1.286H1.929a.643.643,0,0,0-.643.643V16.071a.643.643,0,0,0,.643.643H12.214a.643.643,0,0,0,.643-.643Z" fill="#d43031"/>
-                                        </g>
-                                        <text id="Please_upload_the_document_confirming_this_part_of_the_delivery_is_done." data-name="Please upload the document confirming this part of the delivery is done." transform="translate(502 14)" fill="#2c1e3f" font-size="14" font-family="SegoeUI, Segoe UI" opacity="0"><tspan x="-445.566" y="0">Please upload the document confirming this part of the delivery is done.</tspan></text>
-                                    </g>
-                                    </svg>
-                                </a>                              
+                                <h4><strong>{{isset($booking->destination->port) ? $booking->destination->port : ''}}</strong></h4>                             
                             </div>
                             <div class="flex">
                                 <div class="w-2/12">
@@ -763,7 +721,8 @@
                                         <div>
                                             <span class="head mb-4">Trip Number</span>
                                             <span class="value flex">
-                                                316W</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->transportDocumentId : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -772,7 +731,8 @@
                                         <div>
                                             <span class="head mb-4">Transport Name</span>
                                             <span class="value flex">
-                                                MAERSK INNOSHIMA</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->carrier : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -798,8 +758,164 @@
                     <div class="hidden" id="bookinginfo" role="tabpanel" aria-labelledby="bookinginfo-tab">
                         <div class="detail-body">
                             @if(isset($booking))
-                                <div class="p-4 rounded-lg bg-gray-50">
-                                    <p class="text-sm text-gray-500">No booking info found</p>
+                                <div class="rounded-lg bg-gray-50">
+                                    <div class="detail-box">
+                                        <div class="w-2/12">
+                                            <div class="flex flex-col gap-4">
+                                                <div>
+                                                    <span class="head">Booking ID</span>
+                                                    <span class="value">{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }}</span>
+                                                </div>
+                        
+                                                <div>
+                                                    <span class="head">No of Container</span>
+                                                    <span class="value">{{$booking->no_of_containers}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="w-3/12">
+                                            <div class="flex flex-col gap-4">
+                                                <div>
+                                                    <span class="head">from</span>
+                                                    <span class="value">{{isset($booking->origin->fullname) ? $booking->origin->fullname :
+                                                        '-'}}</span>
+                                                </div>
+                        
+                                                <div>
+                                                    <span class="head">Container</span>
+                                                    <span class="value">{{$booking->container_size}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="w-3/12">
+                                            <div class="flex flex-col gap-4">
+                                                <div>
+                                                    <span class="head">to</span>
+                                                    <span class="value">{{isset($booking->destination->fullname) ?
+                                                        $booking->destination->fullname : ''}}</span>
+                                                </div>
+                        
+                                                <div>
+                                                    <span class="head">product</span>
+                                                    <span class="value">{{$booking->product}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="w-2/12">
+                                            <div class="flex flex-col gap-4">
+                                                <div>
+                                                    <span class="head">amount</span>
+                                                    <span class="value">{{ '$' . number_format($booking->amount, 2) }}</span>
+                                                </div>
+                        
+                                                <div>
+                                                    <span class="head">CARGO READY</span>
+                                                    <span class="value">{{ date('d M y', strtotime($booking->departure_date_time))
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="w-2/12">
+                                            <div class="flex flex-col gap-4">
+                                                <div>
+                                                    <span class="head">Transportation</span>
+                                                    <span class="value">{{$booking->transportation}}</span>
+                                                </div>
+                        
+                                                <div>
+                                                    <span class="head">Shipping line</span>
+                                                    <span class="value">{{isset($booking->company->name) ? $booking->company->name :
+                                                        '-'}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="w-2/12">
+                                            <div class="flex flex-col gap-4">
+                                                <div>
+                                                    <span class="head">Shipping Number</span>
+                                                    <span class="value">{{isset($booking->shipping_number) ? $booking->shipping_number :
+                                                        '-'}}</span>
+                                                </div>
+                        
+                                                <div>
+                                                    <span class="head">Receipt Number</span>
+                                                    <span class="value">{{isset($booking->receipt_number) ? $booking->receipt_number :
+                                                        '-'}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @php
+                                            $bookingStatusOptions = [
+                                                'BOOKING_STATUS_IN_PROGRESS' => [
+                                                    'label' => config('constants.BOOKING_STATUS_IN_PROGRESS'),
+                                                    'class' => 'progress',
+                                                ],
+                                                'BOOKING_STATUS_COMPLETED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_COMPLETED'),
+                                                    'class' => 'completed',
+                                                ],
+                                                'BOOKING_STATUS_ON_HOLD' => [
+                                                    'label' => config('constants.BOOKING_STATUS_ON_HOLD'),
+                                                    'class' => 'hold',
+                                                ],
+                                                'BOOKING_STATUS_CANCELLED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_CANCELLED'),
+                                                    'class' => 'cancel',
+                                                ],
+                                                'BOOKING_STATUS_CONFIRMED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_CONFIRMED'),
+                                                    'class' => 'confirmed',
+                                                ],
+                                                'BOOKING_STATUS_SI_SUBMITTED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+                                                    'class' => 'si-submitted',
+                                                ],
+                                                'BOOKING_STATUS_SI_CONFIRMED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+                                                    'class' => 'progress',
+                                                ],
+                                                'BOOKING_STATUS_EVGM_SUBMITTED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+                                                    'class' => 'progress',
+                                                ],
+                                                'BOOKING_STATUS_EVGM_CONFIRMED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+                                                    'class' => 'progress',
+                                                ],
+                                                'BOOKING_STATUS_DRAFT_BL_RECEIVED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+                                                    'class' => 'progress',
+                                                ],
+                                                'BOOKING_STATUS_DRAFT_BL_CONFIRMED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+                                                    'class' => 'progress',
+                                                ],
+                                                'BOOKING_STATUS_FINISHED' => [
+                                                    'label' => config('constants.BOOKING_STATUS_FINISHED'),
+                                                    'class' => 'defualt',
+                                                ],
+                                            ];
+                                        @endphp
+                        
+                                        <div class="w-2/12">
+                                            <div class="flex justify-between flex-col items-end h-full">
+                                                <div>
+                                                    @foreach($bookingStatusOptions as $badgeClass => $status)
+                                                        @if($booking->status == $status['label'])
+                                                            <span class="badge {{ $status['class'] }} {{ $badgeClass }}">
+                                                                {{ str_replace('_', ' ', ucwords(strtolower(substr($badgeClass, strlen('BOOKING_STATUS_'))))) }}
+                                                            </span>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                         </div>
