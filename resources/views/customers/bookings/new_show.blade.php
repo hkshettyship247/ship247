@@ -384,7 +384,9 @@
                                         <div>
                                             <span class="head mb-4">Date</span>
                                             <span class="value flex">
-                                                {{ date('Y-m-d', strtotime($booking->departure_date_time)) }}</span>
+                                                {{ isset($track_booking_response['data']) ? Carbon\Carbon::parse($track_booking_response['data']?->originPortActualDepartureUtc)->setTimezone('UTC')->format('Y-m-d
+                                                H:i') : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -450,7 +452,9 @@
                                         <div>
                                             <span class="head mb-4">Date</span>
                                             <span class="value flex">
-                                                2023-04-22</span>
+                                                {{ isset($track_booking_response['data']) ? Carbon\Carbon::parse($track_booking_response['data']?->originPortActualDepartureUtc)->setTimezone('UTC')->format('Y-m-d
+                                                H:i') : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -459,7 +463,8 @@
                                         <div>
                                             <span class="head mb-4">Trip Number</span>
                                             <span class="value flex">
-                                                316W</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->transportDocumentId : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -514,7 +519,9 @@
                                         <div>
                                             <span class="head mb-4">Date</span>
                                             <span class="value flex">
-                                                {{ date('Y-m-d', strtotime($booking->departure_date_time)) }}</span>
+                                                {{ isset($track_booking_response['data']) ? Carbon\Carbon::parse($track_booking_response['data']?->originPortActualDepartureUtc)->setTimezone('UTC')->format('Y-m-d
+                                                H:i') : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -523,7 +530,8 @@
                                         <div>
                                             <span class="head mb-4">Trip Number</span>
                                             <span class="value flex">
-                                                316W</span>
+                                                {{ isset($track_booking_response['data']) ? $track_booking_response['data']?->transportDocumentId : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -712,7 +720,9 @@
                                         <div>
                                             <span class="head mb-4">Date</span>
                                             <span class="value flex">
-                                                2023-04-22</span>
+                                                {{ isset($track_booking_response['data']) ? Carbon\Carbon::parse($track_booking_response['data']?->originPortActualDepartureUtc)->setTimezone('UTC')->format('Y-m-d
+                                                H:i') : '-' }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
