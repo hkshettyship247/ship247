@@ -720,7 +720,7 @@
                                         <div>
                                             <span class="head mb-4">Date</span>
                                             <span class="value flex">
-                                                {{ isset($track_booking_response['data']) ? Carbon\Carbon::parse($track_booking_response['data']?->originPortActualDepartureUtc)->setTimezone('UTC')->format('Y-m-d
+                                                {{ isset($track_booking_response['data']) ? Carbon\Carbon::parse($track_booking_response['data']?->finalPortActualArrivalUtc)->setTimezone('UTC')->format('Y-m-d
                                                 H:i') : '-' }}
                                             </span>
                                         </div>
