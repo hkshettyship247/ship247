@@ -124,6 +124,13 @@ class SeaSchedulesController extends Controller
      */
     public function store(Request $request)
     {
+		/*
+		$request->validate([
+            'etd' => ['required', 'date', 'after:yesterday'],
+			'valid_till' => ['required', 'date', 'after:yesterday'],
+        ]);
+		*/
+		
 		$company = Company::find($request->company_id);
 		$origin = Location::find($request->origin_id);
 		$destination = Location::find($request->destination_id);
@@ -190,6 +197,13 @@ class SeaSchedulesController extends Controller
      */
     public function update(Request $request, SeaSchedule $seaSchedule)
     {
+		/** Not validated because may be they need to adjust things
+		$request->validate([
+            'etd' => ['required', 'date', 'after:yesterday'],
+			'valid_till' => ['required', 'date', 'after:yesterday'],
+        ]);
+		**/
+		
         $seaSchedule->origin_id = $request->origin_id;
         $seaSchedule->destination_id = $request->destination_id;
         $seaSchedule->company_id = $request->company_id;
