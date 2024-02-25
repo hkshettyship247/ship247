@@ -1,7 +1,7 @@
 import {currencyFormatter} from "../../views/helpers/helpers";
 import React, {useEffect, useState} from "react";
 
-const ShippingDetailsRow = ({name, charge, setTotalAmount, defaultChecked = false, updatePriceBreakDown}) => {
+const ShippingDetailsRow = ({name, charge, setTotalAmount, setTrackOne, setCircleOne, setTrackThree, setCircleFour, defaultChecked = false, updatePriceBreakDown}) => {
     const [checked, setChecked] = useState(defaultChecked);
     const [disabled, setDisabled] = useState(false);
 
@@ -23,10 +23,28 @@ const ShippingDetailsRow = ({name, charge, setTotalAmount, defaultChecked = fals
     }, [defaultChecked])
 
     useEffect(() => {
+		//alert(charge.name + " | " + checked);
+		
         if (checked) {
+			if(charge.name.includes('Pickup')){
+				setTrackOne("track2");
+				setCircleOne("circle2");
+			}
+			if(charge.name.includes('Delivery')){
+				setTrackThree("track2");
+				setCircleFour("circle2");
+			}
             setTotalAmount(totalAmount => totalAmount + charge.amount);
             updatePriceBreakDown(charge, true);
         } else {
+			if(charge.name.includes('Pickup')){
+				setTrackOne("track");
+				setCircleOne("circle");
+			}
+			if(charge.name.includes('Delivery')){
+				setTrackThree("track");
+				setCircleFour("circle");
+			}
             setTotalAmount(totalAmount => totalAmount - charge.amount);
             updatePriceBreakDown(charge, false);
         }
