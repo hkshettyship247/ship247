@@ -23,8 +23,14 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
         email: result.user_details ? `${result?.user_details?.email}` : null,
         description: '',
     });
-
-  
+	const [trackOne, setTrackOne] = useState(filterChargeTypes.pickup? "track2": "track");
+	const [trackTwo, setTrackTwo] = useState("track");
+	const [trackThree, setTrackThree] = useState(filterChargeTypes.delivery? "track2": "track");
+	const [trackFour, setTrackFour] = useState("track");
+	const [circleOne, setCircleOne] = useState(filterChargeTypes.pickup? "circle2":"circle");
+	const [circleTwo, setCircleTwo] = useState("circle");
+	const [circleThree, setCircleThree] = useState("circle");
+	const [circleFour, setCircleFour] = useState(filterChargeTypes.delivery? "circle2":"circle");
 
     // const saveBookingDetailsInSession = (data) => {
     //     storeBookingDetailsInSession(data)
@@ -115,6 +121,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
         const {name, amount} = data;
 
         setPriceBreakDown((prevData) => {
+			
+			//alert(filterChargeTypes.delivery + " | " + trackThree + " | " + circleFour);
+			
             const updatedData = {
                 ...prevData,
                 [name]: {
@@ -126,8 +135,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
             return updatedData; // Return the updated data to update the state
         });
     };
-
-
+	
+	//alert(JSON.stringify(result.price_details));
+	
     if (parseInt(params.get('route_type')) === constants.ROUTE_TYPE_LAND) {
         // const origin_code = result.origin.code;
         const origin_name = (result.origin.city ?? result.origin.port).substring(0, 10).trim() +
@@ -252,9 +262,9 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
 
                     <footer>
                         <div className="tracking">
-                            <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked? "track bold land" : "track land"}`}>
+                            <div className="track land">
                                 <div className="text">{origin_name}</div>
-                                <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked? "circle circle-bold" : "circle"}`}></div>
+                                <div className="circle"></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
@@ -273,18 +283,18 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div> */}
-                            <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked ? "track bold" : "track"}`}>
+                            <div className="track">
                                 <div
                                     className="text">{destination_name}</div>
-                                <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                                <div className="circle"></div>
                             </div>
                             {/* <ol>
-                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                                {result.transportLegs.slice(1).map((transportLeg, index) => {
-                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                                })}
-                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                            </ol> */}
+                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                    {result.transportLegs.slice(1).map((transportLeg, index) => {
+                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                    })}
+                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                </ol> */}
                         </div>
 
                         <div className="price">
@@ -402,9 +412,13 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                             )}
                         </div>
                     </footer>
-
+					
                     <ShippingDetails updatePriceBreakDown={updatePriceBreakDown}
                                      setTotalAmount={setTotalAmount}
+									 setTrackOne={setTrackOne}
+									 setCircleOne={setCircleOne}
+									 setTrackThree={setTrackThree}
+									 setCircleFour={setCircleFour}
                                      uid={result.index}
                                      price_amount={result.price_amount}
                                      price_details={result.price_details}
@@ -423,8 +437,10 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
         const destination_code = result?.destination_code;
         const delivery_name = result?.delivery_name;
         const tt = result?.tt;
-        const valid_till = result?.valid_till ? dayjs(result?.valid_till).format('DD/MM/YYYY') : ''
-        
+        const valid_till = result?.valid_till ? dayjs(result?.valid_till).format('DD/MM/YYYY') : '';
+		
+		//alert(filterChargeTypes.delivery + " | " + trackThree + " | " + circleFour);
+		
         return <div key={`search-result-card-${result.company.id}-${result.index}`}>
             <div className="shadow-box small-box mb-5">
                 <div className="search-result-box">
@@ -490,39 +506,40 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
 
                     <footer>
                         <div className="tracking">
-                            <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked || priceBreakDown?.["Origin Charges"]?.isChecked?"track bold":"track"}`}>
-                                <div className="text">{pickup_name}</div>
-                                <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                            <div className={trackOne}>
+                                <div
+                                    className="text">{pickup_name}</div>
+                                <div className={circleOne}></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className="track bold">
+                            <div className={trackTwo}>
                                 <div className="text">{origin_code}</div>
-                                <div className="circle circle-bold"></div>
+                                <div className={circleTwo}></div>
                                 <div className="icon">
                                     <img src="/images/svg/ship-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
+                            <div className={trackThree}>
                                 <div className="text">{destination_code}</div>
-                                <div className="circle circle-bold"></div>
+                                <div className={circleThree}></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
+                            <div className={trackFour}>
                                 <div
                                     className="text">{delivery_name}</div>
-                                <div className={`${priceBreakDown?.["Delivery Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                                <div className={circleFour}></div>
                             </div>
                             {/* <ol>
-                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                                {result.transportLegs.slice(1).map((transportLeg, index) => {
-                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                                })}
-                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                            </ol> */}
+                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                    {result.transportLegs.slice(1).map((transportLeg, index) => {
+                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                    })}
+                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                </ol> */}
                         </div>
 
                         <div className="price">
@@ -646,6 +663,10 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
 
                     <ShippingDetails updatePriceBreakDown={updatePriceBreakDown}
                                      setTotalAmount={setTotalAmount}
+									 setTrackOne={setTrackOne}
+									 setCircleOne={setCircleOne}
+									 setTrackThree={setTrackThree}
+									 setCircleFour={setCircleFour}
                                      uid={result.index}
                                      price_amount={result.price_amount}
                                      price_details={result.price_details}
