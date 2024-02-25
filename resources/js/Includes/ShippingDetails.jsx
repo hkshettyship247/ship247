@@ -5,7 +5,7 @@ import {usePage} from "@inertiajs/react";
 // import { storeBookingPriceBreakDownDetailsInSession } from "../../views/network/network";
 import ShippingDetailsRow from "@/Includes/ShippingDetailsRow";
 
-const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, company_id, updatePriceBreakDown, filterChargeTypes, hot_deals}) => {
+const ShippingDetails = ({setTotalAmount, setTrackOne, setCircleOne, setTrackThree, setCircleFour, price_amount, price_details, uid, company_id, updatePriceBreakDown, filterChargeTypes, hot_deals}) => {
     const {constants} = usePage().props;
     const params = new URLSearchParams(window.location.search);
     let charges = [];
@@ -24,12 +24,14 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
         }
         return result;
     }
-
+	
+	/**
     useEffect(() => {
         if (company_id === constants.CMA_COMPANY_ID || hot_deals) {
             setTotalAmount(price_amount);
         }
     }, [filterChargeTypes]);
+	/**/
 
     if ((price_amount && constants.IGNORED_COMPANIES.includes(company_id)) || hot_deals) {
         charges.push({
@@ -39,12 +41,60 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
     }
 
     if (company_id === constants.CMA_COMPANY_ID) {
+		/**
         if (price_details?.charges) {
             charges.push({'heading': 'Per Equipment', data: price_details?.charges});
         }
         if (price_details?.extra) {
             charges.push({'heading': 'Extras', data: price_details?.extra});
         }
+		/**/
+		
+		/**/
+		let org_chargs = 0;
+		let base_chargs = 0;
+		let dest_chargs = 0;
+		
+		price_details.charges.forEach((chargex, index) => {
+			//alert(JSON.stringify(chargex.charge_name)+" | "+JSON.stringify(chargex.amount)+" | "+JSON.stringify(chargex.included));	
+
+			if(chargex.charge_name.toLowerCase().includes('origin')){
+				if(chargex.amount !== null){
+					org_chargs += chargex.amount;
+				}
+			}
+			else if(chargex.charge_name.toLowerCase().includes('destination')){
+				if(chargex.amount !== null){
+					dest_chargs += chargex.amount;
+				}
+			}
+			else{
+				if(chargex.amount !== null){
+					base_chargs += chargex.amount;
+				}
+			}
+			
+        });
+		
+		charges.push({
+            'heading': 'Origin Charges', data: [{
+                name: "Origin Charges", amount: org_chargs
+            }]
+        });
+
+        charges.push({
+            'heading': 'Freight Charges', data: [{
+                name: "BASIC OCEAN FREIGHT", amount: base_chargs + 100
+            }]
+        });
+
+        charges.push({
+            'heading': 'Destination Charges', data: [{
+                name: "Destination Charges", amount: dest_chargs
+            }]
+        });
+		
+		/**/
     } else if (company_id === constants.MAERSK_COMPANY_ID) {
         if (price_details?.origin_charges_total_usd) {
             charges.push({
@@ -101,6 +151,9 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
             data: [{name: "Destination Charges", amount: parseFloat(data.destination_charges)}]
         });
     } else if (company_id === constants.MSC_COMPANY_ID) {
+		
+		//alert(JSON.stringify(price_details));
+		
         charges.push({
             'heading': 'Origin Charges', data: [{
                 name: "Origin Charges", amount: price_details.origin_charges
@@ -181,16 +234,37 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
                                     </tr>
                                     {chargeType.data.map((charge, i) => {
                                         if (company_id === constants.CMA_COMPANY_ID) {
+											/**
                                             return <tr
                                                 key={`shipping_details_charges_${uid}-${company_id}-${index}-${i}`}>
                                                 <td>{charge.charge_code} - {charge.charge_name}</td>
                                                 <td className="text-right">{charge.hasOwnProperty('included') && charge.included === true && !charge.charge_name.includes('FREIGHT') ? 'Included in Ocean Freight' : currencyFormatter(charge.amount)}</td>
                                             </tr>
+											/**/
+											
+											/**/
+											return <ShippingDetailsRow charge={charge}
+                                                                       key={`${uid}-${company_id}-${index}-${i}`}
+                                                                       name={`${uid}-${company_id}-${index}-${i}`}
+                                                                       setTotalAmount={setTotalAmount}
+																	   setTrackOne={setTrackOne}
+																	   setCircleOne={setCircleOne}
+																	   setTrackThree={setTrackThree}
+																	   setCircleFour={setCircleFour}
+                                                                       updatePriceBreakDown={updatePriceBreakDown}
+                                                                       filterChargeTypes={filterChargeTypes}
+                                                                       defaultChecked={getDefaultCheck(charge.name)}/>
+											/**/
+											
                                         } else if (company_id === constants.MAERSK_COMPANY_ID) {
                                             return <ShippingDetailsRow charge={charge}
                                                                        key={`${uid}-${company_id}-${index}-${i}`}
                                                                        name={`${uid}-${company_id}-${index}-${i}`}
                                                                        setTotalAmount={setTotalAmount}
+																	   setTrackOne={setTrackOne}
+																	   setCircleOne={setCircleOne}
+																	   setTrackThree={setTrackThree}
+																	   setCircleFour={setCircleFour}
                                                                        updatePriceBreakDown={updatePriceBreakDown}
                                                                        filterChargeTypes={filterChargeTypes}
                                                                        defaultChecked={getDefaultCheck(charge.name)}/>
@@ -199,6 +273,10 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
                                                                        key={`${uid}-${company_id}-${index}-${i}`}
                                                                        name={`${uid}-${company_id}-${index}-${i}`}
                                                                        setTotalAmount={setTotalAmount}
+																	   setTrackOne={setTrackOne}
+																	   setCircleOne={setCircleOne}
+																	   setTrackThree={setTrackThree}
+																	   setCircleFour={setCircleFour}
                                                                        updatePriceBreakDown={updatePriceBreakDown}
                                                                        defaultChecked={getDefaultCheck(charge.name)}/>
                                         } else if (company_id === constants.MSC_COMPANY_ID) {
@@ -206,6 +284,10 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
                                                                        key={`${uid}-${company_id}-${index}-${i}`}
                                                                        name={`${uid}-${company_id}-${index}-${i}`}
                                                                        setTotalAmount={setTotalAmount}
+																	   setTrackOne={setTrackOne}
+																	   setCircleOne={setCircleOne}
+																	   setTrackThree={setTrackThree}
+																	   setCircleFour={setCircleFour}
                                                                        updatePriceBreakDown={updatePriceBreakDown}
                                                                        defaultChecked={getDefaultCheck(charge.name)}/>
                                         } else {
@@ -213,6 +295,10 @@ const ShippingDetails = ({setTotalAmount, price_amount, price_details, uid, comp
                                                                        key={`${uid}-${company_id}-${index}-${i}`}
                                                                        name={`${uid}-${company_id}-${index}-${i}`}
                                                                        setTotalAmount={setTotalAmount}
+																	   setTrackOne={setTrackOne}
+																	   setCircleOne={setCircleOne}
+																	   setTrackThree={setTrackThree}
+																	   setCircleFour={setCircleFour}
                                                                        updatePriceBreakDown={updatePriceBreakDown}
                                                                        defaultChecked={getDefaultCheck(charge.name)}/>
                                         }
