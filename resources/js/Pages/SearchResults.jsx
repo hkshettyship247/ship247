@@ -402,6 +402,9 @@ const SearchResults = ({
                             _result.price_details = prices['cma'].hasOwnProperty(_result.etd) ? prices['cma'][_result.etd] : {};
                             _result.price_amount = prices['cma'].hasOwnProperty(_result.etd)
                                 ? parseFloat(prices['cma'][_result.etd]['total']) + 100 : 0;
+								
+								//alert(JSON.stringify(_result.price_details));
+								
                             // TODO: Later move 100+ expression to Shipping Details
                         }
                     } else if (_result?.company_id === constants.HAPAG_COMPANY_ID) {
@@ -460,14 +463,17 @@ const SearchResults = ({
             } else if (sortBy === SORT_BY_CHEAPEST) {
                 //_processedResults = _processedResults?.filter((result) => result.price_amount > 0)
 				//_processedResults = _processedResults?.filter((result) => Math.abs(result.price_amount) > 0)
+				
+				//alert(JSON.stringify(_processedResults));
+				
 				_processedResults = _processedResults?.filter((result) => result.price_amount != null)
                     ?.sort((item1, item2) => {
-						console.log(item1.price_amount);
+						//console.log('item1='+item1.price_amount+' | item2='+item2.price_amount);
                         return item1.price_amount - item2.price_amount
                     });
 				//_processedResultOthers = _processedResults?.filter((result) => result.price_amount === undefined);
 				_processedResultOthers.forEach((_processedResultOther, index) => {
-					console.log(_processedResultOther.price_amount);
+					//console.log(_processedResultOther.price_amount);
 					if(_processedResultOther.price_amount == null){
                     _processedResults.push(_processedResultOther);
 					}
