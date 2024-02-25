@@ -194,7 +194,9 @@
     <script>
         $(document).ready(function () {
             toggleContainerSize($('#truck_type_id').children("option:selected").text().toLowerCase());
-
+			
+			//setValidDateMin();
+			
             $('#truck_type_id').change(function () {
                 const truckTypeLabel = $(this).children("option:selected").text().toLowerCase();
                 toggleContainerSize(truckTypeLabel);
@@ -209,6 +211,16 @@
                     $('#container_size_form_field select').prop('required', false);
                 }
             }
+			
+			function setValidDateMin(){
+				const date = new Date();
+				dateday="0"+(date.getDate());
+				dateday=dateday.slice(-2);
+				datemonth="0"+(date.getMonth()+1);
+				datemonth=datemonth.slice(-2);
+				etdmin=date.getFullYear()+"-"+datemonth+"-"+dateday;
+				 $('#valid_till').prop('min', etdmin);
+			}
         });
     </script>
 @endsection
