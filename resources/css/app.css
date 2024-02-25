@@ -546,6 +546,12 @@ body {
       position: relative;
       flex: 1;
       min-height: 14px; }
+	.search-result-box footer .tracking .track2 {
+      align-items: center;
+      display: flex;
+      position: relative;
+      flex: 1;
+      min-height: 14px; }
       .search-result-box footer .tracking .track:after {
         content: '';
         position: absolute;
@@ -556,11 +562,32 @@ body {
         width: calc(100% - 14px);
         height: 2px;
         background-color: #C6C6C6; }
+	  .search-result-box footer .tracking .track2:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: calc(100% - 14px);
+        height: 2px;
+        background-color: var(--primary-color); }
       .search-result-box footer .tracking .track:last-child {
+        flex: 0; }
+	  .search-result-box footer .tracking .track2:last-child {
         flex: 0; }
         .search-result-box footer .tracking .track:last-child:after {
           display: none; }
+		.search-result-box footer .tracking .track2:last-child:after {
+          display: none; }
       .search-result-box footer .tracking .track .text {
+        position: absolute;
+        top: -44px;
+        left: 0;
+        font-size: 12px;
+        font-family: var(--primary-font-bold);
+        white-space: nowrap; }
+	  .search-result-box footer .tracking .track2 .text {
         position: absolute;
         top: -44px;
         left: 0;
@@ -571,6 +598,20 @@ body {
         position: absolute;
         left: 44%;
         top: -20px; }
+	  .search-result-box footer .tracking .track2 .icon {
+        position: absolute;
+        left: 44%;
+        top: -20px; }
+	  .search-result-box footer .tracking .track.land:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: calc(100% - 14px);
+        height: 2px;
+        background-color: var(--primary-color); }
       .search-result-box footer .tracking .track.land .circle {
         background-color: var(--primary-color); }
       .search-result-box footer .tracking .track.land .icon {
@@ -580,11 +621,16 @@ body {
         width: 14px;
         border-radius: 50%;
         background-color: #C6C6C6; }
-        .search-result-box footer .tracking .bold:after {
-          background-color: var(--primary-color); }
-      .search-result-box footer .tracking .track .circle-bold{
+	  .search-result-box footer .tracking .track .circle2 {
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
         background-color: var(--primary-color); }
-      /* .search-result-box footer .tracking .track:nth-child(2) .text {
+      .search-result-box footer .tracking .track:nth-child(2):after {
+        background-color: var(--primary-color); }
+      .search-result-box footer .tracking .track:nth-child(2) .circle {
+        background-color: var(--primary-color); }
+      .search-result-box footer .tracking .track:nth-child(2) .text {
         left: -12px;
         top: auto;
         bottom: -26px; }
@@ -593,13 +639,46 @@ body {
       .search-result-box footer .tracking .track:nth-child(3) .text {
         left: -12px;
         top: auto;
-        bottom: -26px; } */
+        bottom: -26px; } 
       .search-result-box footer .tracking .track:last-child .text {
         right: 0;
         left: auto;
         top: -44px;
         bottom: auto; }
+		
+		.search-result-box footer .tracking .track2 .circle {
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
+        background-color: #C6C6C6; }
+	  .search-result-box footer .tracking .track2 .circle2 {
+        height: 14px;
+        width: 14px;
+        border-radius: 50%;
+        background-color: var(--primary-color); }
+      .search-result-box footer .tracking .track2:nth-child(2):after {
+        background-color: var(--primary-color); }
+      .search-result-box footer .tracking .track2:nth-child(2) .circle {
+        background-color: var(--primary-color); }
+      .search-result-box footer .tracking .track2:nth-child(2) .text {
+        left: -12px;
+        top: auto;
+        bottom: -26px; }
+      .search-result-box footer .tracking .track2:nth-child(3) .circle {
+        background-color: var(--primary-color); }
+      .search-result-box footer .tracking .track2:nth-child(3) .text {
+        left: -12px;
+        top: auto;
+        bottom: -26px; }
+      .search-result-box footer .tracking .track2:last-child .text {
+        right: 0;
+        left: auto;
+        top: -44px;
+        bottom: auto; }
+		
       .search-result-box footer .tracking .track.bytruck.active:after, .search-result-box footer .tracking .track.bytruck.active .circle {
+        background-color: #64bba4; }
+	  .search-result-box footer .tracking .track2.bytruck.active:after, .search-result-box footer .tracking .track.bytruck.active .circle {
         background-color: #64bba4; }
   .search-result-box footer .price {
     @apply flex flex-col items-center justify-center gap-1 lg:w-auto w-full; }
