@@ -118,7 +118,13 @@ class LandSchedulesController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    { 
+		/*
+		$request->validate([
+			'valid_till' => ['required', 'date', 'after:yesterday'],
+        ]);
+		*/
+		
 		$company = Company::find($request->company_id);
 		$origin = Location::find($request->origin_id);
 		$destination = Location::find($request->destination_id);
@@ -180,6 +186,12 @@ class LandSchedulesController extends Controller
      */
     public function update(Request $request, LandSchedule $landSchedule)
     {
+		/** Not validated because may be they need to adjust things
+		$request->validate([
+			'valid_till' => ['required', 'date', 'after:yesterday'],
+        ]);
+		**/
+
         $landSchedule->truck_type_id = $request->truck_type_id;
         $landSchedule->container_size = $request->container_size ?? "";
         $landSchedule->axle = $request->axle;
