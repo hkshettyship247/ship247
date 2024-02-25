@@ -175,7 +175,7 @@
 
                                 <div class="form-field">
                                     <label for="eta" class="form-label">ETA</label>
-                                    <input type="date" id="eta" name="eta" required
+                                    <input type="date" id="eta" name="eta" required readonly
                                            class="form-input small-input mt-2 w-full block"
                                            value="{{ $detail->eta->format('Y-m-d') }}">
                                     @error('eta')
@@ -233,6 +233,9 @@
             @if($seaSchedule->origin_charges_included === 1)
             toggleOriginCharges(true);
             @endif
+			
+			//setETDMin();
+			//setValidDateMin();
 
             $('#origin_charges_included').change(function () {
                 toggleOriginCharges($(this).is(':checked'));
@@ -261,6 +264,55 @@
                     $('#destination_charges').prop('readonly', false).prop('disabled', false);
                 }
             }
+			
+			$('#etd').change(function () {
+                setETA();
+            })
+			
+			$('#tt').change(function () {
+                setETA();
+            })
+			
+			function setETA(){
+				
+				etd=$('#etd').val();
+				tt=$('#tt').val();
+				if(etd != null && tt > 0){
+					const date = new Date(etd);
+					var newDate = new Date();
+					newDate.setTime(date.getTime() + (tt * 24 * 60 * 60 * 1000) );
+					dateday="0"+(newDate.getDate());
+					dateday=dateday.slice(-2);
+					datemonth="0"+(newDate.getMonth()+1);
+					datemonth=datemonth.slice(-2);
+					eta=newDate.getFullYear()+"-"+datemonth+"-"+dateday;
+					$('#eta').val(eta);
+				}
+				else{
+					$('#eta').val('');
+				}
+				
+			}
+			
+			function setETDMin(){
+				const date = new Date();
+				dateday="0"+(date.getDate());
+				dateday=dateday.slice(-2);
+				datemonth="0"+(date.getMonth()+1);
+				datemonth=datemonth.slice(-2);
+				etdmin=date.getFullYear()+"-"+datemonth+"-"+dateday;
+				 $('#etd').prop('min', etdmin);
+			}
+			
+			function setValidDateMin(){
+				const date = new Date();
+				dateday="0"+(date.getDate());
+				dateday=dateday.slice(-2);
+				datemonth="0"+(date.getMonth()+1);
+				datemonth=datemonth.slice(-2);
+				etdmin=date.getFullYear()+"-"+datemonth+"-"+dateday;
+				 $('#valid_till').prop('min', etdmin);
+			}
         });
     </script>
 @endsection
