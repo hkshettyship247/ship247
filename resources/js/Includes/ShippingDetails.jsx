@@ -55,7 +55,7 @@ const ShippingDetails = ({setTotalAmount, setTrackOne, setCircleOne, setTrackThr
 		let base_chargs = 0;
 		let dest_chargs = 0;
 		
-		price_details.charges.forEach((chargex, index) => {
+		price_details?.charges?.forEach((chargex, index) => {
 			//alert(JSON.stringify(chargex.charge_name)+" | "+JSON.stringify(chargex.amount)+" | "+JSON.stringify(chargex.included));	
 
 			if(chargex.charge_name.toLowerCase().includes('origin')){
