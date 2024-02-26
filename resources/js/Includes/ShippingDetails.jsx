@@ -219,7 +219,8 @@ const ShippingDetails = ({setTotalAmount, setTrackOne, setCircleOne, setTrackThr
 
     return ((charges.length > 0) && <Accordion className="product-price-breakdown">
         <AccordionItem>
-        <AccordionHeader className={`${parseInt(params.get('route_type')) === constants.ROUTE_TYPE_LAND ? 'land-accordion-head' : 'accordion-head'}`} />
+            <AccordionHeader className={`accordion-head`}>
+            </AccordionHeader>
 
             <AccordionBody>
                 <div className="accordion-body">
