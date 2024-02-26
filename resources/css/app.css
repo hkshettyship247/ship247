@@ -621,10 +621,6 @@ body {
         width: 14px;
         border-radius: 50%;
         background-color: #C6C6C6; }
-      .search-result-box footer .tracking .bold:after {
-        background-color: var(--primary-color); }
-      .search-result-box footer .tracking .track .circle-bold{
-        background-color: var(--primary-color); }
 	  .search-result-box footer .tracking .track .circle2 {
         height: 14px;
         width: 14px;
@@ -634,7 +630,7 @@ body {
         background-color: var(--primary-color); }
       .search-result-box footer .tracking .track:nth-child(2) .circle {
         background-color: var(--primary-color); }
-      /* .search-result-box footer .tracking .track:nth-child(2) .text {
+      .search-result-box footer .tracking .track:nth-child(2) .text {
         left: -12px;
         top: auto;
         bottom: -26px; }
@@ -643,7 +639,7 @@ body {
       .search-result-box footer .tracking .track:nth-child(3) .text {
         left: -12px;
         top: auto;
-        bottom: -26px; }  */
+        bottom: -26px; } 
       .search-result-box footer .tracking .track:last-child .text {
         right: 0;
         left: auto;

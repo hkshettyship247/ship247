@@ -283,5 +283,21 @@
 
 @section('footer-scripts')
 <script>
+    // Example function to update ship icon position based on current location
+function updateShipIconPosition() {
+    // Get the ship icon SVG element
+    const shipIcon = document.getElementById('ship-icon-container');
+
+    // Define the percentage value you want to move the ship to the left
+    const leftPercentage = 64.1026;
+
+    // Set the new left position of the ship icon
+    // shipIcon.style.left = `${leftPercentage}%`;
+}
+
+
+// Call the function to update ship icon position
+updateShipIconPosition();
 </script>
+
 @endsection
