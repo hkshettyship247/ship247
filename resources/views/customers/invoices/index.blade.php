@@ -50,6 +50,7 @@
                 <div class="detail-body">
                     @if(isset($payments) && count($payments) > 0)
                     @foreach ($payments as $payment)
+                        {{ dd($payment) }}
                     <div class="detail-box relative">
                         <div class="absolute left-4 -top-3">
                             <span class="badge progress small-badge">{{$payment->status }}</span>
