@@ -261,10 +261,10 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                     </header>
 
                     <footer>
-                    <div className="tracking">
-                            <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked? "track bold land" : "track land"}`}>
+                        <div className="tracking">
+                            <div className="track land">
                                 <div className="text">{origin_name}</div>
-                                <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked? "circle circle-bold" : "circle"}`}></div>
+                                <div className="circle"></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
@@ -283,18 +283,18 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div> */}
-                            <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked ? "track bold" : "track"}`}>
+                            <div className="track">
                                 <div
                                     className="text">{destination_name}</div>
-                                <div className={`${priceBreakDown?.["BASIC LAND FREIGHT"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                                <div className="circle"></div>
                             </div>
                             {/* <ol>
-                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                                {result.transportLegs.slice(1).map((transportLeg, index) => {
-                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                                })}
-                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                            </ol> */}
+                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                    {result.transportLegs.slice(1).map((transportLeg, index) => {
+                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                    })}
+                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                </ol> */}
                         </div>
 
                         <div className="price">
@@ -310,7 +310,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 <>
                                 { formData.name && formData.email ?
                                  (<>
-                                    <button onClick={showModal} className="book-button">
+                                    <button onClick={showModal} className="book-button 123">
                                         Get Quote
                                     </button>
 
@@ -506,39 +506,40 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
 
                     <footer>
                         <div className="tracking">
-                            <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked || priceBreakDown?.["Origin Charges"]?.isChecked?"track bold":"track"}`}>
-                                <div className="text">{pickup_name}</div>
-                                <div className={`${priceBreakDown?.["Pickup Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                            <div className={trackOne}>
+                                <div
+                                    className="text">{pickup_name}</div>
+                                <div className={circleOne}></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className="track bold">
+                            <div className={trackTwo}>
                                 <div className="text">{origin_code}</div>
-                                <div className="circle circle-bold"></div>
+                                <div className={circleTwo}></div>
                                 <div className="icon">
                                     <img src="/images/svg/ship-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
+                            <div className={trackThree}>
                                 <div className="text">{destination_code}</div>
-                                <div className="circle circle-bold"></div>
+                                <div className={circleThree}></div>
                                 <div className="icon">
                                     <img src="/images/svg/truck-icon.svg" alt=""/>
                                 </div>
                             </div>
-                            <div className={`${priceBreakDown?.["Destination Charges"]?.isChecked || priceBreakDown?.["Delivery Charges"]?.isChecked?"track bold":"track"}`}>
+                            <div className={trackFour}>
                                 <div
                                     className="text">{delivery_name}</div>
-                                <div className={`${priceBreakDown?.["Delivery Charges"]?.isChecked?"circle circle-bold":"circle"}`}></div>
+                                <div className={circleFour}></div>
                             </div>
                             {/* <ol>
-                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                                {result.transportLegs.slice(1).map((transportLeg, index) => {
-                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                                })}
-                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                            </ol> */}
+                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                    {result.transportLegs.slice(1).map((transportLeg, index) => {
+                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                    })}
+                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                </ol> */}
                         </div>
 
                         <div className="price">
