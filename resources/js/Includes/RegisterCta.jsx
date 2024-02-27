@@ -20,7 +20,7 @@ export default function Services() {
         </div>
 
         <div className="button ml-auto">
-            <a href="/register" className="register-button">
+            <a href="/work-with-us-form" className="register-button">
                 Register NOW
             </a>
         </div>

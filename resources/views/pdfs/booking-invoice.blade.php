@@ -14,7 +14,8 @@
     <table style="width: 100%;">
         <tr>
             <td valign="top" style="padding-bottom: 30px; font-family: 'Figtree', 'Arial', sans-serif;">
-                <img src="{{ asset('/images/logo.png') }}" alt="Ship247 Logo" style="width: 180px;" />
+                {{-- <img src="{{ asset('/images/logo.png') }}" alt="Ship247 Logo" style="width: 180px;" /> --}}
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/images/logo.png'))) }}" alt="Ship247 Logo" style="width: 180px;" />
             </td>
 
             <td>
@@ -249,7 +250,8 @@
                         </td>
 
                         <td width="50%" style="padding: 20px; font-family: 'Figtree', 'Arial', sans-serif;font-size: 14px; text-align: right;">
-                            <img src="{{ asset('/images/invoice-stamp.jpeg') }}" alt="Ship247 Logo" width="200px" style="width: 200px;" />
+                            {{-- <img src="{{ asset('/images/invoice-stamp.jpeg') }}" alt="Ship247 Logo" width="200px" style="width: 200px;" /> --}}
+                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/images/invoice-stamp.jpeg'))) }}" width="200px" style="width: 200px;">
                             <strong style="margin-top: 10px; display: block;">THANKS FOR YOUR BUSINESS!</strong>
                         </td>
                     </tr>
