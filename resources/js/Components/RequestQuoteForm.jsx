@@ -68,6 +68,16 @@ const RequestQuoteForm = ({origin, destination, user}) => {
             });
     };
 
+    const handleGetQuoteClick = () => {
+        if (formData.name && formData.email) {
+            // If the user is authenticated, show the modal
+            showModal();
+        } else {
+            // If the user is not authenticated, redirect to the login page
+            window.location.href = '/login';
+        }
+    };
+
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         setFormData((prevData) => ({
@@ -77,7 +87,7 @@ const RequestQuoteForm = ({origin, destination, user}) => {
     };
 
     return (<>
-        <button onClick={showModal} className="book-button">
+        <button onClick={handleGetQuoteClick} className="book-button">
             Get Quote
         </button>
 

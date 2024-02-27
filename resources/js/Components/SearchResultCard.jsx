@@ -116,6 +116,16 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
         }));
     };
 
+    const handleGetQuoteClick = () => {
+        if (formData.name && formData.email) {
+            // If the user is authenticated, show the modal
+            showModal();
+        } else {
+            // If the user is not authenticated, redirect to the login page
+            window.location.href = '/login';
+        }
+    };
+
     const updatePriceBreakDown = (data, isChecked) => {
 
         const {name, amount} = data;
@@ -289,12 +299,12 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 <div className="circle"></div>
                             </div>
                             {/* <ol>
-                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                    {result.transportLegs.slice(1).map((transportLeg, index) => {
-                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                    })}
-                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                </ol> */}
+                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                                {result.transportLegs.slice(1).map((transportLeg, index) => {
+                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                                })}
+                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                            </ol> */}
                         </div>
 
                         <div className="price">
@@ -308,9 +318,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 </>
                             ) : (
                                 <>
-                                { formData.name && formData.email ?
-                                 (<>
-                                    <button onClick={showModal} className="book-button 123">
+                                    <button onClick={handleGetQuoteClick} className="book-button 123">
                                         Get Quote
                                     </button>
 
@@ -405,9 +413,6 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                                 </div>
                                             </form>)}
                                     </Modal>
-                                    </>)
-                                    : ""
-                                }
                                 </>
                             )}
                         </div>
@@ -534,12 +539,12 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 <div className={circleFour}></div>
                             </div>
                             {/* <ol>
-                    <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
-                    {result.transportLegs.slice(1).map((transportLeg, index) => {
-                        return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
-                    })}
-                    <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
-                </ol> */}
+                                <li>{getLocationName(result?.facilities?.collectionOrigin)}</li>
+                                {result.transportLegs.slice(1).map((transportLeg, index) => {
+                                    return (<li key={`transport-leg-${index}`}>{getLocationName(transportLeg?.facilities?.startLocation)}</li>)
+                                })}
+                                <li>{getLocationName(result?.facilities?.deliveryDestination)}</li>
+                            </ol> */}
                         </div>
 
                         <div className="price">
@@ -553,9 +558,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                 </>
                             ) : (
                                 <>
-                                { formData.name && formData.email ?
-                                 (<>
-                                    <button onClick={showModal} className="book-button">
+                                    <button onClick={handleGetQuoteClick} className="book-button">
                                         Get Quote
                                     </button>
 
@@ -653,9 +656,6 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
                                             </form>
                                         )}
                                     </Modal>
-                                    </>)
-                                    : ""
-                                }
                                 </>
                             )}
                         </div>

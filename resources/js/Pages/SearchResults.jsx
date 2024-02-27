@@ -723,11 +723,7 @@ const SearchResults = ({
                                                                         <h2 className="default-heading small-size mb-6">
                                                                             Results Not Found...
                                                                         </h2>
-                                                                        <RequestQuoteForm
-                                                                            origin={searched_origin}
-                                                                            destination={searched_destination}
-                                                                            user={user_details}
-                                                                        />
+                                                                        <RequestQuoteForm origin={searched_origin} destination={searched_destination} user={user_details} />
                                                                     </div>
                                                                 </div>
                                                             </div>
