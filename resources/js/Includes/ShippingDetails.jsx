@@ -74,23 +74,27 @@ const ShippingDetails = ({setTotalAmount, setTrackOne, setCircleOne, setTrackThr
 			
         });
 		
-		charges.push({
-            'heading': 'Origin Charges', data: [{
-                name: "Origin Charges", amount: org_chargs
-            }]
-        });
+		if(price_amount){
+			
+			charges.push({
+				'heading': 'Origin Charges', data: [{
+					name: "Origin Charges", amount: org_chargs
+				}]
+			});
 
-        charges.push({
-            'heading': 'Freight Charges', data: [{
-                name: "BASIC OCEAN FREIGHT", amount: base_chargs + 100
-            }]
-        });
+			charges.push({
+				'heading': 'Freight Charges', data: [{
+					name: "BASIC OCEAN FREIGHT", amount: base_chargs + 100
+				}]
+			});
 
-        charges.push({
-            'heading': 'Destination Charges', data: [{
-                name: "Destination Charges", amount: dest_chargs
-            }]
-        });
+			charges.push({
+				'heading': 'Destination Charges', data: [{
+					name: "Destination Charges", amount: dest_chargs
+				}]
+			});
+		
+		}
 		
 		/**/
     } else if (company_id === constants.MAERSK_COMPANY_ID) {
