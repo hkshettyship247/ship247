@@ -116,6 +116,34 @@
     .dashboard-detail-box .step-content-1 .value {
         display: flex !important;
     }
+    .badge.DOWNLOAD_IN_PROGRESS,
+    .badge.PAY_IN_PROGRESS,
+    .badge.VIEW_IN_PROGRESS,
+    .badge.BOOKING_STATUS_IN_PROGRESS {
+        font-size: 0.65rem;
+        padding-left: 1rem;
+         padding-right: 1rem;
+    }
+    .badge.DOWNLOAD_IN_PROGRESS {
+        background: #2c1e3f;
+        color: #ffffff;
+    }
+    .badge.VIEW_IN_PROGRESS {
+        background-color: #ffffff !important;
+        border: 1px solid #D43031;
+    }
+    .badge.PAY_IN_PROGRESS {
+        color: #ffffff !important;
+        border: 1px solid #D43031;
+        background: #D43031 !important;
+    }
+
+    @media (min-width: 991px) {
+.dashboard-detail-box .detail-body .detail-box {
+    display: flex;
+    align-items: center;
+}
+    }
 
     </style>
 @section('content')
@@ -954,8 +982,99 @@
                     <div class="hidden" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                         <div class="detail-body">
                             @if(isset($booking))
-                                <div class="p-4 rounded-lg bg-gray-50">
-                                    <p class="text-sm text-gray-500">No payment found</p>
+                                <div class="rounded-lg bg-gray-50">
+                                    {{-- <p class="text-sm text-gray-500">No payment found</p> --}}
+                                    <div class="rounded-lg bg-gray-50">
+                                        @if (isset($booking->payment) && !empty($booking->payment))
+                                        <div class="detail-box">
+                                            <div class="w-2/12">
+                                                <div class="flex flex-col gap-4">
+                                                    <div>
+                                                        <span class="head">ID</span>
+                                                        <span class="value">{{ $booking->payment->id }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w-2/12">
+                                                <div class="flex flex-col gap-4">
+                                                    <div>
+                                                        <span class="head">BL</span>
+                                                        <span class="value">00039</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w-3/12">
+                                                <div class="flex flex-col gap-4">
+                                                    <div>
+                                                        <span class="head">from</span>
+                                                        <span class="value">{{isset($booking->origin->fullname) ? $booking->origin->fullname : ''}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="w-3/12">
+                                                <div class="flex flex-col gap-4">
+                                                    <div>
+                                                        <span class="head">to</span>
+                                                        <span class="value">{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="w-2/12">
+                                                <div class="flex flex-col gap-4">
+                                                    <div>
+                                                        <span class="head">amount</span>
+                                                        <span class="value">${{ $booking->payment->amount }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            
+                                            @if(empty($booking->payment))
+                                            <div class="w-2/12">
+                                                <div class="flex flex-col gap-4">
+                                                    <div>
+                                                        <span class="head">Due</span>
+                                                        <span class="value">9 jan 2023</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                                                    
+                                            <div class="w-2/12">
+                                                <div class="flex justify-between flex-col items-end h-full">
+                                                    <div><span class="badge progress BOOKING_STATUS_IN_PROGRESS">
+                                                       <a href="#">{{ $booking->payment->status }}</a>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w-2/12">
+                                                <div class="flex justify-between flex-col items-end h-full">
+                                                    <div><span class="badge DOWNLOAD_IN_PROGRESS">
+                                                        <a href="{{ $booking->payment ? route('superadmin.generate.pdf.invoice', ['bookingID' => $booking->id]) : '#' }}"> Download</a>
+                                                    </span></div>
+                                                </div>
+                                            </div>
+                                            <div class="w-2/12">
+                                                <div class="flex justify-between flex-col items-end h-full">
+                                                    <div><span class="badge progress VIEW_IN_PROGRESS">
+                                                        <a href="{{ $booking->payment ? route('superadmin.payment.details', $booking->payment->id) : '#' }}">View Details</a>
+                                                    </span></div>
+                                                </div>
+                                            </div>
+                                            @if(empty($booking->payment))
+                                            <div class="w-2/12">
+                                                <div class="flex justify-between flex-col items-end h-full">
+                                                    <div><span class="badge progress PAY_IN_PROGRESS">
+                                                        <a href="#">Pay</a>
+                                                    </span></div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
                             @endif
                         </div>

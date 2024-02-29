@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
+use PDF;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Booking;
+use App\Models\Company;
+use App\Models\Invoice;
 use App\Models\Payments;
 use Illuminate\Http\Request;
-use PDF;
+use App\Models\WorkWithUsForm;
+use App\Models\CompanyStatusHistory;
 
 class InvoicesController extends Controller
 {
@@ -95,9 +100,14 @@ class InvoicesController extends Controller
     public function getBookingInvoice(Request $request)
     {
 
-
         $payment_details = Payments::with(['booking.user'])->find($request->paymentID);
         return view('admin.invoices.detail', compact("payment_details"));
+    }
+
+    public function getPaymentDetails(Request $request)
+    {
+        $payment_details = Payments::with(['booking.user'])->find($request->paymentID);
+        return view('admin.invoices.payment-details', compact('payment_details'));
     }
 
 

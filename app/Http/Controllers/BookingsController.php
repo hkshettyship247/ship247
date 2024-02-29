@@ -89,7 +89,6 @@ class BookingsController extends Controller
             $track_booking_response = MarineTrafficAPI::getTrackingInformation($booking->marinetraffic_id);
         }
 
-        
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             return view('customers.bookings.new_show', compact('booking', 'track_booking_response'));
             // return view('admin.bookings.show', compact("booking"));

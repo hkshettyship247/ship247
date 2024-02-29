@@ -112,6 +112,7 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('/bookings/{bookingId}/edit', [BookingsController::class, 'editBookingDetails'])->name('bookings.edit');
 
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
+        Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');
 
         Route::get('/users', [ProfileController::class, 'getUserList'])->name('user.index');
         Route::get('/create/user', [ProfileController::class, 'createUser'])->name('user.create');
