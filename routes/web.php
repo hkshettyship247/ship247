@@ -110,6 +110,7 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 
         Route::get('/bookings/{booking}', [BookingsController::class, 'show'])->name('bookings.show');
         Route::get('/bookings/{bookingId}/edit', [BookingsController::class, 'editBookingDetails'])->name('bookings.edit');
+        Route::post('/booking-store-documents', [BookingsController::class, 'storeDocuments'])->name('booking.storeDocuments');
 
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
         Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');
@@ -269,6 +270,8 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('/invoices', [InvoicesController::class, 'index'])->name('customer.invoices.index');
         Route::get('/bookings', [BookingsController::class, 'index'])->name('customer.bookings.index');
         Route::get('/bookings/{booking}', [BookingsController::class, 'show'])->name('customer.bookings.show');
+        Route::get('/generate/pdf/invoice/{bookingID}', [InvoicesController::class, 'generatePDFInvoice'])->name('customer.generate.pdf.invoice');
+        Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('customer.payment.details');
     });
 
     // Employee routes
@@ -283,11 +286,13 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('/customer/{customerID}', [ProfileController::class, 'getCustomerDetails'])->name('customer.detail');
 
         Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
+        Route::get('/generate/pdf/invoice/{bookingID}', [InvoicesController::class, 'generatePDFInvoice'])->name('generate.pdf.invoice');
 
         Route::get('/bookings/{booking}', [BookingsController::class, 'show'])->name('bookings.show');
         Route::get('/bookings/{bookingId}/edit', [BookingsController::class, 'editBookingDetails'])->name('bookings.edit');
 
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
+        Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');
 
         Route::get('/users', [ProfileController::class, 'getUserList'])->name('user.index');
         Route::get('/create/user', [ProfileController::class, 'createUser'])->name('user.create');
@@ -440,11 +445,13 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('/customer/{customerID}', [ProfileController::class, 'getCustomerDetails'])->name('customer.detail');
 
         Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
+        Route::get('/generate/pdf/invoice/{bookingID}', [InvoicesController::class, 'generatePDFInvoice'])->name('generate.pdf.invoice');
 
         Route::get('/bookings/{booking}', [BookingsController::class, 'show'])->name('bookings.show');
         Route::get('/bookings/{bookingId}/edit', [BookingsController::class, 'editBookingDetails'])->name('bookings.edit');
 
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
+        Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');
 
         Route::get('/users', [ProfileController::class, 'getUserList'])->name('user.index');
         Route::get('/create/user', [ProfileController::class, 'createUser'])->name('user.create');

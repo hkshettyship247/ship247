@@ -55,6 +55,8 @@ return [
     'BOOKING_PAYMENT_PENDING' => 'progress',
     'BOOKING_PAYMENT_FAILED' => 'cancel',
 
+    'ALLOWED_DOCUMENT_TYPES' => ['pdf, doc, docx, xls, xlsx'],
+
      // Company docs type
     'COMPANY_DOCUMENTS' =>[
                     (object) [ 'value' => 1, 'label' => 'Shipping License'],
