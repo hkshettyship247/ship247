@@ -10,6 +10,7 @@ use App\Models\SeaSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SeaSchedulesController extends Controller
 {
@@ -76,10 +77,7 @@ class SeaSchedulesController extends Controller
 
         $companies = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'))
             ->pluck('name', 'id');
-
-        $seaSchedules = $seaSchedulesQuery->latest()
-            ->paginate(self::PER_PAGE)
-            ->appends($search_criteria);
+		
         $route = null;
         $route_user = '';
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
@@ -89,10 +87,15 @@ class SeaSchedulesController extends Controller
             $route = "employees.";
             $route_user = 'employee.';
         }  else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$company = Company::find(Auth::user()->company_id);
+            $seaSchedulesQuery->where('company_id', Auth::user()->company_id);
             $route = "suppliers.";
             $route_user = 'supplier.';
         }
-
+		
+		$seaSchedules = $seaSchedulesQuery->latest()
+            ->paginate(self::PER_PAGE)
+            ->appends($search_criteria);
 
         return view($route . 'sea_schedules.index',
             compact('seaSchedules', 'companies', 'origin', 'destination', 'company', 'eta', 'etd', 'route_user'));
@@ -103,17 +106,19 @@ class SeaSchedulesController extends Controller
      */
     public function create(Request $request)
     {
-        $companies = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'))
-            ->pluck('name', 'id'); // TODO: Filter Companies by their type
+        $companiesQuery = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'));
+            
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$companiesQuery->where('id', Auth::user()->company_id);
             $route = "suppliers.";
         }
-
+		
+		$companies=$companiesQuery->pluck('name', 'id'); // TODO: Filter Companies by their type
         $container_sizes = ContainerSizes::get();
         return view($route . 'sea_schedules.create',
             compact('companies', 'container_sizes'));
@@ -176,17 +181,19 @@ class SeaSchedulesController extends Controller
      */
     public function edit(SeaSchedule $seaSchedule)
     {
-        $companies = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'))
-            ->pluck('name', 'id'); // TODO: Filter Companies by their type
+        $companiesQuery = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'));
+            
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$companiesQuery->where('id', Auth::user()->company_id);
             $route = "suppliers.";
         }
-
+		
+		$companies = $companiesQuery->pluck('name', 'id'); // TODO: Filter Companies by their type
         $container_sizes = ContainerSizes::get();
         return view($route . 'sea_schedules.edit',
             compact('companies', 'container_sizes', 'seaSchedule'));

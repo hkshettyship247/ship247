@@ -8,6 +8,7 @@ use App\Models\ContainerSizes;
 use App\Models\PickAndDeliverySchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class PickAndDeliverySchedulesController extends Controller
 {
@@ -19,9 +20,7 @@ class PickAndDeliverySchedulesController extends Controller
     public function index()
     {
         $pickAndDeliverySchedulesQuery = PickAndDeliverySchedule::query();
-        // TODO: Add Filter
-        $pickAndDeliverySchedules = $pickAndDeliverySchedulesQuery->latest()
-            ->paginate(self::PER_PAGE);
+        
         $route = null;
         $route_user = '';
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
@@ -31,10 +30,15 @@ class PickAndDeliverySchedulesController extends Controller
             $route = "employees.";
             $route_user = 'employee.';
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$pickAndDeliverySchedulesQuery->where('company_id', Auth::user()->company_id);
             $route = "suppliers.";
             $route_user = 'supplier.';
         }
-
+		
+		// TODO: Add Filter
+        $pickAndDeliverySchedules = $pickAndDeliverySchedulesQuery->latest()
+        ->paginate(self::PER_PAGE);
+		
         return view($route . 'pick_and_delivery_schedules.index', compact('pickAndDeliverySchedules', 'route_user'));
     }
 
@@ -43,18 +47,21 @@ class PickAndDeliverySchedulesController extends Controller
      */
     public function create()
     {
-        $companies = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'))
-            ->pluck('name', 'id'); // TODO: Filter Companies by their type
-        $container_sizes = ContainerSizes::get();
+		$companiesQuery = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'));
+        
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$companiesQuery->where('id', Auth::user()->company_id);
             $route = "suppliers.";
         }
-
+		
+		$companies = $companiesQuery->pluck('name', 'id'); // TODO: Filter Companies by their type
+		 $container_sizes = ContainerSizes::get();
+		
         return view($route . 'pick_and_delivery_schedules.create',
             compact('companies', 'container_sizes'));
     }
@@ -90,18 +97,20 @@ class PickAndDeliverySchedulesController extends Controller
      */
     public function edit(PickAndDeliverySchedule $pickAndDeliverySchedule)
     {
-        $companies = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'))
-            ->pluck('name', 'id'); // TODO: Filter Companies by their type
-        $container_sizes = ContainerSizes::get();
+        $companiesQuery = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'));
+        
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$companiesQuery->where('id', Auth::user()->company_id);
             $route = "suppliers.";
         }
-
+		
+		$companies = $companiesQuery->pluck('name', 'id'); // TODO: Filter Companies by their type
+		$container_sizes = ContainerSizes::get();
         return view($route . 'pick_and_delivery_schedules.edit',
             compact('companies', 'container_sizes', 'pickAndDeliverySchedule'));
     }

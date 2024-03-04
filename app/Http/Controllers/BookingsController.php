@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class BookingsController extends Controller
 {
@@ -25,7 +26,7 @@ class BookingsController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = Company::pluck('name', 'id');
+		$companies = Company::pluck('name', 'id'); // All companies
         $perPage = $request->input('per_page', self::PER_PAGE); // Number of records per page
         $search = $request->input('search'); // Search keyword
         $view_booking = isset($request->view_booking) && $request->view_booking != null ? $request->view_booking : null;
@@ -38,15 +39,6 @@ class BookingsController extends Controller
         $origin = null;
         $destination = null;
         $company = null;
-
-        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN') || auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-            $bookingsQuery = Booking::query();
-        } else {
-            $bookingsQuery = Booking::where('user_id', Auth::user()->id);
-            // if(isset($request->view_booking) && $request->view_booking != null){
-            //     $bookingsQuery =  $bookingsQuery->where('status',$request->view_booking);
-            // }
-        }
 
         if ($request->origin_id) {
             $origin = Location::find($request->origin_id);
@@ -62,17 +54,41 @@ class BookingsController extends Controller
             $company = Company::find($request->company_id);
             $bookingsQuery->where('company_id', $request->company_id);
         }
-
-        //        $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
-        $bookings = $bookingsQuery->latest()->get();
         
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+			
+			$bookingsQuery = Booking::query();
+			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
+			$bookings = $bookingsQuery->latest()->get();
+			
             return view('admin.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+			
+			$bookingsQuery = Booking::query();
+			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
+			$bookings = $bookingsQuery->latest()->get();
+			
             return view('employees.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
+			
+			$bookingsQuery = Booking::where('user_id', Auth::user()->id); // only list bookings of this customer with user id
+			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
+			$bookings = $bookingsQuery->latest()->get();
+			
             return view('customers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			
+			$bookingsQuery = Booking::where('company_id', Auth::user()->company_id); // Bookings of this vendor company with company id
+			/**
+			//will use this for orders module to house bookings from vendor users for other vendors schedules
+			$vendor_users = User::where('company_id', Auth::user()->company_id)->get();
+			foreach($vendor_users  as $vendor_user){
+				$bookingsQuery->orWhere('user_id', $vendor_user->id); // all bookings with users of this vendor company
+			}
+			**/
+			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
+			$bookings = $bookingsQuery->latest()->get();
+			
             return view('suppliers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking'));
         }
         abort(404);
