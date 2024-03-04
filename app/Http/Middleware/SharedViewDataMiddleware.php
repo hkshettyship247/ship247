@@ -10,6 +10,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class SharedViewDataMiddleware
 {
@@ -20,10 +21,24 @@ class SharedViewDataMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $new_bookings_count = Booking::whereNull('read_at')->count();
+        
         $new_companies_count = Company::whereNull('read_at')->count();
         $new_work_with_us_forms_count = WorkWithUsForm::whereNull('read_at')->count();
-        $new_quick_request_forms_count = QuickRequestForms::whereNull('read_at')->count();
+        
+		// current user role id == 4 (supplier) => get curr user company id
+		if(isset(auth()->user()->role_id) && auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')){
+			
+			$new_bookings_count = Booking::whereNull('read_at')->where('company_id', auth()->user()->company_id)->count();
+			$new_quick_request_forms_count = QuickRequestForms::whereNull('read_at')->count();
+			
+		}
+		else{
+			
+			$new_bookings_count = Booking::whereNull('read_at')->count();
+			$new_quick_request_forms_count = QuickRequestForms::whereNull('read_at')->count();
+			
+		}
+		
 
         View::share('anyNewBooking', boolval($new_bookings_count));
 
