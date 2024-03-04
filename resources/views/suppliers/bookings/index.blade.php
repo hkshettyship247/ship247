@@ -30,11 +30,11 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                 </h2>
             </div>
 
-            <div class="md:w-6/12 md:justify-end flex">
+            {{--<div class="md:w-6/12 md:justify-end flex">
                 <a href="/" class="default-button-v2">
                     <span>new booking</span>
                 </a>
-            </div>
+            </div>--}}
         </header>
         <section class="search-result mt-8 mb-12">
 
@@ -67,7 +67,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                         </div>
                     </div>
 
-                    <div class="lg:w-3/12 w-full">
+                    {{--<div class="lg:w-3/12 w-full">
                         <div class="form-field">
                             <label for="company_id" class="form-label-small">Company</label>
                             <select id="company_id" name="company_id"
@@ -82,7 +82,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                                 @endif
                             </select>
                         </div>
-                    </div>
+                    </div>--}}
 
                     <div class="lg:w-3/12 w-full">
                         <button type="submit" class="default-button-v2 outline-button">
