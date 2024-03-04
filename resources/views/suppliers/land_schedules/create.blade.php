@@ -127,7 +127,7 @@
                                     <option value="">Select Company</option>
                                     @foreach($companies as $company_id => $company_name)
                                         <option value="{{ $company_id }}"
-                                                @if(old('company_id') == $company_id) selected @endif
+                                                @if(auth()->user()->company_id == $company_id) selected @endif
                                         >{{$company_name}}</option>
                                     @endforeach
                                 </select>
