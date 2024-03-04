@@ -11,6 +11,7 @@ use App\Models\TruckType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class LandSchedulesController extends Controller
 {
@@ -72,10 +73,6 @@ class LandSchedulesController extends Controller
             '4' => '4 Axles',
         ];
 
-        $landSchedules = $landSchedulesQuery->latest()
-            ->paginate(self::PER_PAGE)
-            ->appends($search_criteria);
-
         $route = null;
         $route_user = '';
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
@@ -85,10 +82,16 @@ class LandSchedulesController extends Controller
             $route = "employees.";
             $route_user = 'employee.';
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$company = Company::find(Auth::user()->company_id);
+            $landSchedulesQuery->where('company_id', Auth::user()->company_id);
             $route = "suppliers.";
             $route_user = 'supplier.';
         }
-
+		
+		$landSchedules = $landSchedulesQuery->latest()
+            ->paginate(self::PER_PAGE)
+            ->appends($search_criteria);
+		
         return view($route . 'land_schedules.index', compact('landSchedules', 'truck_type', 'company', 'axle',
             'truck_types', 'companies', 'axles', 'origin', 'destination', 'route_user'));
     }
@@ -98,18 +101,21 @@ class LandSchedulesController extends Controller
      */
     public function create()
     {
-        $companies = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'))
-            ->pluck('name', 'id'); // TODO: Filter Companies by their type
-        $container_sizes = ContainerSizes::pluck('display_label', 'value');
-        $truck_types = TruckType::pluck('display_label', 'id');
+        $companiesQuery = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'));
+		
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$companiesQuery->where('id', Auth::user()->company_id);
             $route = "suppliers.";
         }
+		
+		$companies=$companiesQuery->pluck('name', 'id'); // TODO: Filter Companies by their type
+        $container_sizes = ContainerSizes::pluck('display_label', 'value');
+        $truck_types = TruckType::pluck('display_label', 'id');
         return view($route . 'land_schedules.create',
             compact('companies', 'container_sizes', 'truck_types'));
     }
@@ -164,19 +170,21 @@ class LandSchedulesController extends Controller
      */
     public function edit(LandSchedule $landSchedule)
     {
-        $companies = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'))
-            ->pluck('name', 'id'); // TODO: Filter Companies by their type
-        $container_sizes = ContainerSizes::pluck('display_label', 'value');
-        $truck_types = TruckType::pluck('display_label', 'id');
-
+        $companiesQuery = Company::whereNotIn('id', config('constants.IGNORED_COMPANIES'));
+            
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
             $route = "admin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+			$companiesQuery->where('id', Auth::user()->company_id);
             $route = "suppliers.";
         }
+		
+		$companies = $companiesQuery->pluck('name', 'id'); // TODO: Filter Companies by their type
+        $container_sizes = ContainerSizes::pluck('display_label', 'value');
+        $truck_types = TruckType::pluck('display_label', 'id');
         return view($route . 'land_schedules.edit',
             compact('companies', 'container_sizes', 'truck_types', 'landSchedule'));
     }
