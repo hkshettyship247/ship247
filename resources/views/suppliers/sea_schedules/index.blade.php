@@ -62,7 +62,7 @@
                             </div>
                         </div>
 
-                        <div class="md:w-4/12">
+                        {{--<div class="md:w-4/12">
                             <div class="form-field">
                                 <label for="company_id" class="text-xs uppercase text-gray-400">Company</label>
                                 <select id="company_id" name="company_id"
@@ -75,9 +75,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
-
+					<br />
                     <div class="flex items-end justify-between flex-row gap-4">
                         <div class="md:w-5/12">
                             <div class="flex gap-4">
