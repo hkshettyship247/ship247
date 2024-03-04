@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\BookingDocument;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
 {
@@ -13,6 +14,9 @@ class Booking extends Model
 
     const LAND = 'Land';
     const SHIP = 'Ship';
+
+    // Define allowed document types
+    const ALLOWED_DOCUMENT_TYPES = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
 
     public function addons()
     {
@@ -41,6 +45,11 @@ class Booking extends Model
     public function payment()
     {
         return $this->hasOne(Payments::class, 'booking_id', 'id');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(BookingDocument::class, 'booking_id', 'id');
     }
 
     public static function scacList()

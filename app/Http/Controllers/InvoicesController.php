@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
+use PDF;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Booking;
+use App\Models\Company;
+use App\Models\Invoice;
 use App\Models\Payments;
 use Illuminate\Http\Request;
-use PDF;
+use App\Models\WorkWithUsForm;
+use App\Services\MarineTrafficAPI;
+use App\Models\CompanyStatusHistory;
 
 class InvoicesController extends Controller
 {
@@ -35,7 +41,7 @@ class InvoicesController extends Controller
         ];
 
         $filename = "Booking_" . $booking->id . "_" . date("YmdHis") . ".pdf";
-    
+
         $pdf = PDF::loadView('pdfs.booking-invoice', $data);
         $pdf->setOptions([
             'fontDir' => base_path('storage/fonts/'),
@@ -95,9 +101,30 @@ class InvoicesController extends Controller
     public function getBookingInvoice(Request $request)
     {
 
-
         $payment_details = Payments::with(['booking.user'])->find($request->paymentID);
         return view('admin.invoices.detail', compact("payment_details"));
+    }
+
+    public function getPaymentDetails(Request $request)
+    {
+        $payment_details = Payments::with(['booking.user'])->find($request->paymentID);
+
+        $track_booking_response = '';
+        if ($payment_details->booking->marinetraffic_id) {
+            $track_booking_response = MarineTrafficAPI::getTrackingInformation($payment_details->booking->marinetraffic_id);
+        }
+        $route = null;
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "superadmin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employee.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+            $route = "supplier.";
+        } else {
+            $route = "customer.";
+        }
+
+        return view('admin.invoices.payment-details', compact('payment_details', 'route', 'track_booking_response'));
     }
 
 

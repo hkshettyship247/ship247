@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\BookingCreated;
+use Carbon\Carbon;
 use App\Models\Booking;
-use App\Models\ContainerSizes;
-use App\Models\BookingAddon;
 use App\Models\Company;
 use App\Models\Location;
-use App\Models\BookingAddonDetails;
-use App\Services\MarineTrafficAPI;
-use Carbon\Carbon;
+use Illuminate\Support\Str;
+use App\Mail\BookingCreated;
+use App\Models\BookingAddon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\ContainerSizes;
+use App\Models\BookingDocument;
+use App\Services\MarineTrafficAPI;
 use Illuminate\Support\Facades\DB;
+use App\Models\BookingAddonDetails;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class BookingsController extends Controller
 {
@@ -40,6 +43,8 @@ class BookingsController extends Controller
         $destination = null;
         $company = null;
 
+        $bookingsQuery = Booking::query();
+
         if ($request->origin_id) {
             $origin = Location::find($request->origin_id);
             $bookingsQuery->where('origin_id', $request->origin_id);
@@ -56,29 +61,21 @@ class BookingsController extends Controller
         }
         
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-			
-			$bookingsQuery = Booking::query();
-			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
 			$bookings = $bookingsQuery->latest()->get();
 			
             return view('admin.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-			
-			$bookingsQuery = Booking::query();
-			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
 			$bookings = $bookingsQuery->latest()->get();
-			
             return view('employees.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
-			
-			$bookingsQuery = Booking::where('user_id', Auth::user()->id); // only list bookings of this customer with user id
 			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
-			$bookings = $bookingsQuery->latest()->get();
+            // only list bookings of this customer with user id
+			$bookings = $bookingsQuery->where('user_id', Auth::user()->id)->latest()->get();
 			
             return view('customers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
 			
-			$bookingsQuery = Booking::where('company_id', Auth::user()->company_id); // Bookings of this vendor company with company id
+			// Bookings of this vendor company with company id
 			/**
 			//will use this for orders module to house bookings from vendor users for other vendors schedules
 			$vendor_users = User::where('company_id', Auth::user()->company_id)->get();
@@ -87,7 +84,7 @@ class BookingsController extends Controller
 			}
 			**/
 			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
-			$bookings = $bookingsQuery->latest()->get();
+			$bookings = $bookingsQuery->where('company_id', Auth::user()->company_id)->latest()->get();
 			
             return view('suppliers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking'));
         }
@@ -96,31 +93,30 @@ class BookingsController extends Controller
 
     public function show(Request $request, Booking $booking)
     {
-        if(is_null($booking->read_at)) {
+        if (is_null($booking->read_at)) {
             $booking->read_at = Carbon::now();
             $booking->save();
         }
         $track_booking_response = '';
-        if($booking->marinetraffic_id) {
+        if ($booking->marinetraffic_id) {
             $track_booking_response = MarineTrafficAPI::getTrackingInformation($booking->marinetraffic_id);
         }
 
-        
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-            return view('customers.bookings.new_show', compact('booking', 'track_booking_response'));
-            // return view('admin.bookings.show', compact("booking"));
+            $route = "superadmin.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-            return view('employees.bookings.show', compact("booking"));
+            $route = "employee.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER') && $booking->user_id === Auth::user()->id) {
-            return view('customers.bookings.show', compact("booking"));
+            $route = "customer.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
             return redirect()->route('customer.bookings.index');
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER') && $booking->user_id === Auth::user()->id) {
-            return view('suppliers.bookings.show', compact("booking"));
+            $route = "supplier.";
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
             return redirect()->route('supplier.bookings.index');
         }
-        abort(404);
+
+        return view('booking_details', compact('route', 'booking', 'track_booking_response'));
     }
 
     public function getContainerSizes()
@@ -186,7 +182,6 @@ class BookingsController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-
     }
 
     public function storeShipmentDetails(Request $request)
@@ -282,5 +277,52 @@ class BookingsController extends Controller
             "status" => "success",
             "message" => "Booking details saved successfully in session",
         ]);
+    }
+
+    public function storeDocuments(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'file.*' => 'required|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240', // Adjust max file size as needed
+        ]);
+
+        // Iterate through each uploaded file
+        foreach ($request->file('files') as $file) {
+            // Store the file in the storage directory
+            $file->store('booking_documents', 'public');
+
+            $randomNumber = Str::random(10); // Generates a random string of length 10
+            $originalFilename = $file->getClientOriginalName();
+
+            $filename = $randomNumber . '_' . $originalFilename;
+            // Create a new BookingDocument record in the database
+            BookingDocument::create([
+                'booking_id' => $request->bookingId, // Assuming you have a booking_id in your request
+                'filename' => $filename,
+            ]);
+        }
+
+        $booking = Booking::find($request->bookingId);
+        
+        return response()->json(['success' => true, 'documents' => $booking->documents, 'message' => 'Documents uploaded successfully!']);
+    }
+
+    public function removeDocument(Request $request)
+    {
+        // Find the document by its ID and booking ID
+        $document = BookingDocument::where(['id' => $request->docId, 'booking_id' => $request->bookingId])->first();
+
+        if (empty($document)) {
+            return response()->json(['success' => false, 'message' => 'Document not found.']);
+        }
+
+        // Delete the file from storage
+        Storage::disk('public')->delete('booking_documents/' . $document->filename);
+
+        // Delete the record from the database
+        $document->delete();
+
+        // Return a JSON response indicating success
+        return response()->json(['success' => true, 'message' => 'Document removed successfully!']);
     }
 }
