@@ -420,7 +420,6 @@
             </ul>
         </div>
 
-
         <div class="detail-body">
             <div class="detail-box d-block">
                 <div class="tabbing">
@@ -613,17 +612,16 @@
             const dt = new DataTransfer();
 
             $("#attachment").on('change', function(e) {
-                for (var i = 0; i < this.files.length; i++) {
-                    let fileBloc = $('<span/>', {class: 'file-block'}),
-                        fileName = $('<span/>', {class: 'name', text: this.files.item(i).name});
-                    fileBloc.append('<span class="file-delete"><span>+</span></span>')
-                        .append(fileName);
-                    $("#filesList > #files-names").append(fileBloc);
-                    dt.items.add(this.files[i]);
-                }
+                uploadFiles();
             });
 
-            $('#uploadBtn').click(function() {
+            // Event listener for file upload
+            function uploadFiles() {
+                if ($('#attachment')[0].files.length === 0) {
+                    alert("Please select one or more files to upload.");
+                    return;
+                }
+                
                 let formData = new FormData();
                 let files = $('#attachment')[0].files;
 
@@ -634,42 +632,111 @@
                 formData.append('_token', "{{ csrf_token(); }}");
                 @php
                 $url =  route($route. 'booking.storeDocuments');
+                $spinner = asset('images/Spinner-2.gif');
                 @endphp
+
+                // AJAX call to upload files
                 $.ajax({
-                    url: "{{ $url }}", // Replace with your upload endpoint
+                    url: "{{ $url }}",
                     type: 'POST',
                     data: formData,
                     contentType: false,
                     processData: false,
+                    beforeSend: function() {
+                        // Show loader before sending request
+                        $('.spinner').html('<img src="{{ $spinner }}" style="display: block; margin: auto;">');
+                    },
                     success: function(response) {
                         if(response.success) {
-                            alert("Document uploaded successfully!");
+                            // Add file blocks with delete buttons using the documents data from the response
+                            $('.spinner').html('');
+                            addFileBlocks(response.documents);
+                            Swal.fire({
+                                title: 'Success',
+                                text: "Document uploaded successfully!",
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
                         }
-                        // Add your success handling here
                     },
                     error: function(xhr, status, error) {
                         console.error('Upload failed:', error);
-                        // Add your error handling here
                     }
                 });
-            });
+            };
+
+            function addFileBlocks(documents) {
+                documents.forEach(function(document) {
+                    let fileBloc = $('<span/>', {class: 'file-block'}),
+                        fileName = $('<span/>', {class: 'name', text: document.filename}),
+                        bookingId = document.booking_id,
+                        docId = document.id;
+
+                    fileBloc.append('<span class="file-delete removeFile" bookingId="' + bookingId + '" docId="' + docId + '"><span>+</span></span>')
+                        .append(fileName);
+                    $("#filesList > #files-names").append(fileBloc);
+                });
+            }
+        });
+        
+        
+        $(document).on('click', 'span.removeFile', function(){
+            var $this = $(this);
+            Swal.fire({
+                title: 'Confirm',
+                text: 'Are you sure you want to delete this file ?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: "red",
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If user confirms, make an AJAX request with the selected date
+                    @php
+                        $deleteUrl =  route($route. 'booking.removeDocument');
+                    @endphp
+                    var docId = $this.attr('docId');
+                    var bookingId = $this.attr('bookingId');
+                    var token = "{{ csrf_token() }}";
+                    $.ajax({
+                        url: "{{ $deleteUrl }}",
+                        method: 'POST',
+                        data: {_token: token, docId: docId, bookingId: bookingId},
+                        success: function(response) {
+                            console.log(response);
+                            
+                            if (response.success) {
+                                let name = $this.next('span.name').text();
+                                // Supprimer l'affichage du nom de fichier
+                                $this.parent().remove();
+                                
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: "Your file has been deleted.",
+                                    icon: "success"
+                                });
+                            }
+                        },
+                        error: function(error) {
+                            // Handle error
+                            var errorMessage = error.responseJSON.error;
+                            Swal.fire({
+                                title: 'Error',
+                                text: errorMessage,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
+                }
+            }); 
         });
 
-
-        $(document).on('click', 'span.file-delete', function(){
+        $(document).on('click', 'span.delete-doc', function(){
             let name = $(this).next('span.name').text();
             // Supprimer l'affichage du nom de fichier
             $(this).parent().remove();
-            for(let i = 0; i < dt.items.length; i++){
-                // Correspondance du fichier et du nom
-                if(name === dt.items[i].getAsFile().name){
-                    // Suppression du fichier dans l'objet DataTransfer
-                    dt.items.remove(i);
-                    continue;
-                }
-            }
-            // Mise à jour des fichiers de l'input file après suppression
-            document.getElementById('attachment').files = dt.files;
         });
     </script>
 @endsection

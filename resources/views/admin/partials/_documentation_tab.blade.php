@@ -9,18 +9,18 @@
                 accept=".pdf, .doc, .docx, .xls, .xlsx" style="visibility: hidden; position: absolute;" multiple />
         </p>
         <p id="files-area">
+            <span class="spinner"></span>
             <span id="filesList">
                 <span id="files-names">
-                    @foreach ($booking->documents ?? [] as $documents)
+                    @foreach ($booking->documents ?? [] as $document)
                     <span class="file-block">
-                        <span class="file-delete">
+                        <span class="file-delete removeFile" bookingId="{{ $booking->id }}" docId="{{ $document->id }}">
                             <span>+</span>
                         </span>
-                        <span class="name">{{ $documents->filename }}</span></span>
+                        <span class="name">{{ $document->filename }}</span></span>
                     @endforeach
                 </span>
             </span>
         </p>
     </div>
 </div>
-<button id="uploadBtn" class="btn default-button-v2 btn-primary">Upload Files</button>

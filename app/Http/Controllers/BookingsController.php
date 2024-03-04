@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\BookingAddonDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class BookingsController extends Controller
 {
@@ -278,11 +279,10 @@ class BookingsController extends Controller
         // Iterate through each uploaded file
         foreach ($request->file('files') as $file) {
             // Store the file in the storage directory
-            $path = $file->store('booking_documents', 'public');
+            $file->store('booking_documents', 'public');
 
             $randomNumber = Str::random(10); // Generates a random string of length 10
             $originalFilename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
 
             $filename = $randomNumber . '_' . $originalFilename;
             // Create a new BookingDocument record in the database
@@ -292,6 +292,28 @@ class BookingsController extends Controller
             ]);
         }
 
-        return response()->json(['success' => true, 'message' => 'Documents uploaded successfully!']);
+        $booking = Booking::find($request->bookingId);
+        
+        return response()->json(['success' => true, 'documents' => $booking->documents, 'message' => 'Documents uploaded successfully!']);
+    }
+
+    public function removeDocument(Request $request)
+    {
+        // Find the document by its ID and booking ID
+        $document = BookingDocument::where(['id' => $request->docId, 'booking_id' => $request->bookingId])->first();
+
+        if (empty($document)) {
+            // Return a JSON response indicating failure if the document doesn't exist
+            return response()->json(['success' => false, 'message' => 'Document not found.']);
+        }
+
+        // Delete the file from storage
+        Storage::disk('public')->delete('booking_documents/' . $document->filename);
+
+        // Delete the record from the database
+        $document->delete();
+
+        // Return a JSON response indicating success
+        return response()->json(['success' => true, 'message' => 'Document removed successfully!']);
     }
 }
