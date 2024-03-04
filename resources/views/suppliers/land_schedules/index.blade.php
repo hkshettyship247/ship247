@@ -97,7 +97,7 @@
 
                         <div class="md:w-2/12">
                             <div class="form-field">
-                                <label for="company_id" class="text-xs uppercase text-gray-400">Company</label>
+                                {{--<label for="company_id" class="text-xs uppercase text-gray-400">Company</label>
                                 <select id="company_id" name="company_id"
                                         class="form-input small-input w-full">
                                     <option value="">Select Company</option>
@@ -106,7 +106,7 @@
                                                 @if($company && $company->id == $company_id) selected @endif
                                         >{{$company_name}}</option>
                                     @endforeach
-                                </select>
+                                </select>--}}
                             </div>
                         </div>
 
