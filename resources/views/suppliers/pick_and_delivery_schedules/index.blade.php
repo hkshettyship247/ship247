@@ -45,12 +45,12 @@
                         </div>
                     </div>
 
-                    <div class="lg:w-3/12 w-full">
+                    {{--<div class="lg:w-3/12 w-full">
                         <div class="form-field">
                             <label for="" class="text-xs uppercase text-gray-400">Company</label>
                             <input type="text" class="form-input small-input w-full">
                         </div>
-                    </div>
+                    </div>--}}
 
                     <div class="lg:w-3/12 w-full">
                         <button type="button" class="default-button-v2 outline-button">
