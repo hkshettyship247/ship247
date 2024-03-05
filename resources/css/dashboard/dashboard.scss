@@ -294,7 +294,29 @@ form.disabled-form select {
     pointer-events: none;
     opacity: 0.6;
 }
+.edit-badge {
+    background-color: #fff8db;
+    color: var(--primary-color);
+}
 .badge.defualt {
     background-color: purple;
     color: #fff; 
-  }
+}
+
+.badge.cancelled {
+    background-color: #ffe8e8;
+    color: var(--primary-color);
+}
+.badge.in-progress {
+    background-color: #fff8db;
+    color: var(--primary-color);
+}
+
+.badge.on-hold {
+    background-color: #f5f1ff;
+    color: var(--primary-color);
+}
+.badge.finished {
+    background-color: purple;
+    color: #fff;
+}

@@ -161,7 +161,7 @@
                             </div>
                         </div>
 
-                        @foreach($seaSchedule->details as $detail)
+                        @forelse($seaSchedule->details as $detail)
                             <div class="grid grid-cols-2 gap-8 mt-6">
                                 <div class="form-field">
                                     <label for="etd" class="form-label">ETD</label>
@@ -213,7 +213,54 @@
                                     @enderror
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <div class="grid grid-cols-2 gap-8 mt-6">
+                                <div class="form-field">
+                                    <label for="etd" class="form-label">ETD</label>
+                                    <input type="date" id="etd" name="etd" required
+                                        class="form-input small-input mt-2 w-full block" value="{{ old('etd') }}">
+                                    @error('etd')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+        
+                                <div class="form-field">
+                                    <label for="eta" class="form-label">ETA</label>
+                                    <input type="date" id="eta" name="eta" required
+                                        class="form-input small-input mt-2 w-full block" value="{{ old('eta') }}">
+                                    @error('eta')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+        
+                                <div class="form-field">
+                                    <label for="tt" class="form-label">TT</label>
+                                    <input type="number" id="tt" name="tt" required
+                                        class="form-input small-input mt-2 w-full block" value="{{ old('tt') }}">
+                                    @error('tt')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+        
+                                <div class="form-field">
+                                    <label for="ft" class="form-label">FT</label>
+                                    <input type="number" id="ft" name="ft" required
+                                        class="form-input small-input mt-2 w-full block" value="{{ old('ft') }}">
+                                    @error('ft')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+        
+                                <div class="form-field">
+                                    <label for="valid_till" class="form-label">Valid Till</label>
+                                    <input type="date" id="valid_till" name="valid_till" required
+                                        class="form-input small-input mt-2 w-full block" value="{{ old('valid_till') }}">
+                                    @error('valid_till')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endforelse
 
                         <div class="form-field mt-8">
                             <button type="submit" class="default-button-v2">

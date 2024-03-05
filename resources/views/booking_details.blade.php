@@ -502,9 +502,11 @@
 
                     <div class="hidden" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                         <div class="detail-body">
-                            @if(isset($booking))
+                            @if(isset($booking) && $booking->payment)
                             @include('admin.partials._payment_tab', ['booking' => $booking, 'track_booking_response' => $track_booking_response, 'tab' =>
                             "bookinginfo-tab"])
+                            @else
+                            <p class="text-sm text-gray-500">No payment information found</p>
                             @endif
                         </div>
                     </div>

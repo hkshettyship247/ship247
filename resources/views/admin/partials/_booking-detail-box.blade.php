@@ -41,10 +41,10 @@
                         <span class="badge progress confirmed small-badge">SI Confirmed</span>
                         @break
                     @case('BOOKING_STATUS_EVGM_SUBMITTED')
-                        <span class="badge progress submitted small-badge">EVGM Submitted</span>
+                        <span class="badge progress submitted small-badge">VGM Submitted</span>
                         @break
                     @case('BOOKING_STATUS_EVGM_CONFIRMED')
-                        <span class="badge progress confirmed small-badge">EVGM Confirmed</span>
+                        <span class="badge progress confirmed small-badge">VGM Confirmed</span>
                         @break
                     @case('BOOKING_STATUS_DRAFT_BL_RECEIVED')
                         <span class="badge progress received small-badge">Draft BL Received</span>

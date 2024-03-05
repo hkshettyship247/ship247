@@ -19,19 +19,56 @@
 
         @if(isset($booking))
         @php
+            // Define the array with name and value pairs
             $bookingStatusOptions = [
-                'BOOKING_STATUS_IN_PROGRESS' => config('constants.BOOKING_STATUS_IN_PROGRESS'),
-                'BOOKING_STATUS_COMPLETED' => config('constants.BOOKING_STATUS_COMPLETED'),
-                'BOOKING_STATUS_ON_HOLD' => config('constants.BOOKING_STATUS_ON_HOLD'),
-                'BOOKING_STATUS_CANCELLED' => config('constants.BOOKING_STATUS_CANCELLED'),
-                'BOOKING_STATUS_CONFIRMED' => config('constants.BOOKING_STATUS_CONFIRMED'),
-                'BOOKING_STATUS_SI_SUBMITTED' => config('constants.BOOKING_STATUS_SI_SUBMITTED'),
-                'BOOKING_STATUS_SI_CONFIRMED' => config('constants.BOOKING_STATUS_SI_CONFIRMED'),
-                'BOOKING_STATUS_EVGM_SUBMITTED' => config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
-                'BOOKING_STATUS_EVGM_CONFIRMED' => config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
-                'BOOKING_STATUS_DRAFT_BL_RECEIVED' => config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
-                'BOOKING_STATUS_DRAFT_BL_CONFIRMED' => config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
-                'BOOKING_STATUS_FINISHED' => config('constants.BOOKING_STATUS_FINISHED'),
+                'BOOKING_STATUS_IN_PROGRESS' => [
+                    'name' => 'In Progress',
+                    'value' => config('constants.BOOKING_STATUS_IN_PROGRESS')
+                ],
+                'BOOKING_STATUS_COMPLETED' => [
+                    'name' => 'Completed',
+                    'value' => config('constants.BOOKING_STATUS_COMPLETED')
+                ],
+                'BOOKING_STATUS_ON_HOLD' => [
+                    'name' => 'On Hold',
+                    'value' => config('constants.BOOKING_STATUS_ON_HOLD')
+                ],
+                'BOOKING_STATUS_CANCELLED' => [
+                    'name' => 'Cancelled',
+                    'value' => config('constants.BOOKING_STATUS_CANCELLED')
+                ],
+                'BOOKING_STATUS_CONFIRMED' => [
+                    'name' => 'Confirmed',
+                    'value' => config('constants.BOOKING_STATUS_CONFIRMED')
+                ],
+                'BOOKING_STATUS_SI_SUBMITTED' => [
+                    'name' => 'SI Submitted',
+                    'value' => config('constants.BOOKING_STATUS_SI_SUBMITTED')
+                ],
+                'BOOKING_STATUS_SI_CONFIRMED' => [
+                    'name' => 'SI Confirmed',
+                    'value' => config('constants.BOOKING_STATUS_SI_CONFIRMED')
+                ],
+                'BOOKING_STATUS_EVGM_SUBMITTED' => [
+                    'name' => 'VGM Submitted',
+                    'value' => config('constants.BOOKING_STATUS_EVGM_SUBMITTED')
+                ],
+                'BOOKING_STATUS_EVGM_CONFIRMED' => [
+                    'name' => 'VGM Confirmed',
+                    'value' => config('constants.BOOKING_STATUS_EVGM_CONFIRMED')
+                ],
+                'BOOKING_STATUS_DRAFT_BL_RECEIVED' => [
+                    'name' => 'Draft BL Received',
+                    'value' => config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED')
+                ],
+                'BOOKING_STATUS_DRAFT_BL_CONFIRMED' => [
+                    'name' => 'Draft BL Confirmed',
+                    'value' => config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED')
+                ],
+                'BOOKING_STATUS_FINISHED' => [
+                    'name' => 'Finished',
+                    'value' => config('constants.BOOKING_STATUS_FINISHED')
+                ],
             ];
         @endphp
         <div class="detail-body">
@@ -110,12 +147,11 @@
                 <div class="w-2/12">
                     <div class="flex justify-between flex-col items-end h-full">
                         <div>
-                            @foreach ($bookingStatusOptions as $constantName => $value)
-                            @if($booking->status == $value)
+                            @foreach ($bookingStatusOptions as $constantName => $option)
+                            @if($booking->status == $option['value'])
                             <span
-                                class="badge {{ strtolower(str_replace('_', '-', substr($constantName, strlen('BOOKING_STATUS_')))) }}">
-                                {{ ucwords(strtolower(str_replace('_', ' ', substr($constantName,
-                                strlen('BOOKING_STATUS_'))))) }}
+                                class="badge edit-badge {{ strtolower(str_replace('_', '-', substr($constantName, strlen('BOOKING_STATUS_')))) }}">
+                                {{ $option['name'] }}
                             </span>
                             @endif
                             @endforeach
@@ -306,15 +342,15 @@
                         <label for="status" class="form-label">Status</label>
                         
                         <select id="status" name="status" required class="form-input small-input mt-2 w-full block">
-                            @foreach ($bookingStatusOptions as $constantName => $value)
-                            <option value="{{ $value }}" {{ $booking->status == $value ? 'selected' : '' }}>
-                                {{ str_replace('_', ' ', ucwords(strtolower(substr($constantName,
-                                strlen('BOOKING_STATUS_'))))) }}
-                            </option>
+                            @foreach ($bookingStatusOptions as $constantName => $option)
+                                <option value="{{ $option['value'] }}" {{ $booking->status == $option['value'] ? 'selected' : '' }}>
+                                    {{ $option['name'] }}
+                                </option>
                             @endforeach
                         </select>
-                        @error('status') {{-- Update the name attribute to 'status' --}}
-                        <span>{{ $message }}</span>
+                        
+                        @error('status')
+                            <span>{{ $message }}</span>
                         @enderror
                     </div>
 

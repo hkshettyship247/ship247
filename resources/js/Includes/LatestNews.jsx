@@ -70,8 +70,8 @@ export default class SimpleSlider extends Component {
                 </div>
 
                 <Slider ref={c => (this.slider = c)} {...settings} className="news-slider">
-                    {this.props?.news?.map(news =>
-                        <div className="item">
+                    {this.props?.news?.map((news, key) =>
+                        <div key={key} className="item">
                             <div className="news-box">
                                 <h4 className="default-subheading leading-tight">
                                     {shortenText(news.title.replace( /(<([^>]+)>)/ig, ''), 40)+'...'}

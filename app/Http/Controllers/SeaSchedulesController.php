@@ -244,8 +244,7 @@ class SeaSchedulesController extends Controller
             $route = "supplier.";
         }
 
-
-        return redirect()->route($route . 'sea-schedules.index');
+        return redirect()->route($route . 'sea-schedules.index')->with('success', 'Price details update successfully.');
     }
 
     /**
@@ -267,7 +266,7 @@ class SeaSchedulesController extends Controller
         }
 
 
-        return redirect()->route($route . 'sea-schedules.index');
+        return redirect()->route($route . 'sea-schedules.index')->with('success', 'Sea pricing removed successfully.');
     }
 
     public function import(Request $request)
@@ -321,6 +320,5 @@ class SeaSchedulesController extends Controller
         }
         // Redirect or return a response
         return redirect()->route($route_user.'sea-schedules.edit', [$duplicateSchedule->id]);
-        // return redirect()->back()->with('success', 'SeaSchedule duplicated successfully!');
     }
 }

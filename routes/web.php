@@ -273,6 +273,8 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('/bookings/{booking}', [BookingsController::class, 'show'])->name('customer.bookings.show');
         Route::get('/generate/pdf/invoice/{bookingID}', [InvoicesController::class, 'generatePDFInvoice'])->name('customer.generate.pdf.invoice');
         Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('customer.payment.details');
+        Route::post('/booking-store-documents', [BookingsController::class, 'storeDocuments'])->name('customer.booking.storeDocuments');
+        Route::post('/booking-remove-documents', [BookingsController::class, 'removeDocument'])->name('customer.booking.removeDocument');
     });
 
     // Employee routes
@@ -322,6 +324,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 		Route::get('/companies/{companyID}/terminate-status', [CompanyController::class, 'terminateCompanyStatus'])->name('companyStatus.terminate');
 		Route::get('/companies/{companyID}/reactivate-status', [CompanyController::class, 'reactivateCompanyStatus'])->name('companyStatus.reactivate');
         Route::post('/bookings/{bookingId}/update-status', [BookingsController::class, 'updatebookingDetails'])->name('bookingDetails.update');
+
+        Route::post('/booking-store-documents', [BookingsController::class, 'storeDocuments'])->name('booking.storeDocuments');
+        Route::post('/booking-remove-documents', [BookingsController::class, 'removeDocument'])->name('booking.removeDocument');
 
         // Route::get('/news',[CompanyController::class, 'getNews'])->name('news.index');
 
@@ -453,6 +458,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
         Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');
+
+        Route::post('/booking-store-documents', [BookingsController::class, 'storeDocuments'])->name('booking.storeDocuments');
+        Route::post('/booking-remove-documents', [BookingsController::class, 'removeDocument'])->name('booking.removeDocument');
 
         Route::get('/users', [ProfileController::class, 'getUserList'])->name('user.index');
         Route::get('/create/user', [ProfileController::class, 'createUser'])->name('user.create');

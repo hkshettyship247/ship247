@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import Benefits from '@/Includes/BenefitSlider';
 import Services from '@/Includes/ServiceSlider';
 import RegistrationCta from '@/Includes/RegisterCta';
@@ -12,6 +12,8 @@ export default function Home({hot_deals_collection, news_listing, user_details})
         const query = new URLSearchParams(values);
         window.location = route('pages.searchresults') + '?' + query.toString();
     }
+
+    const {constants} = usePage().props;
 
     return (
         <>
@@ -37,7 +39,7 @@ export default function Home({hot_deals_collection, news_listing, user_details})
             </section>
 
             {/* Top Deals */}
-            <TopDealSlider deals={hot_deals_collection?.data ?? []}/>
+            <TopDealSlider constants={constants} deals={hot_deals_collection?.data ?? []}/>
 
             {/* Services */}
             <Services />

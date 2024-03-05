@@ -257,7 +257,7 @@
             <form method="POST" action="{{ route('supplier.bookingDetails.update', $booking->id) }}" class="default-form">
                 @csrf
                 <div class="grid grid-cols-1 gap-8 mt-6">
-                    <<div class="form-field">
+                    <div class="form-field">
                         <label for="shipping_number" class="form-label">Shipping Number</label>
                         <input type="text" id="shipping_number" name="shipping_number"
                                class="form-input small-input mt-2 w-full block"
