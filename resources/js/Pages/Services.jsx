@@ -1,10 +1,11 @@
-import { Link, Head } from '@inertiajs/react';
+import { Link, Head, usePage } from '@inertiajs/react';
 import ServiceSlider from '@/Includes/ServiceSlider';
 import RegistrationCta from '@/Includes/RegisterCta';
 import Faq from '@/Includes/FAQs';
 import TopDealSlider from '@/Includes/TopDealSlider';
 
 export default function Services({hot_deals_collection}) {
+    const {constants} = usePage().props;
     return (
         <>
             <Head title="Services" />
@@ -111,7 +112,7 @@ export default function Services({hot_deals_collection}) {
                 </div>
             </section>
 
-            <TopDealSlider deals={hot_deals_collection?.data ?? []}/>
+            <TopDealSlider constants={constants} deals={hot_deals_collection?.data ?? []}/>
 
             <ServiceSlider />
 
@@ -129,11 +130,7 @@ export default function Services({hot_deals_collection}) {
                 VIEW ALL QUESTIONS
                 </a>
             </div> */}
-
         </section>
-
-
-
         </>
     )
 }
