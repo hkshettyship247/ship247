@@ -41,7 +41,7 @@ Route::get('/resources', [WebsiteController::class, 'resources'])->name('pages.r
 Route::get('/clearance', [WebsiteController::class, 'clearance'])->name('pages.clearance');
 Route::get('/work-with-us', [WebsiteController::class, 'workWithUs'])->name('pages.work_with_us');
 Route::get('/work-with-us-form', [WebsiteController::class, 'workWithUsForm'])->name('pages.work_with_us_form');
-Route::get('/search-results', [WebsiteController::class, 'searchresults'])->name('pages.searchresults');
+//Route::get('/search-results', [WebsiteController::class, 'searchresults'])->name('pages.searchresults');
 Route::get('/news', [WebsiteController::class, 'newsListing'])->name('pages.news_listing');
 Route::get('/news/{news}', [WebsiteController::class, 'newsDetails'])->name('pages.news_details');
 
@@ -81,6 +81,8 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 
         return redirect()->route('pages.home');
     })->name('user.dashboard');
+	
+	Route::get('/search-results', [WebsiteController::class, 'searchresults'])->name('pages.searchresults');
 
     Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent'])->name('Stripe Payment Intent');
     Route::post('/booking/payment/info', [PaymentController::class, 'saveBookingPaymentInformation'])->name('Save Stripe Booking information');
