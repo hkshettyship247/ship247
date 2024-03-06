@@ -36,7 +36,7 @@
             <td valign="top">
                 <p style="margin: 0; padding: 0; text-align: left; font-family: 'Figtree', 'Arial', sans-serif; font-size: 14px;">
                     <strong style="font-size: 16px;">Invoice to</strong>
-                    <span style="display: block; font-size: 18px; font-weight: bold; margin-top: 0px">{{$booking->user->fullname}}</span>
+                    <span style="display: block; font-size: 18px; font-weight: bold; margin-top: 0px">{{ ($booking->user) ? $booking->user->fullname : '' }}</span>
                     {{isset($booking->user->company) ? ($booking->user->company->city .',  ' .$booking->user->company->country  )  : null }} <br> {{isset($booking->user->company) ? $booking->user->company->name : null }}                    
                 </p>
             </td>
