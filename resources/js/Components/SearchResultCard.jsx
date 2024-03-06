@@ -147,6 +147,7 @@ const SearchResultCard = ({ result, filterChargeTypes }) => {
     };
 	
 	//alert(JSON.stringify(result.price_details));
+    console.log(JSON.stringify(result.price_details));
 	
     if (parseInt(params.get('route_type')) === constants.ROUTE_TYPE_LAND) {
         // const origin_code = result.origin.code;
