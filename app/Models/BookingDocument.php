@@ -11,7 +11,12 @@ class BookingDocument extends Model
 
     protected $fillable = [
         'booking_id',
-        'filename',
+        'master_bill_lading',
+        'house_bill_lading',
+        'certificate_of_origin',
+        'commercial_invoice',
+        'packing_list',
+        'other_document',
     ];
 
     public function booking()

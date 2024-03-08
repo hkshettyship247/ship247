@@ -320,3 +320,53 @@ form.disabled-form select {
     background-color: purple;
     color: #fff;
 }
+
+.documentation-sec {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+.documentation-sec .col-md-12 {
+    border: 1px solid #C9C9C9;
+    border-radius: 10px;
+    margin-top: 1.25rem;
+    justify-content: space-between;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    flex: 0 0 100%;
+    max-width: calc(100% - 30px);
+    margin: 0 15px;
+    margin-bottom: 20px;
+}
+.documentation-sec .col-lg-3 {
+    flex: 0 0 50%;
+    width: calc(50% - 15px);
+    border: 1px solid #C9C9C9;
+    border-radius: 10px;
+    margin-top: 1.25rem;
+    justify-content: space-between;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    max-width: calc(50% - 30px);
+    margin: 0 15px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    padding: 0 0 14px;
+}
+
+@media screen and (max-width: 767px) {
+    .documentation-sec {
+        flex-direction: column;
+    }
+    .documentation-sec .col-lg-3 {
+        width: 100%;
+    flex: 0 0 100%;
+    max-width: calc(100% - 0px);
+}
+}

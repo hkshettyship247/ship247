@@ -47,9 +47,9 @@ class Booking extends Model
         return $this->hasOne(Payments::class, 'booking_id', 'id');
     }
 
-    public function documents()
+    public function document()
     {
-        return $this->hasMany(BookingDocument::class, 'booking_id', 'id');
+        return $this->hasOne(BookingDocument::class, 'booking_id', 'id');
     }
 
     public static function scacList()

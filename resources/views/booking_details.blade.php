@@ -484,7 +484,7 @@
                     <div class="hidden" id="documentation" role="tabpanel" aria-labelledby="documentation-tab">
                         <div class="detail-body">
                             @if(isset($booking))
-                            @include('admin.partials._documentation_tab', ['booking' => $booking, 'tab' =>
+                            @include('admin.partials._documentation_tab', ['booking' => $booking, 'route' => $route, 'tab' =>
                             "bookinginfo-tab"])
                             @endif
                         </div>

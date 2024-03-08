@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Booking;
 use App\Models\Company;
 use App\Models\Location;
@@ -15,9 +16,9 @@ use App\Models\BookingDocument;
 use App\Services\MarineTrafficAPI;
 use Illuminate\Support\Facades\DB;
 use App\Models\BookingAddonDetails;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class BookingsController extends Controller
@@ -29,7 +30,7 @@ class BookingsController extends Controller
      */
     public function index(Request $request)
     {
-		$companies = Company::pluck('name', 'id'); // All companies
+        $companies = Company::pluck('name', 'id'); // All companies
         $perPage = $request->input('per_page', self::PER_PAGE); // Number of records per page
         $search = $request->input('search'); // Search keyword
         $view_booking = isset($request->view_booking) && $request->view_booking != null ? $request->view_booking : null;
@@ -59,33 +60,33 @@ class BookingsController extends Controller
             $company = Company::find($request->company_id);
             $bookingsQuery->where('company_id', $request->company_id);
         }
-        
+
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-			$bookings = $bookingsQuery->latest()->get();
-			
+            $bookings = $bookingsQuery->latest()->get();
+
             return view('admin.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-			$bookings = $bookingsQuery->latest()->get();
+            $bookings = $bookingsQuery->latest()->get();
             return view('employees.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
-			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
+            // $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
             // only list bookings of this customer with user id
-			$bookings = $bookingsQuery->where('user_id', Auth::user()->id)->latest()->get();
-			
+            $bookings = $bookingsQuery->where('user_id', Auth::user()->id)->latest()->get();
+
             return view('customers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking'));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
-			
-			// Bookings of this vendor company with company id
-			/**
+
+            // Bookings of this vendor company with company id
+            /**
 			//will use this for orders module to house bookings from vendor users for other vendors schedules
 			$vendor_users = User::where('company_id', Auth::user()->company_id)->get();
 			foreach($vendor_users  as $vendor_user){
 				$bookingsQuery->orWhere('user_id', $vendor_user->id); // all bookings with users of this vendor company
 			}
-			**/
-			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
-			$bookings = $bookingsQuery->where('company_id', Auth::user()->company_id)->latest()->get();
-			
+             **/
+            // $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
+            $bookings = $bookingsQuery->where('company_id', Auth::user()->company_id)->latest()->get();
+
             return view('suppliers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking'));
         }
         abort(404);
@@ -283,28 +284,101 @@ class BookingsController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-            'file.*' => 'required|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240', // Adjust max file size as needed
+            'master_bill_file' => 'nullable|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240',
+            'house_bill_file' => 'nullable|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240',
+            'certificate_file' => 'nullable|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240',
+            'commercial_invoice_file' => 'nullable|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240',
+            'packing_list_file' => 'nullable|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240',
+            'other_file' => 'nullable|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240',
         ]);
 
-        // Iterate through each uploaded file
-        foreach ($request->file('files') as $file) {
-            // Store the file in the storage directory
-            $file->store('booking_documents', 'public');
-
-            $randomNumber = Str::random(10); // Generates a random string of length 10
-            $originalFilename = $file->getClientOriginalName();
-
-            $filename = $randomNumber . '_' . $originalFilename;
-            // Create a new BookingDocument record in the database
-            BookingDocument::create([
-                'booking_id' => $request->bookingId, // Assuming you have a booking_id in your request
-                'filename' => $filename,
-            ]);
+        $bookingDocument = BookingDocument::where('booking_id', $request->bookingId)->first();
+        if(empty($bookingDocument)) {
+            $bookingDocument = new BookingDocument();
         }
 
-        $booking = Booking::find($request->bookingId);
-        
-        return response()->json(['success' => true, 'documents' => $booking->documents, 'message' => 'Documents uploaded successfully!']);
+        // Master Bill of Lading
+        if ($request->hasFile('master_bill_file')) {
+            $masterBillFile = $request->file('master_bill_file');
+            $masterBillFilename = $this->uploadFile($masterBillFile);
+            $bookingDocument->booking_id = $request->bookingId;
+            $bookingDocument->master_bill_lading = $masterBillFilename;
+            $bookingDocument->save();
+        }
+
+        // House Bill of Lading
+        if ($request->hasFile('house_bill_file')) {
+            $houseBillFile = $request->file('house_bill_file');
+            $houseBillFilename = $this->uploadFile($houseBillFile);
+            $bookingDocument->booking_id = $request->bookingId;
+            $bookingDocument->house_bill_lading = $houseBillFilename;
+            $bookingDocument->save();
+        }
+
+        // Certificate of Origin
+        if ($request->hasFile('certificate_file')) {
+            $certificateFile = $request->file('certificate_file');
+            $certificateFilename = $this->uploadFile($certificateFile);
+            $bookingDocument->booking_id = $request->bookingId;
+            $bookingDocument->certificate_of_origin = $certificateFilename;
+            $bookingDocument->save();
+        }
+
+        // Commercial Invoice
+        if ($request->hasFile('commercial_invoice_file')) {
+            $commercialInvoiceFile = $request->file('commercial_invoice_file');
+            $commercialInvoiceFilename = $this->uploadFile($commercialInvoiceFile);
+            $bookingDocument->booking_id = $request->bookingId;
+            $bookingDocument->commercial_invoice = $commercialInvoiceFilename;
+            $bookingDocument->save();
+        }
+
+        // Packing List
+        if ($request->hasFile('packing_list_file')) {
+            $packingListFile = $request->file('packing_list_file');
+            $packingListFilename = $this->uploadFile($packingListFile);
+            $bookingDocument->booking_id = $request->bookingId;
+            $bookingDocument->packing_list = $packingListFilename;
+            $bookingDocument->save();
+        }
+
+        // Other
+        if ($request->hasFile('other_file')) {
+            $otherFile = $request->file('other_file');
+            $otherFilename = $this->uploadFile($otherFile);
+            $bookingDocument->booking_id = $request->bookingId;
+            $bookingDocument->other_document = $otherFilename;
+            $bookingDocument->save();
+        }
+
+        return redirect()->back()->with('message', 'Documents uploaded successfully!');
+    }
+
+    // Define a function to handle file uploads
+    private function uploadFile($file, $oldFilename = null)
+    {
+        try {
+            // Construct a random filename to avoid collisions
+            $randomNumber = Str::random(10); // Generates a random string of length 10
+            $originalFilename = $file->getClientOriginalName();
+            $filename = $randomNumber . '_' . $originalFilename;
+
+            // Delete the old file, if it exists
+            if ($oldFilename) {
+                $oldFilePath = 'booking_documents/' . $oldFilename;
+                if (Storage::disk('public')->exists($oldFilePath)) {
+                    Storage::disk('public')->delete($oldFilePath);
+                }
+            }
+
+            // Store the file in the storage directory
+            $file->storeAs('booking_documents', $filename, 'public');
+
+            return $filename;
+        } catch (\Exception $e) {
+            // Handle any exceptions
+            return null;
+        }
     }
 
     public function removeDocument(Request $request)
