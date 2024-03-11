@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Mail\BookingCreated;
 use App\Models\Booking;
-
-
+use App\Models\ContainerSizes;
+use App\Models\BookingAddon;
 use App\Models\Company;
 use App\Models\Location;
-use Illuminate\Support\Str;
-use App\Mail\BookingCreated;
-use App\Models\BookingAddon;
-
-use App\Models\ContainerSizes;
-use App\Models\BookingDocument;
-
-
 use App\Models\BookingAddonDetails;
 use App\Services\MarineTrafficAPI;
 use Carbon\Carbon;
@@ -24,9 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
 
-class BookingsController extends Controller
+class OrdersController extends Controller
 {
     const PER_PAGE = 15;
 
@@ -68,7 +59,7 @@ class BookingsController extends Controller
             $company = Company::find($request->company_id);
             $bookingsQuery->where('company_id', $request->company_id);
         }
-		
+        
 		if(isset($request->sea_type) && $request->sea_type == true){
 			$bookingsQuery->where('transportation', 'Ship');
 			$sea_type=1;
@@ -92,31 +83,11 @@ class BookingsController extends Controller
 		else{
 			$air_type=0;
 		}
-        
-        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+		
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
 			
-			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
-			$bookings = $bookingsQuery->latest()->get();
+			//$bookingsQuery->where('company_id', Auth::user()->company_id); // Bookings of this vendor company with company id
 			
-            return view('admin.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'sea_type', 'land_type', 'air_type'));
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-			
-			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
-			$bookings = $bookingsQuery->latest()->get();
-			
-            return view('employees.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'sea_type', 'land_type', 'air_type'));
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
-			
-			$bookingsQuery->where('user_id', Auth::user()->id); // only list bookings of this customer with user id
-			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
-			$bookings = $bookingsQuery->latest()->get();
-			
-            return view('customers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking', 'sea_type', 'land_type', 'air_type'));
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
-			
-			$bookingsQuery->where('company_id', Auth::user()->company_id); // Bookings of this vendor company with company id
-			/**
-			//will use this for orders module to house bookings from vendor users for other vendors schedules
 			$vendor_users = User::where('company_id', Auth::user()->company_id)->get();
 			$vendor_users_array = array();
 			$i=0;
@@ -127,11 +98,10 @@ class BookingsController extends Controller
 			}
 			if($i > 0)
 			$bookingsQuery->whereIn('user_id', $vendor_users_array);
-			**/
 			// $bookings = $bookingsQuery->latest()->paginate($perPage)->appends($search_criteria);
 			$bookings = $bookingsQuery->latest()->get();
-			
-            return view('suppliers.bookings.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking', 'sea_type', 'land_type', 'air_type'));
+			//dd(json_encode($bookings));
+            return view('suppliers.orders.index', compact('origin', 'destination', 'company', 'bookings', 'search', 'companies', 'view_booking', 'sea_type', 'land_type', 'air_type'));
         }
         abort(404);
     }
@@ -146,25 +116,14 @@ class BookingsController extends Controller
         if($booking->marinetraffic_id) {
             $track_booking_response = MarineTrafficAPI::getTrackingInformation($booking->marinetraffic_id);
         }
-
-        
-        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-             $route = "superadmin.";
-            //return view('customers.bookings.new_show', compact('booking', 'track_booking_response'));
-            // return view('admin.bookings.show', compact("booking"));
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-            $route = "employee.";
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER') && $booking->user_id === Auth::user()->id) {
-            $route = "customer.";
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
-            return redirect()->route('customer.bookings.index');
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER') && $booking->user_id === Auth::user()->id) {
-            return view('suppliers.bookings.show', compact("booking"));
+		
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER') && $booking->user_id === Auth::user()->id) {
+            return view('suppliers.orders.show', compact("booking"));
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
-            //return redirect()->route('supplier.bookings.index');
-			return view('suppliers.bookings.show', compact("booking"));
+            //return redirect()->route('supplier.orders.index');
+			return view('suppliers.orders.show', compact("booking"));
         }
-        return view('booking_details', compact('route', 'booking', 'track_booking_response'));
+        abort(404);
     }
 
     public function getContainerSizes()
@@ -175,30 +134,24 @@ class BookingsController extends Controller
         ]);
     }
 
-    public function editBookingDetails(Request $request)
-    {
-        $booking = Booking::find($request->bookingId);
+    public function editOrderDetails(Request $request)
+    {	
+        $booking = Booking::find($request->orderId);
         $route = null;
-        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-            $route = "admin.";
-		} else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
-			 $route = "customers.";
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-            $route = "employees.";
-        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
             $route = "suppliers.";
         }
         $scac_list = Booking::scacList();
-        return view($route . 'bookings.edit', compact("booking", "scac_list"));
+        return view($route . 'orders.edit', compact("booking", "scac_list"));
     }
 
-    public function updatebookingDetails(Request $request)
+    public function updateorderDetails(Request $request)
     {
 
         try {
             $marine_traffic_subscribe_request = false;
 
-            $booking = Booking::findOrFail($request->bookingId);
+            $booking = Booking::findOrFail($request->orderId);
 
             if ($booking->shipping_number != $request->shipping_number || $booking->scac != $request->scac) {
                 $marine_traffic_subscribe_request = true;
@@ -221,14 +174,10 @@ class BookingsController extends Controller
             }
 
             $route = null;
-            if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
-                $route = "superadmin.";
-            } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
-                $route = "employee.";
-            } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+            if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
                 $route = "supplier.";
             }
-            return redirect()->route($route . 'bookings.index')->with('success', 'Booking details saved successfully.');
+            return redirect()->route($route . 'orders.index')->with('success', 'Booking details saved successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -328,52 +277,5 @@ class BookingsController extends Controller
             "status" => "success",
             "message" => "Booking details saved successfully in session",
         ]);
-    }
-
-    public function storeDocuments(Request $request)
-    {
-        // Validate the incoming request
-        $request->validate([
-            'file.*' => 'required|mimes:' . implode(',', config('constants.ALLOWED_DOCUMENT_TYPES')) . '|max:10240', // Adjust max file size as needed
-        ]);
-
-        // Iterate through each uploaded file
-        foreach ($request->file('files') as $file) {
-            // Store the file in the storage directory
-            $file->store('booking_documents', 'public');
-
-            $randomNumber = Str::random(10); // Generates a random string of length 10
-            $originalFilename = $file->getClientOriginalName();
-
-            $filename = $randomNumber . '_' . $originalFilename;
-            // Create a new BookingDocument record in the database
-            BookingDocument::create([
-                'booking_id' => $request->bookingId, // Assuming you have a booking_id in your request
-                'filename' => $filename,
-            ]);
-        }
-
-        $booking = Booking::find($request->bookingId);
-        
-        return response()->json(['success' => true, 'documents' => $booking->documents, 'message' => 'Documents uploaded successfully!']);
-    }
-
-    public function removeDocument(Request $request)
-    {
-        // Find the document by its ID and booking ID
-        $document = BookingDocument::where(['id' => $request->docId, 'booking_id' => $request->bookingId])->first();
-
-        if (empty($document)) {
-            return response()->json(['success' => false, 'message' => 'Document not found.']);
-        }
-
-        // Delete the file from storage
-        Storage::disk('public')->delete('booking_documents/' . $document->filename);
-
-        // Delete the record from the database
-        $document->delete();
-
-        // Return a JSON response indicating success
-        return response()->json(['success' => true, 'message' => 'Document removed successfully!']);
     }
 }

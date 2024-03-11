@@ -186,6 +186,28 @@
                                         @endif
                             </span>
                                 </div>
+								
+								<div class="form-field">
+                                <span class="uppercase text-gray-400 text-xs block">Mode
+								<span class="primary-color primary-font-medium block mt-1">
+								@if($company_details->sea_type == 1)
+								SEA
+								@endif
+								@if($company_details->land_type == 1)
+									@if($company_details->sea_type == 1)
+									 - 
+									@endif
+								LAND
+								@endif
+								@if($company_details->air_type == 1)
+									@if($company_details->sea_type == 1 || $company_details->land_type == 1)
+									 - 
+									@endif
+								AIR
+								@endif
+								</span>
+								</span>
+								</div>
 
                             </div>
                         </div>

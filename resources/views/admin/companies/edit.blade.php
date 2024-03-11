@@ -150,6 +150,32 @@ $selected_industry = explode(',', $company_details->industry);
                                 <label for="city" class="form-label">City</label>
                                 <input name="city" type="text" id="city" class="form-input small-input w-full" value="{{$company_details->city}}" required>
                             </div>
+							
+							<div class="form-field">
+                                <span class="uppercase text-gray-400 text-xs block">Mode
+								<br /><br />
+								Sea
+								@if($company_details->sea_type == 1)
+									<input type="checkbox" id="sea_type" name="sea_type" checked />
+								@else
+									<input type="checkbox" id="sea_type" name="sea_type" />
+								@endif
+								
+								Land
+								@if($company_details->land_type == 1)
+									<input type="checkbox" id="land_type" name="land_type" checked />
+								@else
+									<input type="checkbox" id="land_type" name="land_type" />
+								@endif
+								
+								Air
+								@if($company_details->air_type == 1)
+									<input type="checkbox" id="air_type" name="air_type" checked />
+								@else
+									<input type="checkbox" id="air_type" name="air_type" />
+								@endif
+								</span>
+							</div>
                         </div>
                     </section>
 

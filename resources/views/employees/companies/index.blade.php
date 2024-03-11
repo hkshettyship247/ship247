@@ -91,7 +91,33 @@ $completedCompaniesCount = count(array_filter($companiesData['data'], function (
                     </div>
 
                 </div>
-
+				
+				<br />
+				<div class="3xl:w-3/12 w-full">
+                        <div class="form-field">
+                            <label for="industry" class="text-xs uppercase text-gray-400">Mode</label>
+							<br />
+							<label for="sea" class="text-xs uppercase text-gray-400">Sea</label>
+							@if($sea_type == 1)
+								<input type="checkbox" id="sea_type" name="sea_type" checked />
+							@else
+								<input type="checkbox" id="sea_type" name="sea_type" />
+							@endif
+							<label for="land" class="text-xs uppercase text-gray-400">Land</label>
+							@if($land_type == 1)
+								<input type="checkbox" id="land_type" name="land_type" checked />
+							@else
+								<input type="checkbox" id="land_type" name="land_type" />
+							@endif
+							<label for="air" class="text-xs uppercase text-gray-400">Air</label>
+							@if($air_type == 1)
+								<input type="checkbox" id="air_type" name="air_type" checked />
+							@else
+								<input type="checkbox" id="air_type" name="air_type" />
+							@endif	
+                        </div>
+                    </div>
+				
             </form>
         </section>
 
@@ -163,6 +189,27 @@ $completedCompaniesCount = count(array_filter($companiesData['data'], function (
                                     <span class="value">{{$company->name}}</span>
                                 </div>
                             </div>
+                        </div>
+						
+						<div class="lg:w-3/12 w-full">
+                            <span class="head">Mode</span>
+							<span class="value">
+							@if($company->sea_type == 1)
+                            SEA
+							@endif
+							@if($company->land_type == 1)
+								@if($company->sea_type == 1)
+								 - 
+								@endif
+							LAND
+							@endif
+							@if($company->air_type == 1)
+								@if($company->sea_type == 1 || $company->land_type == 1)
+								 - 
+								@endif
+							AIR
+							@endif
+							</span>
                         </div>
 
                         <div class="lg:w-3/12 w-full">

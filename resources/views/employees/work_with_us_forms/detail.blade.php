@@ -85,6 +85,29 @@ $selected_industry = explode(',', $work_with_us_form_details->industry);
 									@endforeach
 								@endif
                             </div>
+							<br />
+							<div class="">
+                                <span class="form-label">Mode</span>
+								<br />
+								<span class="form-label">Sea</span>
+								@if($work_with_us_form_details->sea_type == 1)
+									<input type="checkbox" id="sea_type" name="sea_type" checked />
+								@else
+									<input type="checkbox" id="sea_type" name="sea_type" />
+								@endif
+								<span class="form-label">Land</span>
+								@if($work_with_us_form_details->land_type == 1)
+									<input type="checkbox" id="land_type" name="land_type" checked />
+								@else
+									<input type="checkbox" id="land_type" name="land_type" />
+								@endif
+								<span class="form-label">Air</span>
+								@if($work_with_us_form_details->air_type == 1)
+									<input type="checkbox" id="air_type" name="air_type" checked />
+								@else
+									<input type="checkbox" id="air_type" name="air_type" />
+								@endif
+                            </div>
 
                             @csrf
                             @method('PATCH')

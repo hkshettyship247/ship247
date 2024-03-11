@@ -32,7 +32,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
 
             <div class="md:w-6/12 md:justify-end flex">
                 <a href="/" class="default-button-v2">
-                    <span>new booking</span>
+                    <span>Search & Book</span>
                 </a>
             </div>
         </header>
@@ -91,6 +91,32 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                     </div>
 
                 </div>
+				
+				<br />
+				<div class="3xl:w-3/12 w-full">
+                        <div class="form-field">
+                            <label for="industry" class="text-xs uppercase text-gray-400">Transportation</label>
+							<br />
+							<label for="sea" class="text-xs uppercase text-gray-400">Sea</label>
+							@if($sea_type == 1)
+								<input type="checkbox" id="sea_type" name="sea_type" checked />
+							@else
+								<input type="checkbox" id="sea_type" name="sea_type" />
+							@endif
+							<label for="land" class="text-xs uppercase text-gray-400">Land</label>
+							@if($land_type == 1)
+								<input type="checkbox" id="land_type" name="land_type" checked />
+							@else
+								<input type="checkbox" id="land_type" name="land_type" />
+							@endif
+							<label for="air" class="text-xs uppercase text-gray-400">Air</label>
+							@if($air_type == 1)
+								<input type="checkbox" id="air_type" name="air_type" checked />
+							@else
+								<input type="checkbox" id="air_type" name="air_type" />
+							@endif	
+                        </div>
+                    </div>
 
             </form>
         </section>

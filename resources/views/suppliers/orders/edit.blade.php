@@ -5,13 +5,13 @@
     <div class="dashboard-detail-box">
         <header>
             <h2 class="title">
-                Bookings Details
+                Orders Details
             </h2>
             <div class="searchbar">
 
             </div>
             <div>
-                <a href="{{route('customer.bookings.index')}}" class="default-button-v2">
+                <a href="{{route('supplier.orders.index')}}" class="default-button-v2">
                     <span>Back</span>
                 </a>
             </div>
@@ -56,11 +56,6 @@
                             <span class="value">{{isset($booking->destination->fullname) ?
                                 $booking->destination->fullname : ''}}</span>
                         </div>
-
-                        <div>
-                            <span class="head">product</span>
-                            <span class="value">{{$booking->product}}</span>
-                        </div>
                     </div>
                 </div>
 
@@ -95,25 +90,9 @@
                 </div>
 
                 <div class="w-2/12">
-                    <div class="flex flex-col gap-4">
-                        <div>
-                            <span class="head">Shipping Number</span>
-                            <span class="value">{{isset($booking->shipping_number) ? $booking->shipping_number :
-                                '-'}}</span>
-                        </div>
-
-                        <div>
-                            <span class="head">Receipt Number</span>
-                            <span class="value">{{isset($booking->receipt_number) ? $booking->receipt_number :
-                                '-'}}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w-2/12">
                     <div class="flex justify-between flex-col items-end h-full">
                         <div>
-                            @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED'))
+                            @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
                             <span class="badge completed">
                                 Completed
                             </span>
@@ -123,7 +102,7 @@
                                 In-Progress
                             </span>
                             @endif
-                            @if($booking->status ==config('constants.BOOKING_STATUS_CANCELLED'))
+                            @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
                             <span class="badge cancel">
                                 Cancelled
                             </span>
@@ -141,7 +120,7 @@
         </div>
         @if(isset($booking->addons) && count($booking->addons) > 0)
         <h2 class="title mt-8">
-            Bookings Addons Details
+            Orders Addons Details
         </h2>
         <div class="detail-body">
             @foreach ($booking->addons as $addon)
@@ -169,8 +148,45 @@
         </div>
         @endif
 
+        @if(isset($booking->user))
+        <div class="detail-body">
+            <h2 class="title mt-8">
+               User Details
+            </h2>
+
+            <div class="detail-box relative">
+                <div class="xl:w-2/12 lg:mb-0 mb-4">
+                    <div class="flex flex-col gap-4">
+                        <div>
+                            <span class="head">First Name</span>
+                            <span class="value">{{ $booking->user->first_name}}</span>
+                        </div>
+
+                        <div>
+                            <span class="head">Last Name</span>
+                            <span class="value">{{ $booking->user->last_name}}</span>
+                        </div>
+
+                        <div>
+                            <span class="head">Phone Number</span>
+                            <span class="value">{{ $booking->user->phone_number}}</span>
+                        </div>
+                        <div>
+                            <span class="head">Email</span>
+                            <span class="value">{{ $booking->user->email}}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
+
+
         <h2 class="title mt-8">
-            Bookings Price Breakdown 
+            Orders Price Breakdown
         </h2>
 
         <div class="detail-body">
@@ -185,8 +201,8 @@
                     </div>
                 </div>
                 @endif
-               
-               
+
+
                 @if ($booking->is_checked_origin_charges == 'Y')
                 <div class="flex flex-col gap-4">
                     <div>
@@ -196,8 +212,8 @@
                     </div>
                 </div>
                 @endif
-               
-               
+
+
                 @if ($booking->is_checked_basic_ocean_freight  == 'Y')
                 <div class="flex flex-col gap-4">
                     <div>
@@ -207,7 +223,7 @@
                     </div>
                 </div>
                 @endif
-               
+
                 @if ($booking->is_checked_destination_charges  == 'Y')
                 <div class="flex flex-col gap-4">
                     <div>
@@ -217,7 +233,7 @@
                     </div>
                 </div>
                 @endif
-             
+
                 @if ($booking->is_checked_delivery_charges   == 'Y')
                 <div class="flex flex-col gap-4">
                     <div>
@@ -235,8 +251,85 @@
 
 
 
+        <section class="mt-20">
 
 
+            <form method="POST" action="{{ route('supplier.bookingDetails.update', $booking->id) }}" class="default-form">
+                @csrf
+                <div class="grid grid-cols-1 gap-8 mt-6">
+                    <<div class="form-field">
+                        <label for="shipping_number" class="form-label">Shipping Number</label>
+                        <input type="text" id="shipping_number" name="shipping_number"
+                               class="form-input small-input mt-2 w-full block"
+                               value="{{ $booking->shipping_number }}">
+                        @error('shipping_number')
+                        <span>{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-field">
+                        <label for="receipt_number">Receipt Number</label>
+                        <input type="text" id="receipt_number" name="receipt_number"
+                               class="form-input small-input mt-2 w-full block"
+                               value="{{ $booking->receipt_number }}">
+                        @error('receipt_number')
+                        <span>{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-field">
+                        <label for="scac" class="form-label">SCAC</label>
+                        <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 block">
+                            <option value="">Select</option>
+                            @if(isset($scac_list) && count($scac_list) > 0)
+                                @foreach ($scac_list as $scac => $scac_name)
+                                    <option <?php echo isset($booking->scac)
+                                    && $booking->scac == $scac ? 'selected' : '' ?> value="{{ $scac }}">{{ $scac_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="marinetraffic_id">Marine Traffic ID</label>
+                        <input type="text" id="marinetraffic_id" name="marinetraffic_id"
+                               class="form-input small-input mt-2 w-full block" readonly
+                               value="{{ $booking->marinetraffic_id }}">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="product">Product</label>
+                        <input type="text" id="product" name="product"
+                               class="form-input small-input mt-2 w-full block"
+                               value="{{ $booking->product }}">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" name="status" required class="form-input small-input mt-2 w-full block">
+                            <option value="{{ config('constants.BOOKING_STATUS_COMPLETED') }}" {{ $booking->status == config('constants.BOOKING_STATUS_COMPLETED') ? 'selected' : '' }}>Completed</option>
+
+                            <option value="{{ config('constants.BOOKING_STATUS_IN_PROGRESS') }}" {{ $booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS') ? 'selected' : '' }}>In-Progress</option>
+
+                            <option value="{{ config('constants.BOOKING_STATUS_ON_HOLD') }}" {{ $booking->status == config('constants.BOOKING_STATUS_ON_HOLD') ? 'selected' : '' }}>On-Hold</option>
+
+                            <option value="{{ config('constants.BOOKING_STATUS_CANCELLED') }}" {{ $booking->status == config('constants.BOOKING_STATUS_CANCELLED') ? 'selected' : '' }}>Cancelled</option>
+
+                        </select>
+                        @error('status') {{-- Update the name attribute to 'status' --}}
+                        <span>{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-field">
+                        <button type="submit" class="default-button-v2">
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </section>
 
         @endif
     </div>

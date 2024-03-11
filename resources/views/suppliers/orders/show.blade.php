@@ -5,13 +5,10 @@
     <div class="dashboard-detail-box">
         <header>
             <h2 class="title">
-                Bookings Details
+                Orders Details
             </h2>
-            <div class="searchbar">
-
-            </div>
             <div>
-                <a href="{{route('customer.bookings.index')}}" class="default-button-v2">
+                <a href="{{route('supplier.orders.index')}}" class="default-button-v2">
                     <span>Back</span>
                 </a>
             </div>
@@ -19,8 +16,31 @@
 
         @if(isset($booking))
         <div class="detail-body">
-            <div class="detail-box">
-                <div class="w-2/12">
+            <div class="detail-box relative">
+                <div class="absolute left-4 -top-4">
+                    @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED'))
+                    <span class="badge completed small-badge">
+                        Completed
+                    </span>
+                    @endif
+                    @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
+                    <span class="badge progress small-badge">
+                        In-Progress
+                    </span>
+                    @endif
+                    @if($booking->status ==config('constants.BOOKING_STATUS_CANCELLED'))
+                    <span class="badge cancel small-badge">
+                        Cancelled
+                    </span>
+                    @endif
+                    @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
+                    <span class="badge hold small-badge">
+                        On-hold
+                    </span>
+                    @endif
+                </div>
+
+                <div class="xl:w-2/12 lg:mb-0 mb-4">
                     <div class="flex flex-col gap-4">
                         <div>
                             <span class="head">Booking ID</span>
@@ -31,10 +51,17 @@
                             <span class="head">No of Container</span>
                             <span class="value">{{$booking->no_of_containers}}</span>
                         </div>
+
+                        <div>
+                            <span class="head">Shipping Number</span>
+                            <span class="value">{{isset($booking->shipping_number) ? $booking->shipping_number :
+                                '-'}}</span>
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="w-3/12">
+                <div class="xl:w-3/12 lg:mb-0 mb-4">
                     <div class="flex flex-col gap-4">
                         <div>
                             <span class="head">from</span>
@@ -46,10 +73,16 @@
                             <span class="head">Container</span>
                             <span class="value">{{$booking->container_size}}</span>
                         </div>
+
+                        <div>
+                            <span class="head">Receipt Number</span>
+                            <span class="value">{{isset($booking->receipt_number) ? $booking->receipt_number :
+                                '-'}}</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="w-3/12">
+                <div class="xl:w-3/12 lg:mb-0 mb-4">
                     <div class="flex flex-col gap-4">
                         <div>
                             <span class="head">to</span>
@@ -57,14 +90,19 @@
                                 $booking->destination->fullname : ''}}</span>
                         </div>
 
-                        <div>
+                        {{-- <div>
                             <span class="head">product</span>
                             <span class="value">{{$booking->product}}</span>
+                        </div> --}}
+
+                        <div>
+                            <span class="head">Transportation</span>
+                            <span class="value">{{$booking->transportation}}</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="w-2/12">
+                <div class="xl:w-2/12">
                     <div class="flex flex-col gap-4">
                         <div>
                             <span class="head">amount</span>
@@ -76,10 +114,16 @@
                             <span class="value">{{ date('d M y', strtotime($booking->departure_date_time))
                                 }}</span>
                         </div>
+
+                        <div>
+                            <span class="head">Shipping line</span>
+                            <span class="value">{{isset($booking->company->name) ? $booking->company->name :
+                                '-'}}</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="w-2/12">
+                {{-- <div class="w-2/12">
                     <div class="flex flex-col gap-4">
                         <div>
                             <span class="head">Transportation</span>
@@ -108,40 +152,12 @@
                                 '-'}}</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="w-2/12">
-                    <div class="flex justify-between flex-col items-end h-full">
-                        <div>
-                            @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED'))
-                            <span class="badge completed">
-                                Completed
-                            </span>
-                            @endif
-                            @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
-                            <span class="badge progress">
-                                In-Progress
-                            </span>
-                            @endif
-                            @if($booking->status ==config('constants.BOOKING_STATUS_CANCELLED'))
-                            <span class="badge cancel">
-                                Cancelled
-                            </span>
-                            @endif
-                            @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
-                            <span class="badge hold">
-                                On-hold
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
+                </div> --}}
             </div>
         </div>
         @if(isset($booking->addons) && count($booking->addons) > 0)
         <h2 class="title mt-8">
-            Bookings Addons Details
+            Orders Addons Details
         </h2>
         <div class="detail-body">
             @foreach ($booking->addons as $addon)
@@ -168,16 +184,51 @@
             @endforeach
         </div>
         @endif
+        @if(isset($booking->user))
+        <div class="detail-body">
+            <h2 class="title mt-8">
+               User Details
+            </h2>
+    
+            <div class="detail-box relative">
+                <div class="xl:w-2/12 lg:mb-0 mb-4">
+                    <div class="flex flex-col gap-4">
+                        <div>
+                            <span class="head">First Name</span>
+                            <span class="value">{{ $booking->user->first_name}}</span>
+                        </div>
+
+                        <div>
+                            <span class="head">Last Name</span>
+                            <span class="value">{{ $booking->user->last_name}}</span>
+                        </div>
+
+                        <div>
+                            <span class="head">Phone Number</span>
+                            <span class="value">{{ $booking->user->phone_number}}</span>
+                        </div>
+                        <div>
+                            <span class="head">Email</span>
+                            <span class="value">{{ $booking->user->email}}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
 
         <h2 class="title mt-8">
-            Bookings Price Breakdown 
+            Orders Price Breakdown 
         </h2>
 
         <div class="detail-body">
 
             <div class="detail-box relative">
                 @if ($booking->is_checked_pickup_charges  == 'Y')
-                <div class="flex flex-col gap-4">
+                <div class=" lg:mb-0 mb-4">
                     <div>
                         <span class="head">Pickup Charges</span>
                         <span class="value">{{  $booking->pickup_charges > 0 ? '$' . number_format($booking->pickup_charges, 2) : 'Amount will be shared later' }}</span>
@@ -188,7 +239,7 @@
                
                
                 @if ($booking->is_checked_origin_charges == 'Y')
-                <div class="flex flex-col gap-4">
+                <div class=" lg:mb-0 mb-4">
                     <div>
                         <span class="head">Origin Charges</span>
                         <span class="value">{{ '$' . number_format($booking->origin_charges, 2) }}</span>
@@ -199,7 +250,7 @@
                
                
                 @if ($booking->is_checked_basic_ocean_freight  == 'Y')
-                <div class="flex flex-col gap-4">
+                <div class=" lg:mb-0 mb-4">
                     <div>
                         <span class="head">Basic Ocean Freight Charges</span>
                         <span class="value">{{ '$' . number_format($booking->basic_ocean_freight , 2) }}</span>
@@ -209,7 +260,7 @@
                 @endif
                
                 @if ($booking->is_checked_destination_charges  == 'Y')
-                <div class="flex flex-col gap-4">
+                <div class=" lg:mb-0 mb-4">
                     <div>
                         <span class="head">Destination Charges</span>
                         <span class="value">{{ '$' . number_format($booking->destination_charges , 2) }}</span>
@@ -219,7 +270,7 @@
                 @endif
              
                 @if ($booking->is_checked_delivery_charges   == 'Y')
-                <div class="flex flex-col gap-4">
+                <div class="">
                     <div>
                         <span class="head">Delivery Charges</span>
                         <span class="value">{{  $booking->delivery_charges > 0 ? '$' . number_format($booking->delivery_charges,2) : 'Amount will be shared later'  }}</span>
@@ -228,15 +279,9 @@
                 </div>
                 @endif
 
-
             </div>
 
         </div>
-
-
-
-
-
 
         @endif
     </div>

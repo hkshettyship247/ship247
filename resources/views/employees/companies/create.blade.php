@@ -132,6 +132,20 @@
                                 <label for="city" class="form-label">City</label>
                                 <input name="city" type="text" id="city" class="form-input small-input w-full" required>
                             </div>
+							
+							<div class="form-field">
+                                <span class="uppercase text-gray-400 text-xs block">Mode
+								<br /><br />
+								Sea
+									<input type="checkbox" id="sea_type" name="sea_type" />
+								
+								Land
+									<input type="checkbox" id="land_type" name="land_type" />
+								
+								Air
+									<input type="checkbox" id="air_type" name="air_type" />
+								</span>
+							</div>
                         </div>
                     </section>
 

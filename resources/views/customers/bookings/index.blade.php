@@ -31,23 +31,98 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                     Bookings
                 </h2>
             </div>
-            <div class="w-6/12">
-                <form class="dashboard-searchbar">
-                    <input type="text" class="search-bar"
-                        placeholder="Search By : BL, SHIPPING LINE, POO, POD, AMOUNT, TRANSPORTATION, STATUS ETC. …." />
-                    <button class="submit-btn">
-                        <img src="/images/svg/search-icon.svg" alt="">
-                    </button>
-                </form>
-            </div>
 
             <div class="w-3/12 justify-end flex">
                 <a href="/" class="default-button-v2">
-                    <span>new booking</span>
+                    <span>Search & Booking</span>
                 </a>
             </div>
         </header>
+		
+		<section class="search-result mt-8 mb-12">
 
+            <form class="default-form" action="{{ route('customer.bookings.index') }}" method="GET">
+
+                <div class="flex lg:items-end items-start lg:flex-row flex-col lg:gap-6 gap-4">
+                    <div class="lg:w-3/12 w-full">
+                        <div class="form-field">
+                            <label for="origin_id" class="form-label-small">Origin</label>
+                            @include('customers.partials._location-select2',
+                                [
+                                    'name' => 'origin_id',
+                                    'selected_option_value' => $origin->id ?? null,
+                                    'selected_option_text' => $origin->fullname ?? null,
+                                ]
+                            )
+                        </div>
+                    </div>
+
+                    <div class="lg:w-3/12 w-full">
+                        <div class="form-field">
+                            <label for="destination_id" class="form-label-small">Destination</label>
+                            @include('customers.partials._location-select2',
+                                [
+                                    'name' => 'destination_id',
+                                    'selected_option_value' => $destination->id ?? null,
+                                    'selected_option_text' => $destination->fullname ?? null,
+                                ]
+                            )
+                        </div>
+                    </div>
+
+                    <div class="lg:w-3/12 w-full">
+                        <div class="form-field">
+                            <label for="company_id" class="form-label-small">Company</label>
+                            <select id="company_id" name="company_id"
+                                    class="form-input small-input w-full">
+                                <option value="">Select Company</option>
+                                @if(isset($companies) && count($companies) >0  )
+                                @foreach($companies as $company_id => $company_name)
+                                    <option value="{{ $company_id }}"
+                                            @if( isset($company) && $company->id == $company_id) selected @endif
+                                    >{{$company_name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-3/12 w-full">
+                        <button type="submit" class="default-button-v2 outline-button">
+                            <span>Search</span>
+                        </button>
+                    </div>
+				 </div>	
+				
+				<br />
+				<div class="3xl:w-3/12 w-full">
+                        <div class="form-field">
+                            <label for="industry" class="text-xs uppercase text-gray-400">Transportation</label>
+							<br />
+							<label for="sea" class="text-xs uppercase text-gray-400">Sea</label>
+							@if($sea_type == 1)
+								<input type="checkbox" id="sea_type" name="sea_type" checked />
+							@else
+								<input type="checkbox" id="sea_type" name="sea_type" />
+							@endif
+							<label for="land" class="text-xs uppercase text-gray-400">Land</label>
+							@if($land_type == 1)
+								<input type="checkbox" id="land_type" name="land_type" checked />
+							@else
+								<input type="checkbox" id="land_type" name="land_type" />
+							@endif
+							<label for="air" class="text-xs uppercase text-gray-400">Air</label>
+							@if($air_type == 1)
+								<input type="checkbox" id="air_type" name="air_type" checked />
+							@else
+								<input type="checkbox" id="air_type" name="air_type" />
+							@endif	
+                        </div>
+                    </div>
+					
+            </form>
+        </section>
+		
         <div class="tabbing mt-8">
             <div class="mb-8 border-b border-gray-200">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab"

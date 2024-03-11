@@ -11,11 +11,8 @@ use App\Models\Location;
 use Illuminate\Support\Str;
 use App\Mail\BookingCreated;
 use App\Models\BookingAddon;
-
 use App\Models\ContainerSizes;
 use App\Models\BookingDocument;
-
-
 use App\Models\BookingAddonDetails;
 use App\Services\MarineTrafficAPI;
 use Carbon\Carbon;

@@ -26,7 +26,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
         <header>
             <div class="md:w-6/12">
                 <h2 class="title">
-                    Bookings
+                    Orders
                 </h2>
             </div>
 
@@ -38,13 +38,13 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
         </header>
         <section class="search-result mt-8 mb-12">
 
-            <form class="default-form" action="{{ route('superadmin.bookings.index') }}" method="GET">
+            <form class="default-form" action="{{ route('supplier.orders.index') }}" method="GET">
 
                 <div class="flex lg:items-end items-start lg:flex-row flex-col lg:gap-6 gap-4">
                     <div class="lg:w-3/12 w-full">
                         <div class="form-field">
                             <label for="origin_id" class="form-label-small">Origin</label>
-                            @include('admin.partials._location-select2',
+                            @include('suppliers.partials._location-select2',
                                 [
                                     'name' => 'origin_id',
                                     'selected_option_value' => $origin->id ?? null,
@@ -57,7 +57,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                     <div class="lg:w-3/12 w-full">
                         <div class="form-field">
                             <label for="destination_id" class="form-label-small">Destination</label>
-                            @include('admin.partials._location-select2',
+                            @include('suppliers.partials._location-select2',
                                 [
                                     'name' => 'destination_id',
                                     'selected_option_value' => $destination->id ?? null,
@@ -67,7 +67,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                         </div>
                     </div>
 
-                    <div class="lg:w-3/12 w-full">
+                    {{--<div class="lg:w-3/12 w-full">
                         <div class="form-field">
                             <label for="company_id" class="form-label-small">Company</label>
                             <select id="company_id" name="company_id"
@@ -82,7 +82,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                                 @endif
                             </select>
                         </div>
-                    </div>
+                    </div>--}}
 
                     <div class="lg:w-3/12 w-full">
                         <button type="submit" class="default-button-v2 outline-button">
@@ -117,7 +117,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
 							@endif	
                         </div>
                     </div>
-					
+
             </form>
         </section>
 
@@ -158,7 +158,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                 <div class="detail-body">
                     @if(isset($bookings) && count($bookings)> 0)
                         @foreach ($bookings as $booking)
-                            @include('admin.partials._booking-detail-box', ['booking' => $booking, 'tab' => "all-tab"])
+                            @include('suppliers.partials._order-detail-box', ['booking' => $booking, 'tab' =>"all-tab" ])
                         @endforeach
                     @else
                         <div class="p-4 rounded-lg bg-gray-50">
@@ -173,7 +173,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                     @if(isset($bookings) && count($bookings)> 0 && $inProgressBookingsCount > 0)
                         @foreach ($bookings as $booking)
                             @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS') )
-                                @include('admin.partials._booking-detail-box', ['booking' => $booking, 'tab' => "inprogress-tab"])
+                                @include('suppliers.partials._order-detail-box', ['booking' => $booking, 'tab' =>"inprogress-tab" ])
                             @endif
                         @endforeach
                     @else
@@ -189,7 +189,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                     @if(isset($bookings) && count($bookings)> 0 && $completedBookingsCount > 0)
                         @foreach ($bookings as $booking)
                             @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
-                                @include('admin.partials._booking-detail-box', ['booking' => $booking, 'tab' => "completed-tab"])
+                                @include('suppliers.partials._order-detail-box', ['booking' => $booking, 'tab' =>"completed-tab" ])
                             @endif
                         @endforeach
                     @else
@@ -205,7 +205,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                     @if(isset($bookings) && count($bookings)> 0 && $cancelledBookingsCount > 0)
                         @foreach ($bookings as $booking)
                             @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED') )
-                                @include('admin.partials._booking-detail-box', ['booking' => $booking, 'tab' => "cancelled-tab"])
+                                @include('suppliers.partials._order-detail-box', ['booking' => $booking, 'tab' =>"cancelled-tab" ])
                             @endif
                         @endforeach
                     @else
@@ -221,7 +221,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                     @if(isset($bookings) && count($bookings)> 0 && $onHoldBookingsCount > 0)
                         @foreach ($bookings as $booking)
                             @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD') )
-                                @include('admin.partials._booking-detail-box', ['booking' => $booking, 'tab' => "onhold-tab"])
+                                @include('suppliers.partials._order-detail-box', ['booking' => $booking, 'tab' =>"onhold-tab" ])
                             @endif
                         @endforeach
                     @else

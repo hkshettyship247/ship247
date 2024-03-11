@@ -38,6 +38,9 @@ class CompanyController extends Controller
             'email' => $request->email,
             'country' => $request->country,
             'status' => $request->status,
+			'sea_type' => $request->sea_type,
+			'land_type' => $request->land_type,
+			'air_type' => $request->air_type,
         ];
         $companyQuery = Company::query();
 
@@ -80,7 +83,31 @@ class CompanyController extends Controller
                 $statusQuery->where('status', 'like', '%' . $status . '%');
             });
         }
-
+		
+		if(isset($request->sea_type) && $request->sea_type == true){
+			$companyQuery->where('sea_type', '1');
+			$sea_type=1;
+		}
+		else{
+			$sea_type=0;
+		}
+		
+		if(isset($request->land_type) && $request->land_type == true){
+			$companyQuery->where('land_type', '1');
+			$land_type=1;
+		}
+		else{
+			$land_type=0;
+		}
+		
+		if(isset($request->air_type) && $request->air_type == true){
+			$companyQuery->where('air_type', '1');
+			$air_type=1;
+		}
+		else{
+			$air_type=0;
+		}
+		
         $companies = $companyQuery->latest()->paginate($perPage)->appends($search_criteria);;
 
         $route = null;
@@ -90,7 +117,7 @@ class CompanyController extends Controller
             $route = "employees.";
         }
 
-        return view($route . 'companies.index', compact('companies', 'search', 'name', 'email', 'country', 'status'));
+        return view($route . 'companies.index', compact('companies', 'search', 'name', 'email', 'country', 'status', 'sea_type', 'land_type', 'air_type'));
     }
 
     public function getCompanyDetails(Request $request)
@@ -177,9 +204,32 @@ class CompanyController extends Controller
             'city' => 'required|string|max:255',
 			'assigned_user' => 'required|max:255',
         ]);
-
-        $selected_industries = Industry::whereIn('name', $request->industry)->pluck('name')->toArray();
-
+		
+		if(isset($request->sea_type) && $request->sea_type == true){
+			$sea_type=1;
+		}
+		else{
+			$sea_type=0;
+		}
+		
+		if(isset($request->land_type) && $request->land_type == true){
+			$land_type=1;
+		}
+		else{
+			$land_type=0;
+		}
+		
+		if(isset($request->air_type) && $request->air_type == true){
+			$air_type=1;
+		}
+		else{
+			$air_type=0;
+		}
+		
+        $selected_industries = Industry::whereIn('id', $request->industry)->pluck('name')->toArray();
+		
+		//dd($selected_industries);
+		
         try {
             DB::beginTransaction();
 
@@ -196,6 +246,9 @@ class CompanyController extends Controller
                 ? implode(',', $selected_industries) : '';
             $company->country = $request->country;
             $company->city = $request->city;
+			$company->sea_type = $sea_type;
+			$company->land_type = $land_type;
+			$company->air_type = $air_type;
             $company->website = $request->website;
             $company->description = $request->about;
             $company->industry = is_array($selected_industries) && count($selected_industries)
@@ -252,7 +305,15 @@ class CompanyController extends Controller
                 $user->country = $request->user_country;
                 $user->phone_number = $request->user_phone_number;
                 $user->email = $request->user_email;
+				$user->role_id = config('constants.USER_TYPE_SUPPLIER');
+				$user->position = 'vendor admin';
                 $user->company_id = $companyId;
+				if(isset($request->user_id) && $request->user_id == "new_user"){
+					$user->status = config('constants.USER_STATUS_ACTIVE');
+				}
+				else{
+					$user->status = config('constants.USER_STATUS_INACTIVE');
+				}
                 $user->password = Hash::make($request->password);
             } else {
                 $user = auth()->user();
@@ -268,7 +329,8 @@ class CompanyController extends Controller
         }
 
         DB::commit();
-        return redirect()->route(isset($request->user_id) && $request->user_id == "new_user" ? $route . '.company.create' : 'company.index')->with('success', 'Company details saved successfully.');
+        //return redirect()->route(isset($request->user_id) && $request->user_id == "new_user" ? $route . '.company.create' : 'company.index')->with('success', 'Company details saved successfully.');
+		return redirect()->route($route . '.company.index')->with('success', 'Company details saved successfully.');
     }
 	
 	 /**
@@ -294,7 +356,28 @@ class CompanyController extends Controller
             'city' => 'required|string|max:255',
 			'assigned_user' => 'required|max:255',
         ]);
-
+		
+		if(isset($request->sea_type) && $request->sea_type == true){
+			$sea_type=1;
+		}
+		else{
+			$sea_type=0;
+		}
+		
+		if(isset($request->land_type) && $request->land_type == true){
+			$land_type=1;
+		}
+		else{
+			$land_type=0;
+		}
+		
+		if(isset($request->air_type) && $request->air_type == true){
+			$air_type=1;
+		}
+		else{
+			$air_type=0;
+		}
+		
         $selected_industries = Industry::whereIn('name', $request->industry)->pluck('name')->toArray();
 
         try {
@@ -309,6 +392,9 @@ class CompanyController extends Controller
                 ? implode(',', $selected_industries) : '';
             $company->country = $request->country;
             $company->city = $request->city;
+			$company->sea_type = $sea_type;
+			$company->land_type = $land_type;
+			$company->air_type = $air_type;
             $company->website = $request->website;
             $company->description = $request->about;
             $company->industry = is_array($selected_industries) && count($selected_industries)
@@ -424,6 +510,12 @@ class CompanyController extends Controller
 			$company_details->save();
 		}
 		
+		$company_users = User::where('company_id', $request->companyID)->get();
+        foreach ($company_users as $user) {
+           $user->status = config('constants.USER_STATUS_INACTIVE');
+           $user->save();
+        }
+		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
 		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
         $users = User::where('company_id', $request->companyID)->get();
@@ -449,9 +541,11 @@ class CompanyController extends Controller
 			$company_details->save();
 		}
 		
-		$vendor_user = User::where('company_id', $request->companyID)->where('position', 'vendor admin')->first();
-		$vendor_user->status = config('constants.USER_STATUS_INACTIVE');
-		$vendor_user->save();
+		$company_users = User::where('company_id', $request->companyID)->get();
+        foreach ($company_users as $user) {
+           $user->status = config('constants.USER_STATUS_INACTIVE');
+           $user->save();
+        }
 		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
 		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
@@ -478,9 +572,11 @@ class CompanyController extends Controller
 			$company_details->save();
 		}
 		
-		$vendor_user = User::where('company_id', $request->companyID)->where('position', 'vendor admin')->first();
-		$vendor_user->status = config('constants.USER_STATUS_INACTIVE');
-		$vendor_user->save();
+		$company_users = User::where('company_id', $request->companyID)->get();
+        foreach ($company_users as $user) {
+           $user->status = config('constants.USER_STATUS_INACTIVE');
+           $user->save();
+        }
 		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
 		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
@@ -507,9 +603,11 @@ class CompanyController extends Controller
 			$company_details->save();
 		}
 		
-		$vendor_user = User::where('company_id', $request->companyID)->where('position', 'vendor admin')->first();
-		$vendor_user->status = config('constants.USER_STATUS_ACTIVE');
-		$vendor_user->save();
+		$company_users = User::where('company_id', $request->companyID)->get();
+        foreach ($company_users as $user) {
+           $user->status = config('constants.USER_STATUS_ACTIVE');
+           $user->save();
+        }
 		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
 		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
@@ -535,6 +633,12 @@ class CompanyController extends Controller
 		else{
 			$company_details->save();
 		}
+		
+		$company_users = User::where('company_id', $request->companyID)->get();
+        foreach ($company_users as $user) {
+           $user->status = config('constants.USER_STATUS_ACTIVE');
+           $user->save();
+        }
 		
 		$company_status_history = CompanyStatusHistory::where('company_id', $request->companyID)->latest()->first();
 		$work_with_us_form_detail = WorkWithUsForm::where('id', $company_details->wwuforms_id)->first();
@@ -602,6 +706,11 @@ class CompanyController extends Controller
 
         if ($request->status == config('constants.COMPANY_REGISTRATION_STATUS_APPROVED')) {
             $company->is_activated = 1;
+			$company_users = User::where('company_id', $company->id)->get();
+            foreach ($company_users as $user) {
+                $user->status = config('constants.USER_STATUS_ACTIVE');
+                $user->save();
+            }
         }
 
         if ($request->status == config('constants.COMPANY_REGISTRATION_STATUS_RESUBMIT')) {

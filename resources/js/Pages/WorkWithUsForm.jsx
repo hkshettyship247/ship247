@@ -13,6 +13,9 @@ export default function WorkWithUsForm({industryOptions}) {
     const [isSuccess, setIsSuccess] = useState(false);
     const industrySelectRef = useRef();
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+	const [isSeaCheckboxChecked, setIsSeaCheckboxChecked] = useState(false);
+	const [isLandCheckboxChecked, setIsLandCheckboxChecked] = useState(false);
+	const [isAirCheckboxChecked, setIsAirCheckboxChecked] = useState(false);
     // const industryOptions = [
     //     {label: "Insurance", value: "Insurance"},
     //     {label: "Pre Shipment Inspection Service", value: "Pre Shipment Inspection Service"},
@@ -28,12 +31,70 @@ export default function WorkWithUsForm({industryOptions}) {
         company_name: '',
         industry: [],
 		vendor_terms: '',
+		sea_type: '',
+		land_type: '',
+		air_type: '',
+		mode_type: '',
     });
 	
 	function setVendorTerms(isCheckboxChecked){
 		
 		setIsCheckboxChecked(!isCheckboxChecked);
 		setData('vendor_terms', !isCheckboxChecked);
+		
+	}
+	
+	function setSeaType(isSeaCheckboxChecked, isLandCheckboxChecked, isAirCheckboxChecked){
+		
+		setIsSeaCheckboxChecked(!isSeaCheckboxChecked);
+		data.sea_type = !isSeaCheckboxChecked;
+		
+		if( (!isSeaCheckboxChecked) == true || isLandCheckboxChecked == true || isAirCheckboxChecked == true){
+			setData('mode_type', true);
+			//alert(isSeaCheckboxChecked + " (sea 1) | " + isLandCheckboxChecked + " | " + isAirCheckboxChecked + " | " + data.mode_type);
+			//alert(data.sea_type + " (sea 1) | " + isSeaCheckboxChecked);
+		}
+		else{
+			setData('mode_type', false);
+			//alert(isSeaCheckboxChecked + " (sea 2) | " + isLandCheckboxChecked + " | " + isAirCheckboxChecked + " | " + data.mode_type);
+			//alert(data.sea_type + " (sea 2) | " + isSeaCheckboxChecked);
+		}
+		
+	}
+	
+	function setLandType(isSeaCheckboxChecked, isLandCheckboxChecked, isAirCheckboxChecked){
+		
+		setIsLandCheckboxChecked(!isLandCheckboxChecked);
+		data.land_type = !isLandCheckboxChecked;
+		
+		if(isSeaCheckboxChecked == true || (!isLandCheckboxChecked) == true || isAirCheckboxChecked == true){
+			setData('mode_type', true);
+			//alert(isSeaCheckboxChecked + " (land 1) | " + isLandCheckboxChecked + " | " + isAirCheckboxChecked + " | " + data.mode_type);
+			//alert(data.land_type + " (land 1) | " + isLandCheckboxChecked);
+		}
+		else{
+			setData('mode_type', false);
+			//alert(isSeaCheckboxChecked + " (land 2) | " + isLandCheckboxChecked + " | " + isAirCheckboxChecked + " | " + data.mode_type);
+			//alert(data.land_type + " (land 2) | " + isLandCheckboxChecked);
+		}
+		
+	}
+	
+	function setAirType(isSeaCheckboxChecked, isLandCheckboxChecked, isAirCheckboxChecked){
+		
+		setIsAirCheckboxChecked(!isAirCheckboxChecked);
+		data.air_type = !isAirCheckboxChecked;
+		
+		if(isSeaCheckboxChecked == true || isLandCheckboxChecked == true || (!isAirCheckboxChecked) == true){
+			setData('mode_type', true);
+			//alert(isSeaCheckboxChecked + " (air 1) | " + isLandCheckboxChecked + " | " + isAirCheckboxChecked + " | " + data.mode_type);
+			//alert(data.air_type + " (air 1) | " + isAirCheckboxChecked);
+		}
+		else{
+			setData('mode_type', false);
+			//alert(isSeaCheckboxChecked + " (air 2) | " + isLandCheckboxChecked + " | " + isAirCheckboxChecked + " | " + data.mode_type);
+			//alert(data.air_type + " (air 2) | " + isAirCheckboxChecked);
+		}
 		
 	}
 	
@@ -50,8 +111,11 @@ export default function WorkWithUsForm({industryOptions}) {
             preserveScroll: true,
             onSuccess: () => {
                 setIsSuccess(true);
+				reset();
                 setIsCheckboxChecked(false); // Uncheck the checkbox
-                reset();
+				setIsSeaCheckboxChecked(false); // Uncheck the checkbox
+				setIsLandCheckboxChecked(false); // Uncheck the checkbox
+				setIsAirCheckboxChecked(false); // Uncheck the checkbox
             },
         })
     };
@@ -175,6 +239,56 @@ export default function WorkWithUsForm({industryOptions}) {
                                         />
 
                                         <InputError message={errors.industry} className="mt-2" />{/* <InputError message={} className="mt-2" /> */}
+										
+										<br />
+										<br />
+										<div className="form-field checkbox-field">
+											<div className="checkbox">
+												<input
+													id="sea_type"
+													name="sea_type"
+													type="checkbox"
+													className='form-checkbox'
+													checked={isSeaCheckboxChecked}
+													onChange={() => setSeaType(isSeaCheckboxChecked, isLandCheckboxChecked, isAirCheckboxChecked)} />
+												<span className="text">Sea</span>
+												
+												<InputError message={errors.sea_type} className="mt-2" />
+											</div>
+										</div>
+										<br />
+										<div className="form-field checkbox-field">
+											<div className="checkbox">
+												<input
+													id="land_type"
+													name="land_type"
+													type="checkbox"
+													className='form-checkbox'
+													checked={isLandCheckboxChecked}
+													onChange={() => setLandType(isSeaCheckboxChecked, isLandCheckboxChecked, isAirCheckboxChecked)} />
+												<span className="text">Land</span>
+												
+												<InputError message={errors.land_type} className="mt-2" />
+											</div>
+										</div>
+										<br />
+										<div className="form-field checkbox-field">
+											<div className="checkbox">
+												<input
+													id="air_type"
+													name="air_type"
+													type="checkbox"
+													className='form-checkbox'
+													checked={isAirCheckboxChecked}
+													onChange={() => setAirType(isSeaCheckboxChecked, isLandCheckboxChecked, isAirCheckboxChecked)} />
+												<span className="text">Air</span>
+												
+												<InputError message={errors.air_type} className="mt-2" />
+											</div>
+										</div>
+										
+										<input type="hidden" name="mode_type" value={data.mode_type}/>
+										<InputError message={errors.mode_type} className="mt-2" />
                                     </div>
 
                                     <div className="form-field checkbox-field">

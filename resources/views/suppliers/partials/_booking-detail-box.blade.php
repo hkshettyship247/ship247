@@ -1,6 +1,5 @@
 <div class="detail-box gap-4 relative {{is_null($booking->read_at) ? 'bookings-new' : ''}}">
     <div class="absolute left-4 -top-3">
-        
         @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
             <span class="badge completed small-badge">Completed</span>
         @elseif($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))

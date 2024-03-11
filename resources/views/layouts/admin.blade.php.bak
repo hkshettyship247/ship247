@@ -267,7 +267,19 @@
                         <span>payments</span>
                     </a>
                 </li>
-
+				
+				<li class="{{ Route::currentRouteName() === 'customer.quick-request-forms.index' ? 'active' : '' }}">
+                    <a href="{{route('customer.quick-request-forms.index')}}">
+                        <i class="icon">
+                            <img src="/images/svg/dashboard/payment-icon.svg" alt="">
+                        </i>
+                        <span>
+                            Quick Requests
+                        </span>
+                        @if($anyNewQuickRequestForms) <sup class="text-[10px] block ml-1">new</sup> @endif
+                    </a>
+                </li>
+				
                 <li class="{{ Route::currentRouteName() === 'company.index' ? 'active' : '' }}">
                     <a href="{{route('company.index')}}">
                         <i class="icon">
@@ -966,7 +978,6 @@
     @endif
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
     $('.select-multiple').select2({

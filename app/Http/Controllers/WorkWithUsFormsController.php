@@ -21,6 +21,9 @@ class WorkWithUsFormsController extends Controller
      */
     public function index(Request $request)
     {
+		
+		//dd($request->sea_type." | ".$request->land_type." | ".$request->air_type);
+		
         $work_with_us_forms_query = WorkWithUsForm::query();
 
         $search_criteria = [
@@ -29,6 +32,9 @@ class WorkWithUsFormsController extends Controller
             'company_name' => $request->company_name,
             'contact_number' => $request->contact_number,
             'industry' => $request->industry,
+			'sea_type' => $request->sea_type,
+			'land_type' => $request->land_type,
+			'air_type' => $request->air_type,
         ];
 
         $name = $request->input('name');
@@ -74,6 +80,30 @@ class WorkWithUsFormsController extends Controller
                 $q->where('company_name', 'like', '%' . $company_name . '%');
             });
         }
+		
+		if(isset($request->sea_type) && $request->sea_type == true){
+			$work_with_us_forms_query->where('sea_type', '1');
+			$sea_type=1;
+		}
+		else{
+			$sea_type=0;
+		}
+		
+		if(isset($request->land_type) && $request->land_type == true){
+			$work_with_us_forms_query->where('land_type', '1');
+			$land_type=1;
+		}
+		else{
+			$land_type=0;
+		}
+		
+		if(isset($request->air_type) && $request->air_type == true){
+			$work_with_us_forms_query->where('air_type', '1');
+			$air_type=1;
+		}
+		else{
+			$air_type=0;
+		}
 
         // TODO: Add Filters
         $work_with_us_forms = $work_with_us_forms_query->with('related_assigned_user')->latest()->paginate(self::PER_PAGE);
@@ -87,7 +117,7 @@ class WorkWithUsFormsController extends Controller
             $route = "employees.";
         }
 
-        return view($route.'work_with_us_forms.index', compact('work_with_us_forms',  'name', 'email', 'company_name', 'industry', 'contact_number'));
+        return view($route.'work_with_us_forms.index', compact('work_with_us_forms',  'name', 'email', 'company_name', 'industry', 'contact_number', 'sea_type', 'land_type', 'air_type'));
     }
 
     /**
@@ -123,11 +153,32 @@ class WorkWithUsFormsController extends Controller
     {
 		//dd($updated_form->id);
 		
-		if($request->assigned_user != 'no'){
-			WorkWithUsForm::where('id' , $request->id)->update(['status' => $request->status, 'assigned_user' => $request->assigned_user, 'industry' => (is_array($request->industry) && count($request->industry) ? implode(',', $request->industry) : '')]);
+		if(isset($request->sea_type) && $request->sea_type == true){
+			$sea_type=1;
 		}
 		else{
-			WorkWithUsForm::where('id' , $request->id)->update(['status' => $request->status, 'industry' => (is_array($request->industry) && count($request->industry) ? implode(',', $request->industry) : '')]);
+			$sea_type=0;
+		}
+		
+		if(isset($request->land_type) && $request->land_type == true){
+			$land_type=1;
+		}
+		else{
+			$land_type=0;
+		}
+		
+		if(isset($request->air_type) && $request->air_type == true){
+			$air_type=1;
+		}
+		else{
+			$air_type=0;
+		}
+		
+		if($request->assigned_user != 'no'){
+			WorkWithUsForm::where('id' , $request->id)->update(['status' => $request->status, 'sea_type' => $sea_type, 'land_type' => $land_type, 'air_type' => $air_type, 'assigned_user' => $request->assigned_user, 'industry' => (is_array($request->industry) && count($request->industry) ? implode(',', $request->industry) : '')]);
+		}
+		else{
+			WorkWithUsForm::where('id' , $request->id)->update(['status' => $request->status, 'sea_type' => $sea_type, 'land_type' => $land_type, 'air_type' => $air_type, 'industry' => (is_array($request->industry) && count($request->industry) ? implode(',', $request->industry) : '')]);
 		}
 		
 		if($request->status == config('constants.WORK_WITH_US_FORM_STATUS_ACCEPTED')){ // if form is accepted
@@ -144,7 +195,11 @@ class WorkWithUsFormsController extends Controller
 			$company->business_type = $updated_form->industry;
 			$company->industry = $updated_form->industry;
 			$company->wwuforms_id = $request->id;
-
+			
+			$company->sea_type = $updated_form->sea_type;
+			$company->land_type = $updated_form->land_type;
+			$company->air_type = $updated_form->air_type;
+			
 			$company->country = "";
 			$company->city = "";
 			$company->website = "";
@@ -191,8 +246,11 @@ class WorkWithUsFormsController extends Controller
             'company_name' => ['required', 'max:255'],
             'industry' => ['required', 'array'],
 			'vendor_terms' => ['accepted'],
+			'mode_type' => ['accepted'],
         ]);
-
+		
+		//dd("sea=".$request->sea_type." | land=".$request->land_type." | air=".$request->air_type." | mode=".$request->mode_type);
+		
         $selected_industries = Industry::whereIn('id', $request->industry)->pluck('name')->toArray();
 		$default_users = User::where('role_id', config('constants.USER_TYPE_SUPERADMIN'))->first();
         $form = new WorkWithUsForm;
@@ -200,6 +258,12 @@ class WorkWithUsFormsController extends Controller
         $form->last_name = $request->last_name;
         $form->phone_number = $request->phone_number;
         $form->email = $request->email;
+		if(isset($request->sea_type))
+		$form->sea_type = $request->sea_type;
+		if(isset($request->land_type))
+		$form->land_type = $request->land_type;
+		if(isset($request->air_type))
+		$form->air_type = $request->air_type;
         $form->company_name = $request->company_name;
         $form->industry = is_array($selected_industries) && count($selected_industries)
             ? implode(',', $selected_industries) : '';
