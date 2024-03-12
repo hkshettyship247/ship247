@@ -87,7 +87,8 @@
     }
 
     &.admin-sidebar {
-        background-color: #D23C3C;
+        // background-color: #D23C3C;
+        background-color: --primary-color;
 
         .siderbar-navigation {
             li {
@@ -97,16 +98,22 @@
                 a {
                     color: white;
                     .icon {
-                        background-color: #F14242;
+                        // background-color: #F14242;
+                        background-color: #524177;
                     }
                 }
                 &.active, &:hover {
                     a {
                         color: white;
-                        background-color: #BE2121;
+                        // background-color: #BE2121;
+                        background-color: #433266;
             
                         &:after {
                             background-color: #ffffff;
+                        }
+                        .icon {
+                            // background-color: #F14242;
+                            background-color: --primary-color;
                         }
                     }
                 }
