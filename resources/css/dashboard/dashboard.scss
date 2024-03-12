@@ -9,6 +9,10 @@
 @import '../partials/badge';
 @import '../partials/table';
 
+.hover\:bg-red-600:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
 
 .dashboard-body {
     padding: 30px;
@@ -232,7 +236,8 @@
     &.admin-counter {
         div {
             .count-box {
-                border-color: #D23C3C;
+                // border-color: #D23C3C;
+                border-color: --primary-color;
                 background-color: #FFE6E6;
             }
 
@@ -260,7 +265,7 @@
         }
 
         button:hover, button[aria-selected='true'] {
-            border-color: var(--secondary-color);
+            border-color: var(--third-color);
         }
     }
 }

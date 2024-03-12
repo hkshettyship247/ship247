@@ -105,7 +105,7 @@
                              
                              @if(isset($user->city) && $user->city ==null)
                                 <button type="button" onclick="personalEditMode()"
-                                    class="view-personal-mode text-red-600 primary-font-medium uppercase mt-2">
+                                    class="view-personal-mode text-[#433266] primary-font-medium uppercase mt-2">
                                     <span class="">Add</span>
                                 </button>
                                 @else
@@ -123,7 +123,7 @@
                                 <span class="uppercase text-gray-400 text-xs block">department</span>
                                 @if(isset($user->city) && $user->city ==null)
                                 <button type="button" onclick="personalEditMode()"
-                                    class="view-personal-mode text-red-600 primary-font-medium uppercase mt-2">
+                                    class="view-personal-mode text-[#433266] primary-font-medium uppercase mt-2">
                                     <span class="">Add</span>
                                 </button>
                                 @else

@@ -124,7 +124,7 @@
                             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownScheduleButton">
                                 <li>
                                     <a href="{{route($route_user.'pick-and-delivery-schedules.edit', [$pickAndDeliverySchedule->id])}}"
-                                       class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                       class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                         <span>Edit Details</span>
                                     </a>
                                 </li>
@@ -132,7 +132,7 @@
                                     <form action="{{route($route_user.'pick-and-delivery-schedules.destroy', [$pickAndDeliverySchedule->id])}}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <button class="block px-4 py-2 hover:bg-red-600 hover:text-white w-full text-left" type="submit">Delete</button>
+                                        <button class="block px-4 py-2 hover:bg-[#433266] hover:text-white w-full text-left" type="submit">Delete</button>
                                     </form>
                                 </li>
                             </ul>

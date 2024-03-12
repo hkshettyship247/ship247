@@ -67,7 +67,7 @@
                                         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInvoiceButton">
                                             <li>
                                                 <a href="{{route('superadmin.truck-types.edit', ['truckType' => $truck_type->id])}}"
-                                                   class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                   class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                                     <span>Edit</span>
                                                 </a>
                                             </li>
@@ -77,7 +77,7 @@
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="block px-4 py-2 hover:bg-red-600 hover:text-white text-left w-full" type="submit">Delete</button>
+                                                    <button class="block px-4 py-2 hover:bg-[#433266] hover:text-white text-left w-full" type="submit">Delete</button>
                                                 </form>
                                             </li>
                                         </ul>

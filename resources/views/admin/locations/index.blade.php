@@ -180,7 +180,7 @@
                                     <form action="{{route('superadmin.locations.destroy', $location->id)}}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <button class="block px-4 py-2 w-full text-left hover:bg-red-600 hover:text-white" type="submit">Delete</button>
+                                        <button class="block px-4 py-2 w-full text-left hover:bg-[#433266] hover:text-white" type="submit">Delete</button>
                                     </form>
                                 </li>
                             </ul>

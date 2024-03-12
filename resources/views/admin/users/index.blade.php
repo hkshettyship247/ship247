@@ -129,18 +129,18 @@
                         <div id="dropdownUser{{$user->id}}" class="hidden z-10  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 top-0 right-0">
                             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownUserButton{{$user->id}}">
                                 <li>
-                                    <a href="{{route('superadmin.user.edit', ['userID' => $user->id])}}" class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                    <a href="{{route('superadmin.user.edit', ['userID' => $user->id])}}" class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                         <span>Edit</span>
                                     </a>
                                 </li>
                                 <li>
-                                    {{-- <a href="{{route('superadmin.user.delete', ['userID' => $user->id])}}" class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                    {{-- <a href="{{route('superadmin.user.delete', ['userID' => $user->id])}}" class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                         <span>Delete</span>
                                     </a> --}}
                                     <form action="{{route('superadmin.user.delete', ["userID" =>$user->id])}}" method="post">
                                         @csrf
                                         <input type="hidden" name="_method" value="POST">
-                                        <button class="block px-4 py-2 hover:bg-red-600 hover:text-white" type="submit">Delete</button>
+                                        <button class="block px-4 py-2 hover:bg-[#433266] hover:text-white" type="submit">Delete</button>
                                     </form>
                                 </li>
                             </ul>

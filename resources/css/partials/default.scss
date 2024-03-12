@@ -216,12 +216,12 @@ body {
     }
 
     &.outline-button {
-        border: 1px solid var(--secondary-color);
+        border: 1px solid var(--third-color);
         background-color: transparent;
-        color: var(--secondary-color);
+        color: var(--third-color);
         
         &:after {
-            background-color: var(--secondary-color);
+            background-color: var(--third-color);
         }
 
         &:hover{
