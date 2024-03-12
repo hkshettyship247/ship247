@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import PaymentForm from './PaymentForm';
+// import PaymentForm from './PaymentForm';
 import React, { useState, useEffect } from "react";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -58,14 +58,14 @@ export default function BookingCreated({ booking, stripe_key }) {
                             <div className="text-center">
                                 <a href="/" className='default-button-v2 white mt-10'>Continue to Search!</a>
                             </div>
-                            <div>
+                            {/* <div>
                                 <h1>Make a Payment</h1>
 
                                 <Elements stripe={stripePromise}>
                                     <PaymentForm bookingDetails={booking} onSuccess={handlePaymentSuccess} onFailure={handlePaymentFailure} />
                                 </Elements>
 
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
