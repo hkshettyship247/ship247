@@ -12,7 +12,7 @@
 
     #progressbar li {
         list-style-type: none;
-        color: red;
+        color: #2C1E3F;
         text-transform: uppercase;
         font-size: 9px;
         width: 10%;
@@ -49,7 +49,7 @@
     }
 
     #progressbar li.active:before {
-        background: #D43031;
+        background: #2C1E3F;
         color: white;
         z-index: 2;
         position: relative;
@@ -57,7 +57,7 @@
     }
 
     #progressbar li.active:after {
-        background: #D43031;
+        background: #2C1E3F;
         z-index: 1;
         border: 1px solid;
     }
@@ -148,13 +148,13 @@
 
     .badge.VIEW_IN_PROGRESS {
         background-color: #ffffff !important;
-        border: 1px solid #D43031;
+        border: 1px solid #2C1E3F;
     }
 
     .badge.PAY_IN_PROGRESS {
         color: #ffffff !important;
-        border: 1px solid #D43031;
-        background: #D43031 !important;
+        border: 1px solid #2C1E3F;
+        background: #2C1E3F !important;
     }
 
     @media (min-width: 991px) {
@@ -401,10 +401,10 @@
                     <span>SI CONFIRMED</span>
                 </li>
                 <li class="{{ $booking->status >= config('constants.BOOKING_STATUS_EVGM_SUBMITTED') ? 'active' : '' }}">
-                    <span>EVGM SUBMITTED</span>
+                    <span>VGM SUBMITTED</span>
                 </li>
                 <li class="{{ $booking->status >= config('constants.BOOKING_STATUS_EVGM_CONFIRMED') ? 'active' : '' }}">
-                    <span>EVGM CONFIRMED</span>
+                    <span>VGM CONFIRMED</span>
                 </li>
                 <li
                     class="{{ $booking->status >= config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED') ? 'active' : '' }}">

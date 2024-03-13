@@ -115,6 +115,20 @@
         </div>
     </div>
 
+    <div class="lg:w-2/12 lg:mt-0 mt-4">
+        <div class="flex flex-col gap-4">
+            <div>
+                <span class="head">TRANSPORTATION</span>
+                <span class="value">{{ $booking->transportation }}</span>
+            </div>
+
+            <div>
+                <span class="head">RECEIPT NUMBER</span>
+                <span class="value">{{ $booking->receipt_number ? $booking->receipt_number : '-'  }}</span>
+            </div>
+        </div>
+    </div>
+
     <div class="lg:w-2/12 w-full lg:mt-0 mt-6">
         <div class="flex lg:justify-end items-start h-full">
 

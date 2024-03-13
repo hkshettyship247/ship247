@@ -25,6 +25,7 @@
   --secondary-font-bold: 'Raxtor_Bold';
   --primary-color: #2C1E3F;
   --secondary-color: #D43031;
+  --third-color: #433266;
   --grey-color: #C8C8C8;
   --lgrey-color: #F6F6F6; }
 
@@ -32,7 +33,7 @@
   background-color: var(--primary-color); }
 
 .secondary-bg {
-  background-color: var(--secondary-color); }
+  background-color: var(--primary-color); }
 
 .primary-color, .news-inner-box .category {
   color: var(--primary-color); }
@@ -427,9 +428,9 @@ body {
   .search-panel .search-submit {
     @apply border-0 rounded-md h-[60px] lg:w-[66px] w-full text-center flex items-center justify-center relative right-0 top-0; }
   .search-panel .search-results-sea-form .search-submit {
-    background-color: var(--secondary-color); }
+    background-color: var(--primary-color); }
     .search-panel .search-results-sea-form .search-submit:hover {
-      background-color: var(--secondary-color); }
+      background-color: var(--third-color); }
   .search-panel .search-results-land-form .search-submit {
     background-color: #48C272; }
     .search-panel .search-results-land-form .search-submit:hover {

@@ -29,7 +29,7 @@ createInertiaApp({
                     <div className="primary-header default-container">
                         <div className="flex items-center justify-between">
                             <Link href={route('pages.home')} className="header-logo">
-                                <img src="/images/ship247-logo-beta.svg" alt="" />
+                                <img src="/images/ship247-logo-beta1.svg" alt="" />
                             </Link>
 
                             <a href='#' className='mobile-menu' onClick={toggleMenu}>
