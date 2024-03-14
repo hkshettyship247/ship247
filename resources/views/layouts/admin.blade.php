@@ -838,22 +838,22 @@
                                 <li>
                                     @if(auth()->user()->role_id==1)
                                         <a href="{{route('superadmin.profile')}}"
-                                           class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                           class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                             <span>Profile</span>
                                         </a>
                                     @elseif(auth()->user()->role_id==2)
                                         <a href="{{route('customer.profile')}}"
-                                           class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                           class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                             <span>Profile</span>
                                         </a>
                                     @elseif(auth()->user()->role_id==3)
                                         <a href="{{route('employee.profile')}}"
-                                           class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                           class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                             <span>Profile</span>
                                         </a>
 									@elseif(auth()->user()->role_id==4)
                                         <a href="{{route('supplier.profile')}}"
-                                           class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                           class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                             <span>Profile</span>
                                         </a>
                                     @endif
@@ -861,8 +861,7 @@
                             </ul>
                             <div class="py-2 primary-font-regular">
                                 <a href="/logout"
-                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-600 hover:text-white">Sign
-                                    out</a>
+                                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#433266] hover:text-white">Sign out</a>
                             </div>
                         </div>
                     </div>

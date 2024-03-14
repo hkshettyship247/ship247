@@ -180,7 +180,7 @@ body {
 }
 
 .default-button-v2 {
-    background-color: var(--secondary-color);
+    background-color: var(--third-color);
     @apply text-white uppercase p-4 inline-flex items-center justify-center relative text-sm overflow-hidden min-w-[160px];
     font-family: var(--primary-font-bold);
     border-radius: 40px;
@@ -208,7 +208,7 @@ body {
     }
 
     &:hover{
-        color: var(--secondary-color);
+        color: var(--third-color);
 
         &:after {
             width: 100%;
@@ -216,12 +216,12 @@ body {
     }
 
     &.outline-button {
-        border: 1px solid var(--secondary-color);
+        border: 1px solid var(--third-color);
         background-color: transparent;
-        color: var(--secondary-color);
+        color: var(--third-color);
         
         &:after {
-            background-color: var(--secondary-color);
+            background-color: var(--third-color);
         }
 
         &:hover{

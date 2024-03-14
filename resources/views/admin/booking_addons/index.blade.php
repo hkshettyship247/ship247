@@ -72,7 +72,7 @@
                                         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownAddonsButton">
                                             <li>
                                                 <a href="{{route('superadmin.'.request()->route_type_addition.'-booking-addons.edit', ["booking_addon" =>$booking_addon->id])}}"
-                                                   class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                   class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                                     <span>Edit</span>
                                                 </a>
                                             </li>
@@ -82,7 +82,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button
-                                                        class="block px-4 py-2 hover:bg-red-600 hover:text-white text-left w-full"
+                                                        class="block px-4 py-2 hover:bg-[#433266] hover:text-white text-left w-full"
                                                         type="submit">Delete
                                                     </button>
                                                 </form>

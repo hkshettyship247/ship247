@@ -144,7 +144,7 @@
                                             aria-labelledby="dropdownUserButton{{$customer->id}}">
                                             <li>
                                                 <a href="{{route('superadmin.customer.detail', ['customerID' => $customer->id])}}"
-                                                   class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                   class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                                     <span>View</span>
                                                 </a>
                                             </li>
@@ -154,7 +154,7 @@
                                                     method="post">
                                                     @csrf
                                                     <input type="hidden" name="_method" value="POST">
-                                                    <button class="block px-4 py-2 hover:bg-red-600 hover:text-white"
+                                                    <button class="block px-4 py-2 hover:bg-[#433266] hover:text-white"
                                                             type="submit">Delete
                                                     </button>
                                                 </form>

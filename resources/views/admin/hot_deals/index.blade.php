@@ -97,7 +97,7 @@
                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 top-0 right-0">
                             <ul class="py-2 text-sm text-gray-700" aria-labelledby="hotDealButton">
                                 <li>
-                                    <a href="{{route('superadmin.'.request()->route_type_addition.'-hot-deals.edit', ['hot_deal' => $hot_deal->id])}}" class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                    <a href="{{route('superadmin.'.request()->route_type_addition.'-hot-deals.edit', ['hot_deal' => $hot_deal->id])}}" class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                         <span>Edit</span>
                                     </a>
                                 </li>
@@ -105,7 +105,7 @@
                                     <form action="{{route('superadmin.'.request()->route_type_addition.'-hot-deals.destroy', ["hot_deal" =>$hot_deal->id])}}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="block px-4 py-2 hover:bg-red-600 hover:text-white" type="submit">Delete</button>
+                                        <button class="block px-4 py-2 hover:bg-[#433266] hover:text-white" type="submit">Delete</button>
                                     </form>
                                 </li>
                             </ul>

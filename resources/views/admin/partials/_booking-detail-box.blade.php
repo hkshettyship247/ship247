@@ -115,6 +115,20 @@
         </div>
     </div>
 
+    <div class="lg:w-2/12 lg:mt-0 mt-4">
+        <div class="flex flex-col gap-4">
+            <div>
+                <span class="head">TRANSPORTATION</span>
+                <span class="value">{{ $booking->transportation }}</span>
+            </div>
+
+            <div>
+                <span class="head">RECEIPT NUMBER</span>
+                <span class="value">{{ $booking->receipt_number ? $booking->receipt_number : '-'  }}</span>
+            </div>
+        </div>
+    </div>
+
     <div class="lg:w-2/12 w-full lg:mt-0 mt-6">
         <div class="flex lg:justify-end items-start h-full">
 
@@ -135,14 +149,14 @@
                 <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInvoiceButton-{{$booking->id}}{{isset($tab) ? '-'.$tab : ''}}">
                     <li>
                         <a href="{{ route('superadmin.bookings.edit', [$booking->id]) }}"
-                            class="block px-4 py-2 hover:bg-red-600 hover:text-white">Edit </a>
+                            class="block px-4 py-2 hover:bg-[#433266] hover:text-white">Edit </a>
                     </li>
                     <li>
                         <a href="{{ route('superadmin.bookings.show', [$booking->id]) }}"
-                            class="block px-4 py-2 hover:bg-red-600 hover:text-white">View Details</a>
+                            class="block px-4 py-2 hover:bg-[#433266] hover:text-white">View Details</a>
                     </li>
                     <li>
-                        <a target="_blank" href="{{route('superadmin.generate.pdf.invoice', ['bookingID' => $booking->id])}}" class="block px-4 py-2 hover:bg-red-600 hover:text-white">Invoice</a>
+                        <a target="_blank" href="{{route('superadmin.generate.pdf.invoice', ['bookingID' => $booking->id])}}" class="block px-4 py-2 hover:bg-[#433266] hover:text-white">Invoice</a>
                     </li>
                 </ul>
             </div>

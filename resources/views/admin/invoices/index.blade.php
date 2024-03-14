@@ -131,13 +131,13 @@
                                         aria-labelledby="dropdownInvoiceButton{{$payment->id}}">
                                         <li>
                                             <a href="{{route('superadmin.booking.invoice', ['paymentID' => $payment->id])}}"
-                                                class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                                 <span>View Details</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="{{route('superadmin.booking.invoice', ['paymentID' => $payment->id])}}"
-                                                class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                                 <span>Invoice</span>
                                             </a>
                                         </li>
@@ -232,13 +232,13 @@
                                     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInvoiceButton">
                                         <li>
                                             <a href="{{route('superadmin.booking.invoice', ['paymentID' => $payment->id])}}"
-                                                class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                                 <span>View Details</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="{{route('superadmin.booking.invoice', ['paymentID' => $payment->id])}}"
-                                                class="block px-4 py-2 hover:bg-red-600 hover:text-white">
+                                                class="block px-4 py-2 hover:bg-[#433266] hover:text-white">
                                                 <span>Invoice</span>
                                             </a>
                                         </li>
