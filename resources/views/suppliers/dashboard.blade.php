@@ -7,7 +7,17 @@ $bookingData = $data["bookings"]->toArray();
 $bookings =  $data["bookings"];
 
 $inProgressBookingsCount = count(array_filter($bookingData, function ($booking) {
-    return $booking['status'] === config('constants.BOOKING_STATUS_IN_PROGRESS') ;
+    $inProgressStatuses = [
+        config('constants.BOOKING_STATUS_IN_PROGRESS'),
+        config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+        config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+        config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+        config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+        config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+        config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+    ];
+    
+    return in_array($booking['status'], $inProgressStatuses);
 }));
 
 $cancelledBookingsCount = count(array_filter($bookingData, function ($booking) {
@@ -19,7 +29,7 @@ $onHoldBookingsCount = count(array_filter($bookingData, function ($booking) {
 }));
 
 $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
-    return $booking['status'] ===config('constants.BOOKING_STATUS_COMPLETED');
+        return ($booking['status'] === config('constants.BOOKING_STATUS_COMPLETED') || $booking['status'] === config('constants.BOOKING_STATUS_FINISHED'));
 }));
 
 
