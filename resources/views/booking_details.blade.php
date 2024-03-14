@@ -494,11 +494,455 @@
                         <div class="detail-body">
                             @if(isset($booking))
                             <div class="p-4 rounded-lg bg-gray-50">
-                                <p class="text-sm text-gray-500">No shipping information found</p>
+
+                                 <div class="card-shipping pb-5">
+                                     <div class="card-title">
+                                         <h2>Documentation</h2>
+                                     </div>
+                                     <div class="card-body">
+                                         <div class="title-sec">
+                                             <p>Transport Document Receiver</p>
+                                         </div>
+                                         <div class="address-sec">
+                                            <div class="address-info">
+                                                <div class="left-content">
+                                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
+                                                    <a href="#" class="number">**********905</a>
+                                                    <a href="#" class="link">Change</a>
+                                                </div>  
+                                                <div class="action-btn">
+                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
+                                                    </div>
+                                                </div>
+                                                <div class="address-info border-0">
+                                                <div class="left-content">
+                                                    <p> <strong> Company name and address </strong></p>
+                                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
+                                                    <br>TOURIST CLUB AREA
+                                                    <br>ABU DHABI</p>
+                                                    <p>United Arab Emirates</p>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                     </div>
+                                 </div>
+
+                                 <div class="card-shipping pb-5">
+                                     <div class="card-title">
+                                         <h4 class="pb-0"><span>Document Type</span></h4>
+                                     </div>
+                                     <div class="tabbing">
+                                         <div class="mb-8 border-b border-gray-200">
+                                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                                                <li class="mr-2" role="presentation">
+                                                    <button class="inline-block p-4 pb-2 rounded-t-lg text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500" id="waybill-tab" data-tabs-target="#waybill" type="button" role="tab" aria-controls="all" aria-selected="true">Waybill</button>
+                                                </li>
+                                                <li class="mr-2" role="presentation">
+                                                    <button class="inline-block p-4 pb-2 rounded-t-lg hover:text-gray-600 dark:border-transparent text-gray-500 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" id="lading-tab" data-tabs-target="#lading" type="button" role="tab" aria-controls="lading" aria-selected="false">Bill Of Lading</button>
+                                                </li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                        <div id="myTabContent">
+                                            <div class="" id="waybill" role="tabpanel" aria-labelledby="all-tab">
+                                                <div class="detail-body">
+                                                     <div class="rounded-lg bg-gray-50">
+                                                        <form class="wayfill" id="" action=""> 
+                                                            <div class="form-group mb-4">
+                                                                <input type="radio" id="1" name="" value="1">
+                                                                <label for="1">Shipped on Board</label>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="radio" id="2" name="" value="2">
+                                                                <label for="2">Received for Shipment</label>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="hidden" id="lading" role="tabpanel" aria-labelledby="lading-tab">
+                                                <p class="text-sm text-gray-500">Show all uncleared list1</p>
+                                            </div>
+                                        </div>
+                                 </div>
+
+                                 <div class="card-shipping pb-5">
+                                       <div class="card-title">
+                                         <h4><span>Vessel and Location Aliases on B/L</span></h4>
+                                       </div>
+                                        <div class="rounded-lg bg-gray-50">
+                                                <p class="pb-2"><strong>Vessel</strong></p>
+                                                <form class="wayfill" id="" action=""> 
+                                                    <div class="form-group mb-4">
+                                                        <input type="radio" id="3" name="" value="3">
+                                                        <label for="3">MSC ISABELLA(PA)/401E (First Load Port)</label>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="Locationaliases">
+                                                <p class="pb-2"><strong>Location Aliases</strong></p>
+                                                <div class="LocationaRow gap-4">
+                                                     <div class="w-3/12">
+                                                         <div class="Locationcolumn rounded-lg">
+                                                            <form class="Locationform" id="" action=""> 
+                                                                <label>Place of Receipt</label>
+                                                                <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
+                                                                    <option value="">Select</option>
+                                                                    <option value="d">1 </option>
+                                                                    <option value="d">2 </option>
+                                                                    <option value="d">3 </option>
+                                                                    <option value="d">4 </option>
+                                                                </select>
+                                                            </form>
+                                                             <div class="Aliasesbottom">
+                                                                <p>Appointment <span><strong>20 Dec 2023 01:00</strong> </span></p>
+                                                             </div>
+                                                          </div>
+                                                     </div>
+                                                     <div class="w-3/12">
+                                                         <div class="Locationcolumn rounded-lg">
+                                                            <form class="Locationform" id="" action=""> 
+                                                                <label>Load Port</label>
+                                                                <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
+                                                                    <option value="">Select</option>
+                                                                    <option value="d">1 </option>
+                                                                    <option value="d">2 </option>
+                                                                    <option value="d">3 </option>
+                                                                    <option value="d">4 </option>
+                                                                </select>
+                                                            </form>
+                                                             <div class="Aliasesbottom">
+                                                                <p>Departing <span><strong>17 Jan 2024 01:00</strong> </span></p>
+                                                             </div>
+                                                          </div>
+                                                     </div>
+                                                     <div class="w-3/12">
+                                                         <div class="Locationcolumn rounded-lg">
+                                                            <form class="Locationform" id="" action=""> 
+                                                                <label>Port of Discharge</label>
+                                                                <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
+                                                                    <option value="">Select</option>
+                                                                    <option value="d">1 </option>
+                                                                    <option value="d">2 </option>
+                                                                    <option value="d">3 </option>
+                                                                    <option value="d">4 </option>
+                                                                </select>
+                                                            </form>
+                                                             <div class="Aliasesbottom">
+                                                                <p>Arriving <span><strong>29 Dec 2024 18:00</strong> </span></p>
+                                                             </div>
+                                                          </div>
+                                                     </div>
+                                                   
+                                                 </div>
+                                            </div>
+                                     </div>
+                                
+                                   <div class="card-shipping pb-5">
+                                        <div class="card-title">
+                                            <h4><span>Documentation Request </span></h4>
+                                        </div>
+                                        <div class="Documentation-request">
+                                            <div class="sec-title">
+                                            <p><strong>Free detention and demurrage time</strong></p>
+                                               <p>The number of free days of detention/demurrage application to your shipment before charges are applicable.</p>
+                                            </div>
+                                            <div class="DocumentationRow">
+                                                <div class="leftcolumn">
+                                                    <fieldset class="px-0">
+                                                        <div class="inline-flex">
+                                                            <input class="hidden" type="radio" id="no" value="no" name="gender" />
+                                                            <label class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 cursor-pointer rounded-l" for="no">No</label>
+                                                            <input class="hidden" type="radio" id="yes" value="yes" name="gender" checked />
+                                                            <label class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 cursor-pointer rounded-r" for="yes">Yes</label>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="rightcolumn">
+                                                    <h5 class="pb-3"><b>Number of free days:</b></h5>
+                                                    <form class="formbox" id="" action="" >
+                                                        <div class="form-check">
+                                                             <label class="form-check-label" for="flexCheckDefault">
+                                                                applicable free time 11 days combined (detention and demurrage) at (port of discharge / place of delivery) 
+                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        </div>
+                                                        <div class="form-check">
+                                                             <label class="form-check-label" for="flexCheckDefault1">
+                                                                 applicable free time 0 days detention at demurrage (port of discharge / place of delivery) 
+                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                                                        </div>
+                                                        <div class="form-check">
+                                                             <label class="form-check-label" for="flexCheckDefault2">
+                                                                 applicable free time 0 days detention at demurrage (port of discharge / place of delivery) 
+                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                                                        </div>
+                                                        <div class="form-check">
+                                                             <label class="form-check-label" for="flexCheckDefault3">
+                                                                 applicable free time 0 days detention at demurrage (port of discharge / place of delivery) 
+                                                            </label>
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+                                                        </div>
+                                                     </form>
+                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="Documentation-request">
+                                            <div class="sec-title">
+                                               <p><strong>Agent details on BL </strong></p>
+                                               <p>Do you want Maersk Agent details at destination to be printed on BL.</p>
+                                            </div>
+                                            <div class="DocumentationRow">
+                                                <div class="leftcolumn">
+                                                    <fieldset class="px-0">
+                                                        <div class="inline-flex">
+                                                            <input class="hidden" type="radio" id="no2" value="no2" name="no2" checked />
+                                                            <label class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 cursor-pointer rounded-l" for="no2">No</label>
+                                                            <input class="hidden" type="radio" id="yes2" value="yes2" name="yes2" />
+                                                            <label class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 cursor-pointer rounded-r" for="yes2">Yes</label>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="rightcolumn">
+                                                   
+                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="Documentation-request">
+                                            <div class="sec-title">
+                                                <p><strong>In-transit</strong></p>
+                                               <p>The In-transit clause below will be include on the BL.</p>
+                                            </div>
+                                            <div class="DocumentationRow">
+                                                <div class="leftcolumn">
+                                                    <fieldset class="px-0">
+                                                        <div class="inline-flex">
+                                                            <input class="hidden" type="radio" id="no3" value="no3" name="no3" checked />
+                                                            <label class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 cursor-pointer rounded-l" for="no3">No</label>
+                                                            <input class="hidden" type="radio" id="yes3" value="yes3" name="yes3" />
+                                                            <label class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 cursor-pointer rounded-r" for="yes3">Yes</label>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="rightcolumn">
+                                                   
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                              
+
+                                    <div class="card-shipping pb-5">
+                                        <div class="card-title">
+                                            <h4><span>Parties </span></h4>
+                                        </div>
+                                        <div class="parties-section">
+                                            <div class="parties-row">
+                                                <div class="w-4/12">
+                                                    <div class="card-body">
+                                                        <div class="title-sec">
+                                                            <p>Shipper</p>
+                                                        </div>
+                                                        <div class="address-sec">
+                                                            <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
+                                                                    <a href="#" class="number">**********905</a>
+                                                                    <a href="#" class="link">Change</a>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
+                                                                    </div>
+                                                             </div>
+                                                             <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <p> <strong> Company name and address </strong></p>
+                                                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
+                                                                    <br>TOURIST CLUB AREA
+                                                                    <br>ABU DHABI</p>
+                                                                    <p>United Arab Emirates</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                             <div class="address-info border-0">
+                                                                <div class="left-content">
+                                                                    <p>References</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-4/12">
+                                                    <div class="card-body">
+                                                        <div class="title-sec">
+                                                            <p>Consignee</p>
+                                                        </div>
+                                                        <div class="address-sec">
+                                                            <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
+                                                                    <a href="#" class="number">**********905</a>
+                                                                    <a href="#" class="link">Change</a>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
+                                                                    </div>
+                                                             </div>
+                                                             <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <p> <strong> Company name and address </strong></p>
+                                                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
+                                                                    <br>TOURIST CLUB AREA
+                                                                    <br>ABU DHABI</p>
+                                                                    <p>United Arab Emirates</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                             <div class="address-info border-0">
+                                                                <div class="left-content">
+                                                                    <p>References</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-4/12">
+                                                    <div class="card-body">
+                                                        <div class="title-sec">
+                                                            <p>First Notity Party</p>
+                                                        </div>
+                                                        <div class="address-sec">
+                                                            <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
+                                                                    <a href="#" class="number">**********905</a>
+                                                                    <a href="#" class="link">Change</a>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
+                                                                    </div>
+                                                             </div>
+                                                             <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <p> <strong> Company name and address </strong></p>
+                                                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
+                                                                    <br>TOURIST CLUB AREA
+                                                                    <br>ABU DHABI</p>
+                                                                    <p>United Arab Emirates</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                             <div class="address-info border-0">
+                                                                <div class="left-content">
+                                                                    <p>References</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-shipping pb-5">
+                                        <div class="card-title">
+                                            <h4><span>Additional Parties (Optional)</span></h4>
+                                        </div>
+                                        <div class="parties-section">
+                                            <div class="parties-row">
+                                                <div class="w-4/12">
+                                                    <div class="card-body">
+                                                        <div class="title-sec text-center">
+                                                            <p><svg class="inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg> Additional notify party</p>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="w-4/12">
+                                                    <div class="card-body">
+                                                        <div class="title-sec">
+                                                            <p>Outward Forwarder</p>
+                                                        </div>
+                                                        <div class="address-sec">
+                                                            <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
+                                                                    <a href="#" class="number">**********905</a>
+                                                                    <a href="#" class="link">Change</a>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></a>
+                                                                    </div>
+                                                             </div>
+                                                             <div class="address-info">
+                                                                <div class="left-content">
+                                                                    <p> <strong> Company name and address </strong></p>
+                                                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
+                                                                    <br>TOURIST CLUB AREA
+                                                                    <br>ABU DHABI</p>
+                                                                    <p>United Arab Emirates</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                             <div class="address-info border-0">
+                                                                <div class="left-content">
+                                                                    <p>References</p>
+                                                               </div>  
+                                                                <div class="action-btn">
+                                                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                                                                </div>
+                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="w-4/12">
+                                                    <div class="card-body">
+                                                        <div class="title-sec text-center">
+                                                        <p><svg class="inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg> Inward forwarner </p>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card-shipping pb-5">
+                                        <div class="card-title">
+                                            <h4><span>Booked commodity: Fertilizer</span></h4>
+                                        </div>
+                                    </div>
+
                             </div>
                             @endif
                         </div>
-                    </div>
+                  
 
                     <div class="hidden" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                         <div class="detail-body">
