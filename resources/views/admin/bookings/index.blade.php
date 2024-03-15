@@ -6,7 +6,17 @@
 $bookingData = $bookings->toArray();
 
 $inProgressBookingsCount = count(array_filter($bookingData, function ($booking) {
-    return $booking['status'] === config('constants.BOOKING_STATUS_IN_PROGRESS') ;
+    $inProgressStatuses = [
+        config('constants.BOOKING_STATUS_IN_PROGRESS'),
+        config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+        config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+        config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+        config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+        config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+        config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+    ];
+    
+    return in_array($booking['status'], $inProgressStatuses);
 }));
 
 $cancelledBookingsCount = count(array_filter($bookingData, function ($booking) {
@@ -18,7 +28,7 @@ $onHoldBookingsCount = count(array_filter($bookingData, function ($booking) {
 }));
 
 $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
-    return $booking['status'] ===config('constants.BOOKING_STATUS_COMPLETED');
+    return ($booking['status'] === config('constants.BOOKING_STATUS_COMPLETED') || $booking['status'] === config('constants.BOOKING_STATUS_FINISHED'));
 }));
 ?>
 <section class="shadow-box mt-8">
@@ -172,7 +182,15 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                 <div class="detail-body">
                     @if(isset($bookings) && count($bookings)> 0 && $inProgressBookingsCount > 0)
                         @foreach ($bookings as $booking)
-                            @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS') )
+                            @if(in_array($booking->status, [
+                                config('constants.BOOKING_STATUS_IN_PROGRESS'),
+                                config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+                                config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+                                config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+                                config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+                                config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+                                config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+                            ]))
                                 @include('admin.partials._booking-detail-box', ['booking' => $booking, 'tab' => "inprogress-tab"])
                             @endif
                         @endforeach
@@ -188,7 +206,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                 <div class="detail-body">
                     @if(isset($bookings) && count($bookings)> 0 && $completedBookingsCount > 0)
                         @foreach ($bookings as $booking)
-                            @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
+                            @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') || $booking->status == config('constants.BOOKING_STATUS_FINISHED'))
                                 @include('admin.partials._booking-detail-box', ['booking' => $booking, 'tab' => "completed-tab"])
                             @endif
                         @endforeach

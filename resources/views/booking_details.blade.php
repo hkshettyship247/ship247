@@ -53,7 +53,7 @@
         color: white;
         z-index: 2;
         position: relative;
-        border-color: #FFCECE;
+        border-color: #524177;
     }
 
     #progressbar li.active:after {

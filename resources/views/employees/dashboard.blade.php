@@ -166,7 +166,15 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                 <div class="detail-body">
                     @if(isset($bookings) && count($bookings)> 0 && $inProgressBookingsCount > 0)
                         @foreach ($bookings as $booking)
-                            @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
+                            @if(in_array($booking->status, [
+                                config('constants.BOOKING_STATUS_IN_PROGRESS'),
+                                config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+                                config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+                                config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+                                config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+                                config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+                                config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+                            ]))
                                 @include('employees.partials._booking-detail-box', ['booking' => $booking, 'tab' => 'inprogress-tab'])
                             @endif
                         @endforeach
@@ -182,7 +190,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                 <div class="detail-body">
                     @if(isset($bookings) && count($bookings)> 0 && $completedBookingsCount > 0)
                         @foreach ($bookings as $booking)
-                            @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
+                            @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') || $booking->status == config('constants.BOOKING_STATUS_FINISHED'))
                                 @include('employees.partials._booking-detail-box', ['booking' => $booking, 'tab' => 'completed-tab'])
                             @endif
                         @endforeach

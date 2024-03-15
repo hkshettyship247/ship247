@@ -1,14 +1,63 @@
 <div class="detail-box gap-4 relative {{is_null($booking->read_at) ? 'bookings-new' : ''}}">
+    @php
+        $bookingStatusOptions = [
+            'BOOKING_STATUS_IN_PROGRESS' => config('constants.BOOKING_STATUS_IN_PROGRESS'),
+            'BOOKING_STATUS_COMPLETED' => config('constants.BOOKING_STATUS_COMPLETED'),
+            'BOOKING_STATUS_ON_HOLD' => config('constants.BOOKING_STATUS_ON_HOLD'),
+            'BOOKING_STATUS_CANCELLED' => config('constants.BOOKING_STATUS_CANCELLED'),
+            'BOOKING_STATUS_CONFIRMED' => config('constants.BOOKING_STATUS_CONFIRMED'),
+            'BOOKING_STATUS_SI_SUBMITTED' => config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+            'BOOKING_STATUS_SI_CONFIRMED' => config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+            'BOOKING_STATUS_EVGM_SUBMITTED' => config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+            'BOOKING_STATUS_EVGM_CONFIRMED' => config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+            'BOOKING_STATUS_DRAFT_BL_RECEIVED' => config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+            'BOOKING_STATUS_DRAFT_BL_CONFIRMED' => config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+            'BOOKING_STATUS_FINISHED' => config('constants.BOOKING_STATUS_FINISHED'),
+        ];
+    @endphp
     <div class="absolute left-4 -top-3">
-        @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
-            <span class="badge completed small-badge">Completed</span>
-        @elseif($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
-            <span class="badge progress small-badge">In-Progress</span>
-        @elseif($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
-            <span class="badge cancel small-badge">Cancelled</span>
-        @elseif($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
-            <span class="badge hold small-badge">On-hold</span>
-        @endif
+        @foreach($bookingStatusOptions as $statusKey => $statusValue)
+            @if($booking->status == $statusValue)
+                @switch($statusKey)
+                    @case('BOOKING_STATUS_IN_PROGRESS')
+                        <span class="badge progress small-badge">In-Progress</span>
+                        @break
+                    @case('BOOKING_STATUS_COMPLETED')
+                        <span class="badge completed small-badge">Completed</span>
+                        @break
+                    @case('BOOKING_STATUS_ON_HOLD')
+                        <span class="badge hold small-badge">On-hold</span>
+                        @break
+                    @case('BOOKING_STATUS_CANCELLED')
+                        <span class="badge cancel small-badge">Cancelled</span>
+                        @break
+                    @case('BOOKING_STATUS_CONFIRMED')
+                        <span class="badge progress confirmed small-badge">Confirmed</span>
+                        @break
+                    @case('BOOKING_STATUS_SI_SUBMITTED')
+                        <span class="badge progress submitted small-badge">SI Submitted</span>
+                        @break
+                    @case('BOOKING_STATUS_SI_CONFIRMED')
+                        <span class="badge progress confirmed small-badge">SI Confirmed</span>
+                        @break
+                    @case('BOOKING_STATUS_EVGM_SUBMITTED')
+                        <span class="badge progress submitted small-badge">VGM Submitted</span>
+                        @break
+                    @case('BOOKING_STATUS_EVGM_CONFIRMED')
+                        <span class="badge progress confirmed small-badge">VGM Confirmed</span>
+                        @break
+                    @case('BOOKING_STATUS_DRAFT_BL_RECEIVED')
+                        <span class="badge progress received small-badge">Draft BL Received</span>
+                        @break
+                    @case('BOOKING_STATUS_DRAFT_BL_CONFIRMED')
+                        <span class="badge progress confirmed small-badge">Draft BL Confirmed</span>
+                        @break
+                    @case('BOOKING_STATUS_FINISHED')
+                        <span class="badge defualt finished small-badge">Finished</span>
+                        @break
+                @endswitch
+            @endif
+        @endforeach
     </div>
 
     <div class="lg:w-2/12 lg:mb-0 mb-4">

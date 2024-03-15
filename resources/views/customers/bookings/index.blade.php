@@ -6,7 +6,17 @@
 $bookingData = $bookings->toArray();
 
 $inProgressBookingsCount = count(array_filter($bookingData, function ($booking) {
-    return $booking['status'] === config('constants.BOOKING_STATUS_IN_PROGRESS') ;
+    $inProgressStatuses = [
+        config('constants.BOOKING_STATUS_IN_PROGRESS'),
+        config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+        config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+        config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+        config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+        config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+        config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+    ];
+    
+    return in_array($booking['status'], $inProgressStatuses);
 }));
 
 $cancelledBookingsCount = count(array_filter($bookingData, function ($booking) {
@@ -18,7 +28,7 @@ $onHoldBookingsCount = count(array_filter($bookingData, function ($booking) {
 }));
 
 $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
-    return $booking['status'] ===config('constants.BOOKING_STATUS_COMPLETED');
+    return ($booking['status'] === config('constants.BOOKING_STATUS_COMPLETED') || $booking['status'] === config('constants.BOOKING_STATUS_FINISHED'));
 }));
 
 ?>
@@ -40,7 +50,6 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
         </header>
 		
 		<section class="search-result mt-8 mb-12">
-
             <form class="default-form" action="{{ route('customer.bookings.index') }}" method="GET">
 
                 <div class="flex lg:items-end items-start lg:flex-row flex-col lg:gap-6 gap-4">
@@ -96,30 +105,29 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
 				
 				<br />
 				<div class="3xl:w-3/12 w-full">
-                        <div class="form-field">
-                            <label for="industry" class="text-xs uppercase text-gray-400">Transportation</label>
-							<br />
-							<label for="sea" class="text-xs uppercase text-gray-400">Sea</label>
-							@if($sea_type == 1)
-								<input type="checkbox" id="sea_type" name="sea_type" checked />
-							@else
-								<input type="checkbox" id="sea_type" name="sea_type" />
-							@endif
-							<label for="land" class="text-xs uppercase text-gray-400">Land</label>
-							@if($land_type == 1)
-								<input type="checkbox" id="land_type" name="land_type" checked />
-							@else
-								<input type="checkbox" id="land_type" name="land_type" />
-							@endif
-							<label for="air" class="text-xs uppercase text-gray-400">Air</label>
-							@if($air_type == 1)
-								<input type="checkbox" id="air_type" name="air_type" checked />
-							@else
-								<input type="checkbox" id="air_type" name="air_type" />
-							@endif	
-                        </div>
+                    <div class="form-field">
+                        <label for="industry" class="text-xs uppercase text-gray-400">Transportation</label>
+                        <br />
+                        <label for="sea" class="text-xs uppercase text-gray-400">Sea</label>
+                        @if($sea_type == 1)
+                            <input type="checkbox" id="sea_type" name="sea_type" checked />
+                        @else
+                            <input type="checkbox" id="sea_type" name="sea_type" />
+                        @endif
+                        <label for="land" class="text-xs uppercase text-gray-400">Land</label>
+                        @if($land_type == 1)
+                            <input type="checkbox" id="land_type" name="land_type" checked />
+                        @else
+                            <input type="checkbox" id="land_type" name="land_type" />
+                        @endif
+                        <label for="air" class="text-xs uppercase text-gray-400">Air</label>
+                        @if($air_type == 1)
+                            <input type="checkbox" id="air_type" name="air_type" checked />
+                        @else
+                            <input type="checkbox" id="air_type" name="air_type" />
+                        @endif	
                     </div>
-					
+                </div>	
             </form>
         </section>
 		
@@ -154,524 +162,111 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
                 </ul>
             </div>
         </div>
-
+        @php
+            $bookingStatusOptions = [
+                'BOOKING_STATUS_IN_PROGRESS' => config('constants.BOOKING_STATUS_IN_PROGRESS'),
+                'BOOKING_STATUS_COMPLETED' => config('constants.BOOKING_STATUS_COMPLETED'),
+                'BOOKING_STATUS_ON_HOLD' => config('constants.BOOKING_STATUS_ON_HOLD'),
+                'BOOKING_STATUS_CANCELLED' => config('constants.BOOKING_STATUS_CANCELLED'),
+                'BOOKING_STATUS_CONFIRMED' => config('constants.BOOKING_STATUS_CONFIRMED'),
+                'BOOKING_STATUS_SI_SUBMITTED' => config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+                'BOOKING_STATUS_SI_CONFIRMED' => config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+                'BOOKING_STATUS_EVGM_SUBMITTED' => config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+                'BOOKING_STATUS_EVGM_CONFIRMED' => config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+                'BOOKING_STATUS_DRAFT_BL_RECEIVED' => config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+                'BOOKING_STATUS_DRAFT_BL_CONFIRMED' => config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+                'BOOKING_STATUS_FINISHED' => config('constants.BOOKING_STATUS_FINISHED'),
+            ];
+        @endphp
         <div id="myTabContent">
             <div class="" id="all" role="tabpanel" aria-labelledby="all-tab">
                 <div class="detail-body">
-                    @php
-                        $bookingStatusOptions = [
-                            'BOOKING_STATUS_IN_PROGRESS' => config('constants.BOOKING_STATUS_IN_PROGRESS'),
-                            'BOOKING_STATUS_COMPLETED' => config('constants.BOOKING_STATUS_COMPLETED'),
-                            'BOOKING_STATUS_ON_HOLD' => config('constants.BOOKING_STATUS_ON_HOLD'),
-                            'BOOKING_STATUS_CANCELLED' => config('constants.BOOKING_STATUS_CANCELLED'),
-                            'BOOKING_STATUS_CONFIRMED' => config('constants.BOOKING_STATUS_CONFIRMED'),
-                            'BOOKING_STATUS_SI_SUBMITTED' => config('constants.BOOKING_STATUS_SI_SUBMITTED'),
-                            'BOOKING_STATUS_SI_CONFIRMED' => config('constants.BOOKING_STATUS_SI_CONFIRMED'),
-                            'BOOKING_STATUS_EVGM_SUBMITTED' => config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
-                            'BOOKING_STATUS_EVGM_CONFIRMED' => config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
-                            'BOOKING_STATUS_DRAFT_BL_RECEIVED' => config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
-                            'BOOKING_STATUS_DRAFT_BL_CONFIRMED' => config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
-                            'BOOKING_STATUS_FINISHED' => config('constants.BOOKING_STATUS_FINISHED'),
-                        ];
-                    @endphp
                     @if(isset($bookings) && count($bookings)> 0)
-                    @foreach ($bookings as $booking)
-                    <div class="detail-box">
-                        <div class="w-2/12">
-                            <div class="flex flex-col gap-4">
-                                <div>
-                                    <span class="head">Booking ID</span>
-                                    <span class="value">{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }} </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="w-3/12">
-                            <div class="flex flex-col gap-4">
-                                <div>
-                                    <span class="head">from</span>
-                                    <span class="value">{{isset($booking->origin->fullname) ? $booking->origin->fullname : ''}}</span>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="w-3/12">
-                            <div class="flex flex-col gap-4">
-                                <div>
-                                    <span class="head">to</span>
-                                    <span class="value">{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="w-2/12">
-                            <div class="flex flex-col gap-4">
-                                <div>
-                                    <span class="head">amount</span>
-                                    <span class="value">{{ '$' . number_format($booking->amount, 2) }}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                            <div class="w-2/12">
-                                <div class="flex justify-center items-center h-full">
-                                    <div>
-                                        @foreach($bookingStatusOptions as $statusKey => $statusValue)
-                                            @if($booking->status == $statusValue)
-                                                @switch($statusKey)
-                                                    @case('BOOKING_STATUS_IN_PROGRESS')
-                                                        <span class="badge progress small-badge">In-Progress</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_COMPLETED')
-                                                        <span class="badge completed small-badge">Completed</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_ON_HOLD')
-                                                        <span class="badge hold small-badge">On-hold</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_CANCELLED')
-                                                        <span class="badge cancel small-badge">Cancelled</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_CONFIRMED')
-                                                        <span class="badge progress confirmed small-badge">Confirmed</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_SI_SUBMITTED')
-                                                        <span class="badge progress submitted small-badge">SI Submitted</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_SI_CONFIRMED')
-                                                        <span class="badge progress confirmed small-badge">SI Confirmed</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_EVGM_SUBMITTED')
-                                                        <span class="badge progress submitted small-badge">VGM Submitted</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_EVGM_CONFIRMED')
-                                                        <span class="badge progress confirmed small-badge">VGM Confirmed</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_DRAFT_BL_RECEIVED')
-                                                        <span class="badge progress received small-badge">Draft BL Received</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_DRAFT_BL_CONFIRMED')
-                                                        <span class="badge progress confirmed small-badge">Draft BL Confirmed</span>
-                                                        @break
-                                                    @case('BOOKING_STATUS_FINISHED')
-                                                        <span class="badge defualt finished small-badge">Finished</span>
-                                                        @break
-                                                @endswitch
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex justify-end items-center h-full">
-
-                                    <div>
-                                        <a href="{{ route('customer.bookings.show', [$booking->id]) }}"
-                                            class="default-button small-button red">view details</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        @foreach ($bookings as $booking)
+                            @include('customers.partials.new_booking-detail-box', ['booking' => $booking, 'bookingStatusOptions' =>$bookingStatusOptions])
                         @endforeach
-
-                        @else
-
+                    @else
                         <div class="p-4 rounded-lg bg-gray-50">
                             <p class="text-sm text-gray-500">No bookings found</p>
                         </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="hidden" id="inprogress" role="tabpanel"
-                    aria-labelledby="inprogress-tab">
-                    <div class="detail-body">
-                        @if(isset($bookings) && count($bookings)> 0 && $inProgressBookingsCount > 0)
-                        @foreach ($bookings as $booking)
-                        @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
-                        <div class="detail-box">
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">Booking ID</span>
-                                        <span class="value">{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }} </span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">from</span>
-                                        <span class="value">{{isset($booking->origin->fullname) ? $booking->origin->fullname : ''}}</span>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">to</span>
-                                        <span class="value">{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">amount</span>
-                                        <span class="value">{{ '$' . number_format($booking->amount, 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-
-                                <div class="flex justify-center items-center h-full">
-                                    <div>
-                                        @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
-                                        <span class="badge completed">
-                                            Completed
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
-                                        <span class="badge progress">
-                                            In-Progress
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
-                                        <span class="badge cancel">
-                                            Cancelled
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
-                                        <span class="badge hold">
-                                            On-hold
-                                        </span>
-                                        @endif
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex justify-end items-center h-full">
-
-                                    <div>
-                                        <a href="{{ route('customer.bookings.show', [$booking->id]) }}"
-                                            class="default-button small-button red">view details</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        @endif
-                        @endforeach
-                        @else
-                        <div class="p-4 rounded-lg bg-gray-50">
-                            <p class="text-sm text-gray-500">No in-progress bookings found</p>
-                        </div>
-                        @endif
-
-                    </div>
-                </div>
-                <div class="hidden" id="completed" role="tabpanel"
-                    aria-labelledby="completed-tab">
-                    <div class="detail-body">
-                        @if(isset($bookings) && count($bookings)> 0 && $completedBookingsCount > 0)
-                        @foreach ($bookings as $booking)
-                        @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
-                        <div class="detail-box">
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">Booking ID</span>
-                                        <span class="value">{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }} </span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">from</span>
-                                        <span class="value">{{isset($booking->origin->fullname) ? $booking->origin->fullname : ''}}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">to</span>
-                                        <span class="value">{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">amount</span>
-                                        <span class="value">{{ '$' . number_format($booking->amount, 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-
-                                <div class="flex justify-center items-center h-full">
-                                    <div>
-                                        @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
-                                        <span class="badge completed">
-                                            Completed
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
-                                        <span class="badge progress">
-                                            In-Progress
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
-                                        <span class="badge cancel">
-                                            Cancelled
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
-                                        <span class="badge hold">
-                                            On-hold
-                                        </span>
-                                        @endif
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex justify-end items-center h-full">
-
-                                    <div>
-                                        <a href="{{ route('customer.bookings.show', [$booking->id]) }}"
-                                            class="default-button small-button red">view details</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        @endif
-                        @endforeach
-                        @else
-                        <div class="p-4 rounded-lg bg-gray-50">
-                            <p class="text-sm text-gray-500">No completed bookings found</p>
-                        </div>
-                        @endif
-
-                    </div>
-                </div>
-                <div class="hidden" id="canceled" role="tabpanel"
-                    aria-labelledby="canceled-tab">
-                    <div class="detail-body">
-                        @if(isset($bookings) && count($bookings)> 0 && $cancelledBookingsCount > 0)
-                        @foreach ($bookings as $booking)
-                        @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
-                        <div class="detail-box">
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">Booking ID</span>
-                                        <span class="value">{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }} </span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">from</span>
-                                        <span class="value">{{isset($booking->origin->fullname) ? $booking->origin->fullname : ''}}</span>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">to</span>
-                                        <span class="value">{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">amount</span>
-                                        <span class="value">{{ '$' . number_format($booking->amount, 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-
-                                <div class="flex justify-center items-center h-full">
-                                    <div>
-                                        @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
-                                        <span class="badge completed">
-                                            Completed
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
-                                        <span class="badge progress">
-                                            In-Progress
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
-                                        <span class="badge cancel">
-                                            Cancelled
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
-                                        <span class="badge hold">
-                                            On-hold
-                                        </span>
-                                        @endif
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex justify-end items-center h-full">
-
-                                    <div>
-                                        <a href="{{ route('customer.bookings.show', [$booking->id]) }}"
-                                            class="default-button small-button red">view details</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        @endif
-                        @endforeach
-                        @else
-                        <div class="p-4 rounded-lg bg-gray-50">
-                            <p class="text-sm text-gray-500">No cancelled bookings found</p>
-                        </div>
-                        @endif
-
-                    </div>
-                </div>
-                <div class="hidden" id="onhold" role="tabpanel" aria-labelledby="onhold-tab">
-                    <div class="detail-body">
-                        @if(isset($bookings) && count($bookings)> 0 && $onHoldBookingsCount > 0)
-                        @foreach ($bookings as $booking)
-                        @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
-                        <div class="detail-box">
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">Booking ID</span>
-                                        <span class="value">{{ str_pad($booking->id, 5, '0', STR_PAD_LEFT) }} </span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">from</span>
-                                        <span class="value">{{isset($booking->origin->fullname) ? $booking->origin->fullname : ''}}</span>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                            <div class="w-3/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">to</span>
-                                        <span class="value">{{isset($booking->destination->fullname) ? $booking->destination->fullname : ''}}</span>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex flex-col gap-4">
-                                    <div>
-                                        <span class="head">amount</span>
-                                        <span class="value">{{ '$' . number_format($booking->amount, 2) }}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-
-                                <div class="flex justify-center items-center h-full">
-                                    <div>
-                                        @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') )
-                                        <span class="badge completed">
-                                            Completed
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_IN_PROGRESS'))
-                                        <span class="badge progress">
-                                            In-Progress
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
-                                        <span class="badge cancel">
-                                            Cancelled
-                                        </span>
-                                        @endif
-                                        @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
-                                        <span class="badge hold">
-                                            On-hold
-                                        </span>
-                                        @endif
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="w-2/12">
-                                <div class="flex justify-end items-center h-full">
-
-                                    <div>
-                                        <a href="{{ route('customer.bookings.show', [$booking->id]) }}"
-                                            class="default-button small-button red">view details</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        @endif
-                        @endforeach
-                        @else
-                        <div class="p-4 rounded-lg bg-gray-50">
-                            <p class="text-sm text-gray-500">No onhold bookings found</p>
-                        </div>
-                        @endif
-
-                    </div>
+                    @endif
                 </div>
             </div>
+            <div class="hidden" id="inprogress" role="tabpanel"
+                aria-labelledby="inprogress-tab">
+                <div class="detail-body">
+                    @if(isset($bookings) && count($bookings)> 0 && $inProgressBookingsCount > 0)
+                    @foreach ($bookings as $booking)
+                    @if(in_array($booking->status, [
+                            config('constants.BOOKING_STATUS_IN_PROGRESS'),
+                            config('constants.BOOKING_STATUS_SI_SUBMITTED'),
+                            config('constants.BOOKING_STATUS_SI_CONFIRMED'),
+                            config('constants.BOOKING_STATUS_EVGM_SUBMITTED'),
+                            config('constants.BOOKING_STATUS_EVGM_CONFIRMED'),
+                            config('constants.BOOKING_STATUS_DRAFT_BL_RECEIVED'),
+                            config('constants.BOOKING_STATUS_DRAFT_BL_CONFIRMED'),
+                        ]))
+                    @include('customers.partials.new_booking-detail-box', ['booking' => $booking, 'bookingStatusOptions' =>$bookingStatusOptions])
+                    @endif
+                    @endforeach
+                    @else
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <p class="text-sm text-gray-500">No in-progress bookings found</p>
+                    </div>
+                    @endif
 
+                </div>
+            </div>
+            <div class="hidden" id="completed" role="tabpanel"
+                aria-labelledby="completed-tab">
+                <div class="detail-body">
+                    @if(isset($bookings) && count($bookings)> 0 && $completedBookingsCount > 0)
+                    @foreach ($bookings as $booking)
+                    @if($booking->status == config('constants.BOOKING_STATUS_COMPLETED') || $booking->status == config('constants.BOOKING_STATUS_FINISHED'))
+                        @include('customers.partials.new_booking-detail-box', ['booking' => $booking, 'bookingStatusOptions' => $bookingStatusOptions])
+                    @endif
+                    @endforeach
+                    @else
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <p class="text-sm text-gray-500">No completed bookings found</p>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+            <div class="hidden" id="canceled" role="tabpanel"
+                aria-labelledby="canceled-tab">
+                <div class="detail-body">
+                    @if(isset($bookings) && count($bookings)> 0 && $cancelledBookingsCount > 0)
+                    @foreach ($bookings as $booking)
+                    @if($booking->status == config('constants.BOOKING_STATUS_CANCELLED'))
+                        @include('customers.partials.new_booking-detail-box', ['booking' => $booking, 'bookingStatusOptions' =>$bookingStatusOptions])
+                    @endif
+                    @endforeach
+                    @else
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <p class="text-sm text-gray-500">No cancelled bookings found</p>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+            <div class="hidden" id="onhold" role="tabpanel" aria-labelledby="onhold-tab">
+                <div class="detail-body">
+                    @if(isset($bookings) && count($bookings)> 0 && $onHoldBookingsCount > 0)
+                    @foreach ($bookings as $booking)
+                    @if($booking->status == config('constants.BOOKING_STATUS_ON_HOLD'))
+                        @include('customers.partials.new_booking-detail-box', ['booking' => $booking, 'bookingStatusOptions' =>$bookingStatusOptions])
+                    @endif
+                    @endforeach
+                    @else
+                    <div class="p-4 rounded-lg bg-gray-50">
+                        <p class="text-sm text-gray-500">No onhold bookings found</p>
+                    </div>
+                    @endif
+                </div>
+            </div>
         </div>
+    </div>
 </section>
 @endsection
