@@ -238,18 +238,18 @@
             .count-box {
                 // border-color: #D23C3C;
                 border-color: --primary-color;
-                background-color: #FFE6E6;
+                // background-color: #FFE6E6;
             }
 
             &:nth-child(2) {
                 .count-box {
-                    background-color: darken($color: #FFE6E6, $amount: 6)
+                    // background-color: darken($color: #FFE6E6, $amount: 6)
                 }
             }
 
             &:nth-child(3) {
                 .count-box {
-                    background-color: darken($color: #FFE6E6, $amount: 12)
+                    // background-color: darken($color: #FFE6E6, $amount: 12)
                 }
             }
         }
