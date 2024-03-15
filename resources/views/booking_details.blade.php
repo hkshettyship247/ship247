@@ -937,6 +937,248 @@
                                         <div class="card-title">
                                             <h4><span>Booked commodity: Fertilizer</span></h4>
                                         </div>
+                                        <div class="booked-commodity">
+                                            <form class="" action="" id="">
+                                                 <div class="form-check-inline">
+                                                    <label>Kind of packages</label>
+                                                    <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
+                                                        <option value="">Aluminium Bulk</option>
+                                                        <option value="d">1 </option>
+                                                        <option value="d">2 </option>
+                                                        <option value="d">3 </option>
+                                                        <option value="d">4 </option>
+                                                    </select>
+                                                 </div>
+                                                 <div class="form-check-inline">
+                                                    <label>6 digit HS Code</label>
+                                                     <input type="text" placeholder="315025" class="form-input small-input mt-2 w-9/12 rounded-lg block" />
+                                                 </div>
+                                             </form>
+                                         </div>
+                                         <div class="cargo-description">
+                                             <div class="sec-title mb-2">
+                                                <h4>Cargo description</h4>
+                                             </div>      
+                                             <div class="info-box-sec">
+                                                   <div class="svg-info mr-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                                  </div>
+                                                  <div class="text-info">
+                                                        <h5>Do not enter Agent address, Free time, In-transit or transsipment clauses here - use the <a href="#">Document Type</a> Local customs regulations need the actual cargo description within the first 2. </h5>
+                                                        <p>To enable your instant draft bill, we will not be validating these clauses entered here.
+                                                  </div>
+                                             </div>  
+                                         </div>
+                                         <div class="template-sec">
+                                             <div class="content-box">
+                                                <h4>2 by 20GP FCL SAID TO CONTAIN<br>
+                                                NATURCOMPLET-G SACO 25KG</h4><br>
+                                                <h4>HUMIC ACID FERTILIZER<br>
+                                                INCOTERMS: FCA ZARAGOZA FACTORY<br>
+                                                BANK NAME EBILAEAD-EMIRATES NBD BANK PJSC</h4>
+                                             </div>
+                                             <div class="fieldtext">
+                                                <div class="form-group-inline">
+                                                    <input type="text" class="form-input small-input w-12/12 rounded-lg block" placeholder="Enter a name for your template" />
+                                                </div>
+                                                <div class="form-group-btn">
+                                                   <a href="#" class="btn outline-btn">Create Template</a>
+                                                   <a href="#" class="btn dark-btn">Open Template</a>
+                                                </div>
+                                              </div>
+                                         </div>
+                                    </div>
+
+
+                                    <div class="card-shipping pb-5">
+                                        <div class="card-title">
+                                            <h4><span>Add Marks and Numbers</span></h4>
+                                        </div>
+                                        <div class="card-btn mt-3">
+                                            <a href="#" class="btn">Add another description for this shipment</a>
+                                            <a href="#" class="btn">Copy these details to another description</a>
+                                         </div>
+                                         <div class="addmark-sec">
+                                              <h2>Give container details, VGM and seals</h2>
+                                          </div>
+                                          <div class="tabbing">
+                                         <div class="mb-8 border-b border-gray-200">
+                                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                                                <li class="mr-2" role="presentation">
+                                                    <button class="inline-block p-4 pb-2 rounded-t-lg text-blue-600 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500" id="containerd-tab" data-tabs-target="#containerd" type="button" role="tab" aria-controls="all" aria-selected="true">Container details</button>
+                                                </li>
+                                                <li class="mr-2" role="presentation">
+                                                    <button class="inline-block p-4 pb-2 rounded-t-lg hover:text-gray-600 dark:border-transparent text-gray-500 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" id="additionald-tab" data-tabs-target="#additionald" type="button" role="tab" aria-controls="additionald" aria-selected="false">Seals and Additional Details</button>
+                                                </li>
+                                            </ul>
+                                            </div>
+                                        </div>
+                                        <div id="myTabContent">
+                                            <div class="" id="containerd" role="tabpanel" aria-labelledby="all-tab">
+                                                <div class="detail-body">
+                                                     <div class="rounded-lg bg-gray-50">
+                                                        <div class="relative overflow-x-auto">
+                                                            <h2 class="mb-3"><strong> 20 Dry Standard</strong></h2>
+                                                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                                    <tr>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Number
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Container Number
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Pkgs (count)
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Cargo wt. (kg)
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Volume (m3)
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            VGM (kg)
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            VGM method
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                            1/2
+                                                                        </th>
+                                                                        <td class="px-6 py-4">
+                                                                            MRSUO178658
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            20
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            20000.000
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            00000.000
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            20180
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            Weight of cargo added to count.
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                            1/2
+                                                                        </th>
+                                                                        <td class="px-6 py-4">
+                                                                            MRSUO178658
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            20
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            20000.000
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            00000.000
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            20180
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            Weight of cargo added to count.
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="hidden" id="additionald" role="tabpanel" aria-labelledby="additionald-tab">
+                                                <div class="detail-body">
+                                                     <div class="rounded-lg bg-gray-50">
+                                                        <div class="relative overflow-x-auto">
+                                                            <h2 class="mb-3"><strong> 24 Dry Standard</strong></h2>
+                                                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                                                    <tr>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Number
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Container Number
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Shippers seal
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Carrier seal
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                           Customs seal
+                                                                        </th>
+                                                                        <th scope="col" class="px-6 py-3">
+                                                                            Vet seal
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                            1/2
+                                                                        </th>
+                                                                        <td class="px-6 py-4">
+                                                                            MRSUO178658
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                          
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                           
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                            1/2
+                                                                        </th>
+                                                                        <td class="px-6 py-4">
+                                                                            MRSUO178658
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                           
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                            
+                                                                        </td>
+                                                                        <td class="px-6 py-4">
+                                                                           
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="terms-sec mt-8 mb-3">
+                                            <p><a href="#" class="btn">Continue </a> By submitting the VGM you agree to the <a href="#" class="link">Terms & Conditions</a> for supplying the gross weight.</p>
+                                        </div>
                                     </div>
 
                             </div>

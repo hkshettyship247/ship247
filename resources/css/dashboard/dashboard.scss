@@ -507,3 +507,90 @@ form.disabled-form select {
     width: 18px;
     height: 18px;
 }
+.card-shipping .booked-commodity {
+    padding-bottom: 30px;
+}
+.booked-commodity .form-check-inline {
+    display: inline-block;
+    margin-right: 1rem;
+    width: 25%;
+}
+.cargo-description .info-box-sec {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    border-radius: 10px;
+    background: #d1d5db;
+}
+.cargo-description .info-box-sec .text-info h5 {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: var(--primary-color);
+    font-family: var(--primary-font-medium);
+    padding-bottom: 10px;
+}
+.cargo-description .info-box-sec .text-info h5 a {
+    text-decoration: underline
+}
+.card-shipping .template-sec {
+    position: relative;
+    border: 1px solid #C9C9C9;
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+.card-shipping .template-sec .content-box {
+    padding: 15px;
+    min-height: 180px;
+    overflow-y: auto;
+}
+.card-shipping .template-sec .fieldtext {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    padding: 10px;
+}
+.card-shipping .template-sec .fieldtext .form-group-inline {
+    flex: 1;
+}
+.card-shipping .template-sec .fieldtext .small-input {
+    width: 100%;
+    padding-right: 15px;
+   border-color: #C9C9C9; 
+}
+.card-shipping .template-sec .fieldtext .form-group-btn {
+    margin-left: 15px;
+}
+.card-shipping .template-sec .fieldtext .form-group-btn .dark-btn {
+    padding: 0.75rem 1rem;
+    border: 1px solid #C9C9C9;
+    border-radius: 10px;
+    background: #d1d5db;
+}
+.card-shipping .template-sec .fieldtext .form-group-btn .outline-btn {
+    padding: 0.75rem 1rem;
+    border: 1px solid #C9C9C9;
+    border-radius: 10px;
+    background: transparent;
+}
+.card-shipping .card-btn .btn {
+    background: #2c1e3f;
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+}
+.card-shipping .addmark-sec {
+    margin: 30px 0;
+}
+.card-shipping .terms-sec .btn {
+    background: #2c1e3f;
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+.card-shipping .terms-sec .link {
+text-decoration: underline;
+font-weight: bold;
+}
