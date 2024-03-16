@@ -340,8 +340,6 @@ const SearchbarForm = (props) => {
                                        onClick={() => setRouteType(constants.ROUTE_TYPE_LAND)}
                                 />
                                 <div className="content land">
-								 <span
-											className="absolute -top-6 left-0 right-0 w-8/12 mx-auto py-1 secondary-bg text-white rounded-md">Beta</span>
                                     <i className="icon">
                                         <svg
                                             id="truck-icon"
