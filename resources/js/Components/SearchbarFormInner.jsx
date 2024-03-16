@@ -376,7 +376,7 @@ const SearchbarForm = (props) => {
 
                             <div className="option">
                                 <input type="radio" name="route_type" disabled />
-                                <div className="content air">
+                                <div className="content air" style={{opacity:0.3}}>
                                     <i className="icon">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

@@ -25,8 +25,8 @@ const SearchbarForm = (props) => {
     const [truckTypes, setTruckTypes] = useState([]);
     const [routeType, setRouteType] = useState(constants.ROUTE_TYPE_SEA);
     const [searchForm] = Form.useForm();
-    const [pickup, setPickup] = useState(true);
-    const [delivery, setDelivery] = useState(true);
+    const [pickup, setPickup] = useState(false);
+    const [delivery, setDelivery] = useState(false);
 	const [infoType, setInfoType] = useState(false);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 	const [showCheckbox, setShowCheckbox] = useState('none');
@@ -486,8 +486,8 @@ const SearchbarForm = (props) => {
                                                onClick={() => setRouteType(constants.ROUTE_TYPE_LAND)}
                                         />
                                         <div className="content land">
-                                            <span
-                                                className="absolute -top-6 left-0 right-0 w-8/12 mx-auto py-1 secondary-bg text-white rounded-md">Beta</span>
+                                            {/*<span
+											className="absolute -top-6 left-0 right-0 w-8/12 mx-auto py-1 secondary-bg text-white rounded-md">Beta</span>*/}
                                             <i className="icon">
                                                 <svg
                                                     id="truck-icon"
@@ -524,7 +524,7 @@ const SearchbarForm = (props) => {
 
                                     <div className="option">
                                         <input type="radio" name="route_type" disabled/>
-                                        <div className="content air">
+                                        <div className="content air" style={{opacity:0.3}}>
                                             <i className="icon">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
