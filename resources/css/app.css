@@ -504,6 +504,8 @@ body {
           @apply uppercase text-[10px] block mt-1; }
     .search-panel .transportation-checkbox input[type='radio'] {
       @apply border-0 opacity-0 absolute left-0 right-0 top-0 bottom-0 w-full h-full z-30 cursor-pointer; }
+	.search-panel .transportation-checkbox input[type='radio']:disabled {
+      @apply border-0 opacity-0 absolute left-0 right-0 top-0 bottom-0 w-full h-full z-30 cursor-default; }
 
 .search-result-box header {
   @apply flex justify-between 2xl:flex-nowrap flex-wrap lg:flex-row items-center; }
