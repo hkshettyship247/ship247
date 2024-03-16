@@ -15,7 +15,8 @@ class CMAAPI implements APIProcessRequest
 
     public static function processRequest($url)
     {
-        return Http::timeout(30)->withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
+        //return Http::timeout(30)->withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
+		return Http::withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
     }
 
     public static function getPointToPointSchedules($origin_code, $origin_name, $destination_code, $destination_name, $departure_date)
