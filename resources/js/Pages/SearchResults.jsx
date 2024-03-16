@@ -138,9 +138,9 @@ const SearchResults = ({
         axles: [],
         charge_types: {
             pickup: charge_type_pickup,
-            origin: true,
+            origin: false,
             freight: true,
-            destination: true,
+            destination: false,
             delivery: charge_type_delivery,
         }
     });
