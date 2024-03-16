@@ -32,7 +32,7 @@ $completedBookingsCount = count(array_filter($bookingData, function ($booking) {
 
             <div class="md:w-6/12 md:justify-end flex">
                 <a href="/" class="default-button-v2">
-                    <span>Search & Book</span>
+                    <span>new booking</span>
                 </a>
             </div>
         </header>
