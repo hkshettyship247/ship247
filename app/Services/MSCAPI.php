@@ -14,7 +14,7 @@ class MSCAPI implements APIProcessRequest
 
     public static function processRequest($url)
     {
-        return Http::get($url);
+        return Http::timeout(30)->get($url);
     }
 
     public static function getPointToPointSchedulesWithPricing(Location $origin, Location $destination, $container_size, $departure_date)
