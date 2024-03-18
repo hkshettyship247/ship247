@@ -430,11 +430,13 @@
                                 <button class="inline-block p-4 pb-2 rounded-t-lg" id="all-tab" data-tabs-target="#all"
                                     type="button" role="tab" aria-controls="all" aria-selected="false">Tracking</button>
                             </li>
+                            @if(isset($booking) && $booking->payment)
                             <li class="mr-2" role="presentation">
                                 <button class="inline-block p-4 pb-2 rounded-t-lg hover:text-gray-600" id="finance-tab"
                                     data-tabs-target="#finance" type="button" role="tab" aria-controls="finance"
                                     aria-selected="false">Finance</button>
                             </li>
+                            @endif
                             <li class="mr-2" role="presentation">
                                 <button class="inline-block p-4 pb-2 rounded-t-lg hover:text-gray-600"
                                     id="bookinginfo-tab" data-tabs-target="#bookinginfo" type="button" role="tab"
@@ -484,7 +486,7 @@
                     <div class="hidden" id="documentation" role="tabpanel" aria-labelledby="documentation-tab">
                         <div class="detail-body">
                             @if(isset($booking))
-                            @include('admin.partials._documentation_tab', ['booking' => $booking, 'tab' =>
+                            @include('admin.partials._documentation_tab', ['booking' => $booking, 'route' => $route, 'tab' =>
                             "bookinginfo-tab"])
                             @endif
                         </div>
