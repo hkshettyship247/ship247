@@ -31,7 +31,7 @@
         <form action="{{ route($route. 'booking.storeDocuments') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="bookingId" value="{{ $booking->id }}">
-            @if (Auth::user()->id === $booking->user_id)    
+            @if (Auth::user()->id === $booking->user_id || auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN'))    
                 <div class="documentation-sec">
                     <div class="col-md-12">
                         <div class="mb-4">

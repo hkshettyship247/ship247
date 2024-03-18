@@ -1,6 +1,5 @@
 <div class="rounded-lg bg-gray-50">
     <div class="rounded-lg bg-gray-50">
-        @if (isset($booking->payment) && !empty($booking->payment))
         <div class="detail-box">
             <div class="w-2/12">
                 <div class="flex flex-col gap-4">
@@ -96,6 +95,5 @@
             </div>
             @endif
         </div>
-        @endif
     </div>
 </div>

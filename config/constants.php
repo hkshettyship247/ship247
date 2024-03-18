@@ -104,7 +104,7 @@ return [
     'USER_TYPE_CUSTOMER' => 2,
     'USER_TYPE_EMPLOYEE' => 3,
     'USER_TYPE_SUPPLIER' => 4,
-    'USER_TYPE_SHIPPER' => 4,
+    'USER_TYPE_SHIPPER' => 5,
 	
 	//user statuses
     'USER_STATUS_ACTIVE' => 1,
