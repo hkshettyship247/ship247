@@ -173,15 +173,63 @@ class WebsiteController extends Controller
             $searched_departure_date = $request->departure_date;
             $searched_route_type = $request->route_type ?? ROUTE_TYPE_SEA;
 			$searched_info_type = $request->info_type ?? false;
-            if (!isset($request->pickup)) {
-                $charge_type_pickup = true;
+			
+			//dd($request);
+            
+			if (!isset($request->pickup)) {
+                $charge_type_pickup = false;
             } else {
-                $charge_type_pickup = boolval($request->pickup);
+				if($request->pickup === 'false'){
+					$charge_type_pickup = boolval(0);
+				}
+				else if($request->pickup === 'true'){
+					$charge_type_pickup = boolval(1);
+				}
+				else{
+					 $charge_type_pickup = boolval($request->pickup);
+				}
+				
+				//dd($request->pickup." | ".gettype($request->pickup)." | ".boolval($request->pickup)." | ".$charge_type_pickup);
+				
             }
             if (!isset($request->delivery)) {
-                $charge_type_delivery = true;
+                $charge_type_delivery = false;
             } else {
-                $charge_type_delivery = boolval($request->delivery);
+				if($request->delivery === 'false'){
+					$charge_type_delivery = boolval(0);
+				}
+				else if($request->delivery === 'true'){
+					$charge_type_delivery = boolval(1);
+				}
+				else{
+					$charge_type_delivery = boolval($request->delivery);
+				}
+            }
+			if (!isset($request->originprices)) {
+                $charge_type_origin = false;
+            } else {
+				if($request->originprices === 'false'){
+					$charge_type_origin = boolval(0);
+				}
+				else if($request->originprices === 'true'){
+					$charge_type_origin = boolval(1);
+				}
+				else{
+					$charge_type_origin = boolval($request->originprices);
+				}
+            }
+			if (!isset($request->destinationprices)) {
+                $charge_type_destination = false;
+            } else {
+				if($request->destinationprices === 'false'){
+					$charge_type_destination = boolval(0);
+				}
+				else if($request->destinationprices === 'true'){
+					$charge_type_destination = boolval(1);
+				}
+				else{
+					$charge_type_destination = boolval($request->destinationprices);
+				}
             }
             $container_sizes = ContainerSizes::get();
             $truck_types = TruckType::select('display_label', 'id')->get()->toArray();
@@ -201,6 +249,8 @@ class WebsiteController extends Controller
                     'hot_deals_collection',
                     'charge_type_pickup',
                     'charge_type_delivery',
+					'charge_type_origin',
+                    'charge_type_destination',
                     'container_sizes',
                     'truck_types',
                     'user_details'
