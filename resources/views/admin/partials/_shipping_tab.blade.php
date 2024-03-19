@@ -102,8 +102,7 @@
             <form class="wayfill" id="" action="">
                 <div class="form-group mb-4">
                     <input type="radio" id="3" name="" value="3">
-                    {{-- <label for="3">MSC ISABELLA(PA)/401E (First Load Port)</label> --}}
-                    <label for="3">{{ $track_booking_response['data']?->vesselName }}</label>
+                    <label for="3">MSC ISABELLA(PA)/401E (First Load Port)</label>
                 </div>
             </form>
         </div>
@@ -115,9 +114,7 @@
                         <form class="Locationform" id="" action="">
                             <label>Place of Receipt</label>
                             <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
-                                <option value="">{{ $track_booking_response['data']?->originPortName }},
-                                    {{ $track_booking_response['data']?->originPortCountry }}
-                                    [{{ $track_booking_response['data']?->originPortUnlocode }}]</option>
+                                <option value="">Select</option>
                             </select>
                         </form>
                         <div class="Aliasesbottom">

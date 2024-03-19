@@ -383,6 +383,207 @@
             </div>
         </div>
 
+        <div class="parties-details">
+             <header>
+                <h4 class="title">Parties Details</h4>
+             </header>                
+           
+            <div class="parties-detail-inner-sec">
+                <div class="sec-title mb-5">
+                    <p><strong>Booking Party + Forwader + Deciding party + Named Account + Third Party booking agent</strong></p>
+                </div>  
+                
+                <div class="parties-detail-row-sec">
+                        <div class="w-6/12">
+                            <form class="addform" id="" action="">
+                                <div class="form-group">
+                                    <label class="form-label">Party Name</label>
+                                    <select name="dcac" id="dcac" class="form-input mb-3 small-input mt-2 w-12/12 rounded-lg block">
+                                        <option value="">Ship 247 for Logistic Services - Abu Dhabi</option>
+                                    </select>
+                               </div>
+                                <div class="address-row">
+                                    <div class="w-6/12">
+                                         <div class="address-details">
+                                             <p>Address</p>
+                                             <h4>PO BOX 43338<br>
+                                             ABU DHABI, Abu Zaby<br>
+                                             United Arab Emirates.
+                                            </h4>
+                                         </div>
+                                     </div>
+                                     <div class="w-6/12">
+                                         <div class="myrefernce">
+                                             <label class="form-label">My reference (optional)</label>
+                                                <input type="text" class="form-input mb-3 small-input mt-2 w-12/12 rounded-lg block">
+                                         </div>
+                                     </div>
+                                </div>
+                             </form>
+                    </div>   
+                    <div class="w-6/12">
+                         <form class="roleselect" id="" action="">
+                                <label class="form-label">Role</label>
+                                 <div class="form-check-inline">
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="shipper">
+                                            <label class="form-check-label" for="shipper"> Shipper</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Forwarder">
+                                            <label class="form-check-label" for="Forwarder"> Forwarder</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Consignee">
+                                            <label class="form-check-label" for="Consignee"> Consignee</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Notify">
+                                            <label class="form-check-label" for="Notify"> Notify</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Second Notify party">
+                                            <label class="form-check-label" for="Second Notify party"> Second Notify party</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Decidong party">
+                                            <label class="form-check-label" for="Decidong party"> Decidong party</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Named Account">
+                                            <label class="form-check-label" for="Named Account"> Named Account</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Third Party booking agent">
+                                            <label class="form-check-label" for="Third Party booking agent"> Third Party booking agent</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Customs Broker">
+                                            <label class="form-check-label" for="Customs Broker"> Customs Broker</label>
+                                        </div>
+                                    </div>
+                               </div>
+                          </form>
+                    </div>
+                </div>  
+                
+                <div class="parties-detail-row-sec">
+                        <div class="w-6/12">
+                            <form class="addform" id="" action="">
+                                <div class="form-group">
+                                    <label class="form-label">Party Name</label>
+                                    <select name="dcac" id="dcac" class="form-input mb-3 small-input mt-2 w-12/12 rounded-lg block">
+                                        <option value="">Ship 247 for Logistic Services - Abu Dhabi</option>
+                                    </select>
+                               </div>
+                                <div class="address-row">
+                                    <div class="w-6/12">
+                                         <div class="address-details">
+                                             <p>Address</p>
+                                             <h4>PO BOX 43338<br>
+                                             ABU DHABI, Abu Zaby<br>
+                                             United Arab Emirates.
+                                            </h4>
+                                         </div>
+                                     </div>
+                                     <div class="w-6/12">
+                                         <div class="myrefernce">
+                                             <label class="form-label">My reference (optional)</label>
+                                                <input type="text" class="form-input mb-3 small-input mt-2 w-12/12 rounded-lg block">
+                                         </div>
+                                     </div>
+                                </div>
+                             </form>
+                    </div>   
+                    <div class="w-6/12">
+                         <form class="roleselect" id="" action="">
+                                <label class="form-label">Role</label>
+                                 <div class="form-check-inline">
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="shipper">
+                                            <label class="form-check-label" for="shipper"> Shipper</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Forwarder">
+                                            <label class="form-check-label" for="Forwarder"> Forwarder</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Consignee">
+                                            <label class="form-check-label" for="Consignee"> Consignee</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Notify">
+                                            <label class="form-check-label" for="Notify"> Notify</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Second Notify party">
+                                            <label class="form-check-label" for="Second Notify party"> Second Notify party</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Decidong party">
+                                            <label class="form-check-label" for="Decidong party"> Decidong party</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Named Account">
+                                            <label class="form-check-label" for="Named Account"> Named Account</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Third Party booking agent">
+                                            <label class="form-check-label" for="Third Party booking agent"> Third Party booking agent</label>
+                                        </div>
+                                    </div>
+                                    <div class="w-6/12">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" value="" id="Customs Broker">
+                                            <label class="form-check-label" for="Customs Broker"> Customs Broker</label>
+                                        </div>
+                                    </div>
+                               </div>
+                          </form>
+                    </div>
+                </div>  
+                
+                
+                <div class="addparty my-5">
+                     <a href="#" class="flex"><svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg><span>Add party<span> </a>
+              </div>
+
+            </div>
+                       
+        </div>
+
         <div class="step-progress">
             <ul id="progressbar">
                 <li class="{{ $booking->status >= config('constants.BOOKING_STATUS_IN_PROGRESS') ? 'active' : '' }}">
