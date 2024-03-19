@@ -116,11 +116,13 @@ const SearchResults = ({
                            searched_route_type,
 						   searched_info_type,
                            hot_deals_collection,
+                           charge_type_pickup,
+                           charge_type_delivery,
+						   charge_type_origin,
+                           charge_type_destination,
                            container_sizes,
                            truck_types,
-                           user_details,
-                           charge_type_pickup,
-                           charge_type_delivery
+                           user_details
                        }) => {
     const [results, setResults] = useState([]);
     const [processedResult, setProcessedResult] = useState([]);
@@ -138,9 +140,9 @@ const SearchResults = ({
         axles: [],
         charge_types: {
             pickup: charge_type_pickup,
-            origin: false,
+            origin: charge_type_origin,
             freight: true,
-            destination: false,
+            destination: charge_type_destination,
             delivery: charge_type_delivery,
         }
     });
@@ -519,6 +521,10 @@ const SearchResults = ({
                                                 route_type={searched_route_type}
 												info_type={searched_info_type}
 												user_details={user_details ?? null}
+												charge_type_pickup={filters.charge_types.pickup}
+												charge_type_delivery={filters.charge_types.delivery}
+												charge_type_origin={filters.charge_types.origin}
+												charge_type_destination={filters.charge_types.destination}
                             />
                         </div>
                     </div>
