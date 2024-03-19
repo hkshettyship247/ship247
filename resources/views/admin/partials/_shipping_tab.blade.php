@@ -103,7 +103,7 @@
                 <div class="form-group mb-4">
                     <input type="radio" id="3" name="" value="3">
                     {{-- <label for="3">MSC ISABELLA(PA)/401E (First Load Port)</label> --}}
-                    <label for="3">{{ $track_booking_response['data']?->vesselName }}</label>
+                    <label for="3">{{ (isset($track_booking_response['data']) && $track_booking_response['data']) ? $track_booking_response['data']?->vesselName : '' }}</label>
                 </div>
             </form>
         </div>
@@ -115,13 +115,14 @@
                         <form class="Locationform" id="" action="">
                             <label>Place of Receipt</label>
                             <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
-                                <option value="">{{ $track_booking_response['data']?->originPortName }},
-                                    {{ $track_booking_response['data']?->originPortCountry }}
+                                @if(isset($track_booking_response['data']) && $track_booking_response['data'])
+                                <option value=""> {{ $track_booking_response['data']?->originPortName }}, {{ $track_booking_response['data']?->originPortCountry }}
                                     [{{ $track_booking_response['data']?->originPortUnlocode }}]</option>
+                                @endif
                             </select>
                         </form>
                         <div class="Aliasesbottom">
-                            <p>Appointment <span><strong>20 Dec 2023 01:00</strong> </span></p>
+                            <p>Departing <span><strong>{{ (isset($track_booking_response['data']) && $track_booking_response['data']) ? \Carbon\Carbon::parse($track_booking_response['data']->plannedEta)->format('d M Y H:i') : '' }}</strong></span></p>
                         </div>
                     </div>
                 </div>
@@ -130,34 +131,38 @@
                         <form class="Locationform" id="" action="">
                             <label>Load Port</label>
                             <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
-                                <option value="">Select</option>
-                                <option value="d">1 </option>
-                                <option value="d">2 </option>
-                                <option value="d">3 </option>
-                                <option value="d">4 </option>
+                                @if(isset($track_booking_response['data']) && $track_booking_response['data'])
+                                <option value="">
+                                    {{ $track_booking_response['data']->originPortName }},
+                                    {{ $track_booking_response['data']->originPortCountry }}
+                                    [{{ $track_booking_response['data']->originPortUnlocode }}]
+                                </option>
+                                @endif
                             </select>
                         </form>
                         <div class="Aliasesbottom">
-                            <p>Departing <span><strong>17 Jan 2024 01:00</strong> </span></p>
+                            <p>Departing <span><strong>{{ (isset($track_booking_response['data']) && $track_booking_response['data']) ? \Carbon\Carbon::parse($track_booking_response['data']->plannedEta)->format('d M Y H:i') : '' }}</strong></span></p>
                         </div>
                     </div>
                 </div>
                 <div class="w-3/12">
                     <div class="Locationcolumn rounded-lg">
-                        <form class="Locationform" id="" action="">
+                        <form class="Locationform" id="portOfDischargeForm" action="">
                             <label>Port of Discharge</label>
-                            <select name="scac" id="scac" class="form-input small-input mt-2 w-9/12 rounded-lg block">
-                                <option value="">Select</option>
-                                <option value="d">1 </option>
-                                <option value="d">2 </option>
-                                <option value="d">3 </option>
-                                <option value="d">4 </option>
+                            <select name="portOfDischarge" id="portOfDischarge" class="form-input small-input mt-2 w-9/12 rounded-lg block">
+                                @if (!empty($track_booking_response['data']))
+                                    <option value="{{ $track_booking_response['data']->finalPortUnlocode }}">
+                                        {{ $track_booking_response['data']->finalPortName }},
+                                        {{ $track_booking_response['data']->finalPortCountry }}
+                                        [{{ $track_booking_response['data']->finalPortUnlocode }}]
+                                    </option>
+                                @endif
                             </select>
                         </form>
                         <div class="Aliasesbottom">
-                            <p>Arriving <span><strong>29 Dec 2024 18:00</strong> </span></p>
+                            <p>Arriving <span><strong>{{  !empty($track_booking_response['data']) ? \Carbon\Carbon::parse($track_booking_response['data']->finalPortPredictiveArrivalUtc)->format('d M Y H:i') : '' }}</strong></span></p>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
 
             </div>
@@ -646,8 +651,7 @@
                         <div class="relative overflow-x-auto">
                             <h2 class="mb-3"><strong> 20 Dry Standard</strong></h2>
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
                                             Number
@@ -673,13 +677,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(!empty($track_booking_response))
+                                    @foreach($track_booking_response['data']?->containers as $cIndex => $container)
                                     <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            1/2
+                                            {{ $container->isoCode }}
                                         </th>
                                         <td class="px-6 py-4">
-                                            MRSUO178658
+                                            {{ $container->id }}
                                         </td>
                                         <td class="px-6 py-4">
                                             20
@@ -697,30 +703,8 @@
                                             Weight of cargo added to count.
                                         </td>
                                     </tr>
-                                    <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            1/2
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            MRSUO178658
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            20
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            20000.000
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            00000.000
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            20180
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            Weight of cargo added to count.
-                                        </td>
-                                    </tr>
+                                    @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
