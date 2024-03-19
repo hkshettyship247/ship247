@@ -644,3 +644,62 @@ form.disabled-form select {
         max-width: calc(100% - 0px);
     }
 }
+
+// === 19-03-2024 CSS Start === //
+
+.parties-details {
+    position: relative;
+    padding: 40px 0;
+}
+.parties-details .parties-detail-inner-sec {
+    border: 1px solid #C9C9C9;
+    border-radius: 10px;
+    margin-top: 1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.parties-detail-inner-sec .form-input {
+    width: 100%;
+}
+.address-row .address-details p {
+    color: #848484;
+    font-size: 16px;
+    line-height: 24px;
+    padding-bottom: 5px;
+}
+.parties-detail-row-sec {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    background: #fff;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #eeeeee;
+}
+.roleselect .form-check-inline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;  
+}
+.parties-detail-row-sec .address-row {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin: 30px 0;
+}
+.parties-detail-row-sec .roleselect {
+    position: relative;
+}
+.parties-detail-row-sec .roleselect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -25px;
+    width: 1px;
+    height: 100%;
+    background: #eeeeee;
+}

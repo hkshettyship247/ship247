@@ -75,8 +75,8 @@ const SearchbarForm = (props) => {
             destination_port: props?.destination?.fullname,
             departure_date: props?.departure_date ? dayjs(props?.departure_date, 'YYYY-MM-DD') : null,
             container_size: props?.container_size?.value,
-            pickup: true,
-            delivery: true
+            pickup: false,
+            delivery: false
         });
 		
 		calcCheckBox(props);

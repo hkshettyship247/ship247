@@ -25,12 +25,18 @@ const SearchbarForm = (props) => {
     const [truckTypes, setTruckTypes] = useState([]);
     const [routeType, setRouteType] = useState(props.route_type ?? constants.ROUTE_TYPE_SEA);
     const [searchForm] = Form.useForm();
+	const [pickup, setPickup] = useState(props.charge_type_pickup);
+    const [delivery, setDelivery] = useState(props.charge_type_delivery);
+	const [originprices, setOriginPrices] = useState(props.charge_type_origin);
+    const [destinationprices, setDestinationPrices] = useState(props.charge_type_destination);
 	const [infoType, setInfoType] = useState(props.info_type === 'true' ? true : false);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState(props.info_type === 'true' ? true : false);
 	const [showCheckbox, setShowCheckbox] = useState('none');
 	
     const TYPE_ORIGIN = "origin";
     const TYPE_DESTINATION = "destination";
+	
+	//alert(props.charge_type_pickup === true? 'yes': 'no');
 	
     useEffect(() => {
         getContainerSizes()
@@ -80,9 +86,18 @@ const SearchbarForm = (props) => {
 		setDestination2(props?.destination.code, props?.destination?.is_port, props?.destination?.fullname, cityLogo, portLogo);
 		setInfoType(props.info_type === 'true' ? true : false);
 		setIsCheckboxChecked(props.info_type === 'true' ? true : false);
+		setPickup(props.charge_type_pickup);
+		setDelivery(props.charge_type_delivery);
+		setOriginPrices(props.charge_type_origin);
+		setDestinationPrices(props.charge_type_destination);
 		
-    }, []);
-
+		//alert(props.charge_type_pickup + " | " + props.charge_type_origin + " | " + props.charge_type_destination + " | " + props.charge_type_delivery
+		//+ " | " + pickup + " | " + originprices + " | " + destinationprices + " | " + delivery);
+		
+    }, [props]);
+	
+	//alert(pickup);
+	
     const mapCityList = (data) => {
         return data.map((loc) => {
 
@@ -176,6 +191,10 @@ const SearchbarForm = (props) => {
                 departure_date: values.departure_date.format('YYYY-MM-DD'),
                 route_type: routeType,
 				info_type: infoType,
+				pickup: pickup,
+				delivery: delivery,
+				originprices: originprices,
+				destinationprices: destinationprices,
             };
             if(values?.container_size) {
                 data.container_size = values.container_size;
