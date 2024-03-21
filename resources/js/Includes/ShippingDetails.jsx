@@ -27,7 +27,7 @@ const ShippingDetails = ({setTotalAmount, setTrackOne, setCircleOne, setTrackThr
 	
     useEffect(() => {
         if (company_id === constants.CMA_COMPANY_ID || hot_deals) {
-            //setTotalAmount(price_amount);
+            setTotalAmount(price_amount);
         }
     }, [filterChargeTypes]);
 
