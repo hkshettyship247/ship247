@@ -17,8 +17,8 @@ class MaerskAPI implements APIProcessRequest
 
     public static function processRequest($url)
     {
-        //return Http::timeout(30)->withHeaders(['Consumer-Key' => env('MAERSK_API_KEY')])->get($url);
-		return Http::withHeaders(['Consumer-Key' => env('MAERSK_API_KEY')])->get($url);
+        return Http::timeout(30)->withHeaders(['Consumer-Key' => env('MAERSK_API_KEY')])->get($url);
+		//return Http::withHeaders(['Consumer-Key' => env('MAERSK_API_KEY')])->get($url);
     }
 
     public static function getLocationsByCity($city)
