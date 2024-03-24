@@ -15,8 +15,18 @@ class CMAAPI implements APIProcessRequest
 
     public static function processRequest($url)
     {
-        //return Http::timeout(30)->withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
-		return Http::withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
+		$cma_response = Http::timeout(30)->withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
+		//$cma_response = Http::withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
+		
+		//dd(json_encode($cma_response));
+		
+		//$file = fopen("d.txt","w") or die("Unable to open file!");
+		//fwrite($file,$cma_response);
+		//fclose($file);
+		
+        return $cma_response;
+		
+		//return Http::withHeaders(['KeyId' => env('CMA_API_KEY')])->get($url);
     }
 
     public static function getPointToPointSchedules($origin_code, $origin_name, $destination_code, $destination_name, $departure_date)
@@ -37,24 +47,49 @@ class CMAAPI implements APIProcessRequest
         }
 
         if (isset($response['success']) && $response['success']) {
+			
+			//$file = fopen("d.txt","w") or die("Unable to open file!");
+			//fwrite($file,json_encode($response['data']));
+			//fclose($file);
+			
             $cma_filtered_data = [];
-
+			
+			$bad_data = 0;
             foreach ($response['data'][0] as $data) {
+				
+				//$file = fopen("d.txt","w") or die("Unable to open file!");
+				//fwrite($file,json_encode($data)."[BREAK]");
+				//fclose($file);
+				
                 if (isset($data->routingDetails[0]->pointFrom->departureDateGmt)) {
                     $departure_date = Carbon::parse($data->routingDetails[0]->pointFrom->departureDateGmt);
-                } else {
+                } else if (isset($data->routingDetails[1]->pointFrom->departureDateGmt)) {
                     $departure_date = Carbon::parse($data->routingDetails[1]->pointFrom->departureDateGmt);
                 }
+				else{
+					$bad_data = 1;
+					break;
+				}
+				
                 if (isset($data->routingDetails[count($data->routingDetails) - 1]->pointTo->arrivalDateGmt)) {
                     $arrival_date = Carbon::parse($data->routingDetails[count($data->routingDetails) - 1]->pointTo->arrivalDateGmt);
-                } else {
+                } else if (isset($data->routingDetails[count($data->routingDetails) - 2]->pointTo->arrivalDateGmt)) {
                     $arrival_date = Carbon::parse($data->routingDetails[count($data->routingDetails) - 2]->pointTo->arrivalDateGmt);
                 }
+				else{
+					$bad_data = 1;
+					break;
+				}
+				
                 if (isset($data->routingDetails[0]->pointFrom->cutOff->standardBookingAcceptance->utc)) {
                     $valid_till = Carbon::parse($data->routingDetails[0]->pointFrom->cutOff->standardBookingAcceptance->utc);
-                } else {
+                } else if (isset($data->routingDetails[1]->pointFrom->cutOff->standardBookingAcceptance->utc)) {
                     $valid_till = Carbon::parse($data->routingDetails[1]->pointFrom->cutOff->standardBookingAcceptance->utc);
                 }
+				else{
+					$bad_data = 1;
+					break;
+				}
 
                 $cma_filtered_data[] = [
                     'company_id' => env('CMA_COMPANY_ID'),
@@ -69,13 +104,15 @@ class CMAAPI implements APIProcessRequest
                     'tt' => $data->transitTime
                 ];
             }
-
-            $return_data = [
-                'success' => true,
-                'data' => $cma_filtered_data,
-            ];
+			
+			if($bad_data == 0){
+				$return_data = [
+					'success' => true,
+					'data' => $cma_filtered_data,
+				];
+			}
         }
-
+		
         return $return_data;
     }
 
