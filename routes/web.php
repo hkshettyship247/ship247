@@ -115,8 +115,6 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('/bookings/{bookingId}/edit', [BookingsController::class, 'editBookingDetails'])->name('bookings.edit');
         Route::post('/booking-store-documents', [BookingsController::class, 'storeDocuments'])->name('booking.storeDocuments');
         Route::post('/booking-remove-documents', [BookingsController::class, 'removeDocument'])->name('booking.removeDocument');
-        Route::post('/booking-store-receiver-documents', [BookingsController::class, 'storeReceiverDocuments'])->name('booking.store_receiver_documents');
-        Route::get('/booking-party-address', [BookingsController::class, 'partyAddressForm'])->name('booking.party_address');
 
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
         Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');
@@ -278,7 +276,7 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
 		Route::post('/bookings/{bookingId}/update-status', [BookingsController::class, 'updatebookingDetails'])->name('customer.bookingDetails.update');
 		Route::get('/bookings/{bookingId}/edit', [BookingsController::class, 'editBookingDetails'])->name('customer.bookings.edit');
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('customer.booking.invoice');
-
+	    
 		Route::get('/quick-request-forms', [QuickRequestFormController::class, 'index'])->name('customer.quick-request-forms.index');
 
         Route::get('/quick-request-form/{quickRequestID}', [QuickRequestFormController::class, 'quickRequestDetailsByID'])->name('customer.quick-request-form-detail');

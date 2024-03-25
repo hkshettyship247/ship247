@@ -10,7 +10,7 @@
                     Request Detail
                     {{-- {{ $quick_request_form_details->first_name }} --}}
                 </h2>
-                <a href="{{route('superadmin.quick-request-forms.index')}}" class="default-button-v2 outline-button">
+                <a href="{{route('employee.quick-request-forms.index')}}" class="default-button-v2 outline-button">
                     <span>Back</span>
                 </a>
             </header>

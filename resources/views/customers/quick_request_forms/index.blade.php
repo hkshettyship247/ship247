@@ -15,7 +15,7 @@
 
         <section class="search-result mt-8 mb-12">
 
-            <form class="default-form" action="{{ route('superadmin.quick-request-forms.index') }}" method="GET">
+            <form class="default-form" action="{{ route('customer.quick-request-forms.index') }}" method="GET">
 
                 <div class="flex lg:items-end items-start lg:flex-row flex-col lg:gap-6 gap-4">
                     <div class="lg:w-3/12 w-full">
@@ -117,7 +117,7 @@
                 <div class="lg:w-2/12 lg:mt-0 mt-6">
                     <div class="flex justify-end items-center h-full">
                         <div>
-                            <a href="{{route('superadmin.quick-request-form-detail', ['quickRequestID' => $form->id ])}}"
+                            <a href="{{route('customer.quick-request-form-detail', ['quickRequestID' => $form->id ])}}"
                                 class="default-button small-button red">view details</a>
                         </div>
                     </div>

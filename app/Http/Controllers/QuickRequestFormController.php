@@ -53,10 +53,21 @@ class QuickRequestFormController extends Controller
                 $q->where('company', 'like', '%' . $company . '%');
             });
         }
-
-        // TODO: Add Filters
+		
+		if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "admin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employees.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
+            $route = "customers.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+            $route = "suppliers.";
+        }
+		
+		// TODO: Add Filters
         $quick_request_forms = $quick_request_form_query->latest()->paginate(self::PER_PAGE);
-        return view('admin.quick_request_forms.index', compact('quick_request_forms',  'name', 'email', 'company', 'phone'));
+		
+        return view($route.'quick_request_forms.index', compact('quick_request_forms',  'name', 'email', 'company', 'phone'));
     }
 
 
@@ -75,11 +86,14 @@ class QuickRequestFormController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
             $route = "employees.";
             $route_user = 'employee.';
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_CUSTOMER')) {
+            $route = "customers.";
+            $route_user = 'customer.';
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
             $route = "suppliers.";
             $route_user = 'supplier.';
         }
-        return view('admin.quick_request_forms.detail', compact('quick_request_form_details', 'our_employees', 'route_user'));
+        return view($route.'quick_request_forms.detail', compact('quick_request_form_details', 'our_employees', 'route_user'));
     }
 
 

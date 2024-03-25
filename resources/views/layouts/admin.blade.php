@@ -276,6 +276,17 @@
                         <span>Work with us</span>
                     </a>
                 </li>
+				<li class="{{ Route::currentRouteName() === 'customer.quick-request-forms.index' ? 'active' : '' }}">
+                    <a href="{{route('customer.quick-request-forms.index')}}">
+                        <i class="icon">
+                            <img src="/images/svg/dashboard/payment-icon.svg" alt="">
+                        </i>
+                        <span>
+                            Quick Requests
+                        </span>
+                        @if($anyNewQuickRequestForms) <sup class="text-[10px] block ml-1">new</sup> @endif
+                    </a>
+                </li>
 				
             @endif
 			
