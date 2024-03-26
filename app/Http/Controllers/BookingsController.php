@@ -403,14 +403,15 @@ class BookingsController extends Controller
         ]);
 
         $booking = Booking::findOrFail($request->booking_id);
-        $partyAdress = PartyAdress::where(['booking_id' => $booking->id, 'type' => PartyAdress::DocumentReceiver])->first();
+        $type = $request->type;
+        $partyAdress = PartyAdress::where(['booking_id' => $booking->id, 'type' => constant("App\Models\PartyAdress::$type")])->first();
         if (empty($partyAdress)) {
             $partyAdress = new PartyAdress();
         }
         $partyAdress->booking_id = $booking->id;
         $partyAdress->receiverName = $request->receiverName;
         $partyAdress->number = $request->number;
-        $partyAdress->type = PartyAdress::DocumentReceiver;
+        $partyAdress->type = $type;
         $partyAdress->save();
 
         return redirect()->back()->with('message', 'Data saved successfully!');
@@ -419,7 +420,8 @@ class BookingsController extends Controller
     public function partyAddressForm(Request $request)
     {
         $booking = Booking::findOrFail($request->booking_id);
-        $partyAdress = PartyAdress::where(['booking_id' => $booking->id, 'type' => $request->type])->first();
+        $type = $request->type;
+        $partyAdress = PartyAdress::where(['booking_id' => $booking->id, 'type' => $type])->first();
 
         $route = null;
         if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
@@ -429,7 +431,7 @@ class BookingsController extends Controller
         } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
             $route = "supplier.";
         }
-        return view('party_booking_form', compact('route', 'partyAdress', 'booking'));
+        return view('party_booking_form', compact('route', 'partyAdress', 'booking', 'type'));
     }
 
     // Define a function to handle file uploads

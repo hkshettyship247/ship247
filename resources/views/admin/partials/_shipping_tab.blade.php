@@ -11,12 +11,12 @@
                 <div class="address-info">
                     <div class="left-content">
                         @php
-                            $documentReceiver = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::DocumentReceiver])->first();
+                            $documentReceiver = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::document_receiver])->first();
                         @endphp
                         <h2>{{ !empty($documentReceiver) ? $documentReceiver->receiverName : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</h2>
                         <a href="javascript:void(0)" class="number">{{ !empty($documentReceiver) ? str_pad(substr($documentReceiver->number, -3), strlen($documentReceiver->number), '*', STR_PAD_LEFT) : '**********905' }}
                         </a>
-                        <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::DocumentReceiver }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
+                        <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::document_receiver }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
                     </div>
                     <div class="action-btn">
                         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -290,43 +290,15 @@
                         </div>
                         <div class="address-sec">
                             <div class="address-info">
+                                @php
+                                    $shipper = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::shipper])->first();
+                                @endphp
                                 <div class="left-content">
-                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
-                                    <a href="#" class="number">**********905</a>
+                                    <h2>{{ !empty($shipper) ? $shipper->receiverName : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</h2>
+                                    <a href="javascript:void(0)" class="number">{{ !empty($shipper) ? str_pad(substr($shipper->number, -3), strlen($shipper->number), '*', STR_PAD_LEFT) : '**********905' }}
+                                    </a>
                                     <!-- Link to trigger the modal -->
-                                    <a href="#" data-modal-target="static-modal" data-modal-toggle="static-modal" class="link">Change</a>
-                                    
-                                    <!-- Main modal -->
-                                    <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                        <div class="relative p-4 w-full max-w-2xl max-h-full">
-                                            <!-- Modal content -->
-                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                <!-- Modal header -->
-                                                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                                        Static modal
-                                                    </h3>
-                                                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
-                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                        </svg>
-                                                        <span class="sr-only">Close modal</span>
-                                                    </button>
-                                                </div>
-                                                <!-- Modal body -->
-                                                <div class="p-4 md:p-5 space-y-4">
-                                                    <input type="text" placeholder="Enter your text" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400">
-                                                    <input type="number" placeholder="Enter a number" class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400">
-                                                </div>
-                                                <!-- Modal footer -->
-                                                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                                    <button data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-                                                    <button data-modal-hide="static-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-  
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::shipper }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
                                 </div>
                                 <div class="action-btn">
                                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -378,10 +350,15 @@
                         </div>
                         <div class="address-sec">
                             <div class="address-info">
+                                @php
+                                    $consignee = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::consignee])->first();
+                                @endphp
                                 <div class="left-content">
-                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
-                                    <a href="#" class="number">**********905</a>
-                                    <a href="#" class="link">Change</a>
+                                    <h2>{{ !empty($consignee) ? $consignee->receiverName : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</h2>
+                                    <a href="javascript:void(0)" class="number">{{ !empty($consignee) ? str_pad(substr($consignee->number, -3), strlen($consignee->number), '*', STR_PAD_LEFT) : '**********905' }}
+                                    </a>
+                                    <!-- Link to trigger the modal -->
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::consignee }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
                                 </div>
                                 <div class="action-btn">
                                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -434,10 +411,15 @@
                         </div>
                         <div class="address-sec">
                             <div class="address-info">
+                                @php
+                                    $notityparty = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::notityparty])->first();
+                                @endphp
                                 <div class="left-content">
-                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
-                                    <a href="#" class="number">**********905</a>
-                                    <a href="#" class="link">Change</a>
+                                    <h2>{{ !empty($notityparty) ? $notityparty->receiverName : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</h2>
+                                    <a href="javascript:void(0)" class="number">{{ !empty($notityparty) ? str_pad(substr($notityparty->number, -3), strlen($notityparty->number), '*', STR_PAD_LEFT) : '**********905' }}
+                                    </a>
+                                    <!-- Link to trigger the modal -->
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::notityparty }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
                                 </div>
                                 <div class="action-btn">
                                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -498,7 +480,8 @@
                 <div class="w-4/12">
                     <div class="card-body">
                         <div class="title-sec text-center">
-                            <p><svg class="inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            <p>
+                                <svg class="inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -507,7 +490,60 @@
                                     <line x1="23" y1="11" x2="17" y2="11"></line>
                                 </svg> Additional notify party</p>
                         </div>
-
+                        <div class="address-sec">
+                            <div class="address-info">
+                                @php
+                                    $additionalnotityparty = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::additionalnotityparty])->first();
+                                @endphp
+                                <div class="left-content">
+                                    <h2>{{ !empty($additionalnotityparty) ? $additionalnotityparty->receiverName : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</h2>
+                                    <a href="javascript:void(0)" class="number">{{ !empty($additionalnotityparty) ? str_pad(substr($additionalnotityparty->number, -3), strlen($additionalnotityparty->number), '*', STR_PAD_LEFT) : '**********905' }}
+                                    </a>
+                                    <!-- Link to trigger the modal -->
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::additionalnotityparty }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-star">
+                                            <polygon
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                            </polygon>
+                                        </svg></a>
+                                </div>
+                            </div>
+                            <div class="address-info">
+                                <div class="left-content">
+                                    <p> <strong> Company name and address </strong></p>
+                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
+                                        <br>TOURIST CLUB AREA
+                                        <br>ABU DHABI
+                                    </p>
+                                    <p>United Arab Emirates</p>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-edit-2">
+                                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                        </svg></a>
+                                </div>
+                            </div>
+                            <div class="address-info border-0">
+                                <div class="left-content">
+                                    <p>References</p>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-edit-2">
+                                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                        </svg></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="w-4/12">
@@ -517,10 +553,15 @@
                         </div>
                         <div class="address-sec">
                             <div class="address-info">
+                                @php
+                                    $outwardforwarder = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::outwardforwarder])->first();
+                                @endphp
                                 <div class="left-content">
-                                    <h2>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.</h2>
-                                    <a href="#" class="number">**********905</a>
-                                    <a href="#" class="link">Change</a>
+                                    <h2>{{ !empty($outwardforwarder) ? $outwardforwarder->receiverName : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</h2>
+                                    <a href="javascript:void(0)" class="number">{{ !empty($outwardforwarder) ? str_pad(substr($outwardforwarder->number, -3), strlen($outwardforwarder->number), '*', STR_PAD_LEFT) : '**********905' }}
+                                    </a>
+                                    <!-- Link to trigger the modal -->
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::outwardforwarder }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
                                 </div>
                                 <div class="action-btn">
                                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -578,7 +619,60 @@
                                     <line x1="23" y1="11" x2="17" y2="11"></line>
                                 </svg> Inward forwarner </p>
                         </div>
-
+                        <div class="address-sec">
+                            <div class="address-info">
+                                @php
+                                    $inwardforwarner = App\Models\PartyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyAdress::inwardforwarner])->first();
+                                @endphp
+                                <div class="left-content">
+                                    <h2>{{ !empty($inwardforwarner) ? $inwardforwarner->receiverName : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</h2>
+                                    <a href="javascript:void(0)" class="number">{{ !empty($inwardforwarner) ? str_pad(substr($inwardforwarner->number, -3), strlen($inwardforwarner->number), '*', STR_PAD_LEFT) : '**********905' }}
+                                    </a>
+                                    <!-- Link to trigger the modal -->
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::inwardforwarner }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-star">
+                                            <polygon
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                            </polygon>
+                                        </svg></a>
+                                </div>
+                            </div>
+                            <div class="address-info">
+                                <div class="left-content">
+                                    <p> <strong> Company name and address </strong></p>
+                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
+                                        <br>TOURIST CLUB AREA
+                                        <br>ABU DHABI
+                                    </p>
+                                    <p>United Arab Emirates</p>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-edit-2">
+                                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                        </svg></a>
+                                </div>
+                            </div>
+                            <div class="address-info border-0">
+                                <div class="left-content">
+                                    <p>References</p>
+                                </div>
+                                <div class="action-btn">
+                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-edit-2">
+                                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                        </svg></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

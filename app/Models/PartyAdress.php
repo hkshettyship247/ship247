@@ -16,5 +16,11 @@ class PartyAdress extends Model
         'type'
     ];
 
-    const DocumentReceiver = 'document_receiver';
+    const document_receiver = 'document_receiver';
+    const shipper = 'shipper';
+    const consignee = 'consignee';
+    const notityparty = 'notityparty';
+    const additionalnotityparty = 'additionalnotityparty';
+    const outwardforwarder = 'outwardforwarder';
+    const inwardforwarner = 'inwardforwarner';
 }
