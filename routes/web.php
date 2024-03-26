@@ -116,6 +116,9 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::post('/booking-store-documents', [BookingsController::class, 'storeDocuments'])->name('booking.storeDocuments');
         Route::post('/booking-remove-documents', [BookingsController::class, 'removeDocument'])->name('booking.removeDocument');
 
+        Route::post('/booking-store-receiver-documents', [BookingsController::class, 'storeReceiverDocuments'])->name('booking.store_receiver_documents');
+        Route::get('/booking-party-address', [BookingsController::class, 'partyAddressForm'])->name('booking.party_address');
+
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
         Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');
 
