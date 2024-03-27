@@ -13,6 +13,7 @@ use App\Models\BookingAddon;
 use Illuminate\Http\Request;
 use App\Models\ContainerSizes;
 use App\Models\BookingDocument;
+use App\Models\PartyCompanyAdress;
 use App\Services\MarineTrafficAPI;
 use Illuminate\Support\Facades\DB;
 use App\Models\BookingAddonDetails;
@@ -417,6 +418,29 @@ class BookingsController extends Controller
         return redirect()->back()->with('message', 'Data saved successfully!');
     }
 
+    public function partyCompanyAddress (Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'company_name' => 'required',
+            'address' => 'required',
+        ]);
+
+        $booking = Booking::findOrFail($request->booking_id);
+        $type = $request->type;
+        $partyAdress = PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => constant("App\Models\PartyCompanyAdress::$type")])->first();
+        if (empty($partyAdress)) {
+            $partyAdress = new PartyCompanyAdress();
+        }
+        $partyAdress->booking_id = $booking->id;
+        $partyAdress->company_name = $request->company_name;
+        $partyAdress->address = $request->address;
+        $partyAdress->type = $type;
+        $partyAdress->save();
+
+        return redirect()->back()->with('message', 'Data saved successfully!');
+    }
+
     public function partyAddressForm(Request $request)
     {
         $booking = Booking::findOrFail($request->booking_id);
@@ -432,6 +456,23 @@ class BookingsController extends Controller
             $route = "supplier.";
         }
         return view('party_booking_form', compact('route', 'partyAdress', 'booking', 'type'));
+    }
+
+    public function partyCompanyAddressForm(Request $request)
+    {
+        $booking = Booking::findOrFail($request->booking_id);
+        $type = $request->type;
+        $partyCompanyAdress = PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => $type])->first();
+
+        $route = null;
+        if (auth()->user()->role_id == config('constants.USER_TYPE_SUPERADMIN')) {
+            $route = "superadmin.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_EMPLOYEE')) {
+            $route = "employee.";
+        } else if (auth()->user()->role_id == config('constants.USER_TYPE_SUPPLIER')) {
+            $route = "supplier.";
+        }
+        return view('booking_party_company_form', compact('route', 'partyCompanyAdress', 'booking', 'type'));
     }
 
     // Define a function to handle file uploads

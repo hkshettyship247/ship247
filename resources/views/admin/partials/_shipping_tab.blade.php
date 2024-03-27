@@ -311,15 +311,16 @@
                                 </div>
                             </div>
                             <div class="address-info">
+                                @php
+                                    $shipperCompanyAddress = App\Models\PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyCompanyAdress::shipper])->first();
+                                @endphp
                                 <div class="left-content">
                                     <p> <strong> Company name and address </strong></p>
-                                    <p>{{ $booking->company->name }}</p>
-                                    <p>{{ $booking->company->address }}</p>
-                                    <p>{{ $booking->company->city }}</p>
-                                    <p>{{ $booking->company->country }}</p>
+                                    <p>{{ !empty($shipperCompanyAddress) ? $shipperCompanyAddress->company_name : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</p>
+                                    <p>{{ !empty($shipperCompanyAddress) ? $shipperCompanyAddress->address : '' }}</p>
                                 </div>
                                 <div class="action-btn">
-                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyCompanyAdress::shipper }}" data-modal-toggle="document-modal" class="link company-address"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-edit-2">
@@ -371,16 +372,16 @@
                                 </div>
                             </div>
                             <div class="address-info">
+                                @php
+                                    $consigneeCompanyAddress = App\Models\PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyCompanyAdress::consignee])->first();
+                                @endphp
                                 <div class="left-content">
                                     <p> <strong> Company name and address </strong></p>
-                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
-                                        <br>TOURIST CLUB AREA
-                                        <br>ABU DHABI
-                                    </p>
-                                    <p>United Arab Emirates</p>
+                                    <p>{{ !empty($consigneeCompanyAddress) ? $consigneeCompanyAddress->company_name : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</p>
+                                    <p>{{ !empty($consigneeCompanyAddress) ? $consigneeCompanyAddress->address : '' }}</p>
                                 </div>
                                 <div class="action-btn">
-                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyCompanyAdress::consignee }}" data-modal-toggle="document-modal" class="link company-address"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-edit-2">
@@ -432,16 +433,16 @@
                                 </div>
                             </div>
                             <div class="address-info">
+                                @php
+                                    $notityPartyCompanyAddress = App\Models\PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyCompanyAdress::notityparty])->first();
+                                @endphp
                                 <div class="left-content">
                                     <p> <strong> Company name and address </strong></p>
-                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
-                                        <br>TOURIST CLUB AREA
-                                        <br>ABU DHABI
-                                    </p>
-                                    <p>United Arab Emirates</p>
+                                    <p>{{ !empty($notityPartyCompanyAddress) ? $notityPartyCompanyAddress->company_name : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</p>
+                                    <p>{{ !empty($notityPartyCompanyAddress) ? $notityPartyCompanyAddress->address : '' }}</p>
                                 </div>
                                 <div class="action-btn">
-                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyCompanyAdress::notityparty }}" data-modal-toggle="document-modal" class="link company-address"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-edit-2">
@@ -513,16 +514,16 @@
                                 </div>
                             </div>
                             <div class="address-info">
+                                @php
+                                    $additionalPartyCompanyAddress = App\Models\PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyCompanyAdress::additionalnotityparty])->first();
+                                @endphp
                                 <div class="left-content">
                                     <p> <strong> Company name and address </strong></p>
-                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
-                                        <br>TOURIST CLUB AREA
-                                        <br>ABU DHABI
-                                    </p>
-                                    <p>United Arab Emirates</p>
+                                    <p>{{ !empty($additionalPartyCompanyAddress) ? $additionalPartyCompanyAddress->company_name : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</p>
+                                    <p>{{ !empty($additionalPartyCompanyAddress) ? $additionalPartyCompanyAddress->address : '' }}</p>
                                 </div>
                                 <div class="action-btn">
-                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyCompanyAdress::additionalnotityparty }}" data-modal-toggle="document-modal" class="link company-address"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-edit-2">
@@ -574,16 +575,16 @@
                                 </div>
                             </div>
                             <div class="address-info">
+                                @php
+                                    $outwardforwarderCompanyAddress = App\Models\PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyCompanyAdress::outwardforwarder])->first();
+                                @endphp
                                 <div class="left-content">
                                     <p> <strong> Company name and address </strong></p>
-                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
-                                        <br>TOURIST CLUB AREA
-                                        <br>ABU DHABI
-                                    </p>
-                                    <p>United Arab Emirates</p>
+                                    <p>{{ !empty($outwardforwarderCompanyAddress) ? $outwardforwarderCompanyAddress->company_name : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</p>
+                                    <p>{{ !empty($outwardforwarderCompanyAddress) ? $outwardforwarderCompanyAddress->address : '' }}</p>
                                 </div>
                                 <div class="action-btn">
-                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyCompanyAdress::outwardforwarder }}" data-modal-toggle="document-modal" class="link company-address"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-edit-2">
@@ -632,7 +633,7 @@
                                     <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyAdress::inwardforwarner }}" data-modal-toggle="document-modal" class="link document-modal">Change</a>
                                 </div>
                                 <div class="action-btn">
-                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <a href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-star">
                                             <polygon
@@ -642,16 +643,16 @@
                                 </div>
                             </div>
                             <div class="address-info">
+                                @php
+                                    $inwardforwarnerCompanyAddress = App\Models\PartyCompanyAdress::where(['booking_id' => $booking->id, 'type' => App\Models\PartyCompanyAdress::inwardforwarner])->first();
+                                @endphp
                                 <div class="left-content">
                                     <p> <strong> Company name and address </strong></p>
-                                    <p>SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.
-                                        <br>TOURIST CLUB AREA
-                                        <br>ABU DHABI
-                                    </p>
-                                    <p>United Arab Emirates</p>
+                                    <p>{{ !empty($inwardforwarnerCompanyAddress) ? $inwardforwarnerCompanyAddress->company_name : 'SHIP 247 FOR LOGISTIC SERVICES - SOLE PROPRIETORSHIP L.L.C.' }}</p>
+                                    <p>{{ !empty($inwardforwarnerCompanyAddress) ? $inwardforwarnerCompanyAddress->address : '' }}</p>
                                 </div>
                                 <div class="action-btn">
-                                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <a href="javascript:void(0)" data-modal-toggle="document-modal" type="{{ App\Models\PartyCompanyAdress::inwardforwarner }}" data-modal-toggle="document-modal" class="link company-address"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="feather feather-edit-2">

@@ -737,6 +737,26 @@
                     }
                 });
             });
+            
+            $('a.company-address').click(function(e) {
+                e.preventDefault(); // Prevent default link behavior
+                const type = $(this).attr('type');
+                const booking_id = "{{ $booking->id }}";
+                // Perform AJAX request to fetch form HTML
+                $.ajax({
+                    url: "{{ route($route. 'booking.party_company_address') }}", // Replace with the URL of your form view
+                    method: 'GET',
+                    data: {type: type, booking_id: booking_id},
+                    success: function(response) {
+                        // Populate the modal with the fetched form HTML
+                        $('.modal-content').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors if any
+                        console.error(error);
+                    }
+                });
+            });
 
             const dt = new DataTransfer();
 
