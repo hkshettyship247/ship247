@@ -125,12 +125,16 @@
                                        value="{{ $landSchedule->land_freight }}">
                             </div>
 							
-							<div class="form-field">
+							{{--<div class="form-field">
                                 <label for="our_charges" class="form-label">Our Charges</label>
                                 <input type="number" id="our_charges" name="our_charges" required
                                        class="form-input small-input mt-2 w-full block"
                                        value="{{ $landSchedule->our_charges }}">
-                            </div>
+                            </div>--}}
+							
+							<input type="hidden" id="our_charges" name="our_charges" required
+                                       class="form-input small-input mt-2 w-full block"
+                                       value="{{ $landSchedule->our_charges }}">
 
                             <div class="form-field">
                                 <label for="company_id" class="form-label">Company</label>
