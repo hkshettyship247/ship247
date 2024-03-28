@@ -198,10 +198,10 @@
                                         <span class="head">Ocean Freight</span>
                                         <span class="value">{{'$'.number_format($seaSchedule->ocean_freight, 2)}}</span>
                                     </div>
-									<div>
+									{{--<div>
                                         <span class="head">Our Charges</span>
                                         <span class="value">{{'$'.number_format($seaSchedule->our_charges, 2)}}</span>
-                                    </div>
+                                    </div>--}}
                                 </div>
                             </div>
 
