@@ -728,23 +728,27 @@
             </div>
         </div>
         <div class="template-sec">
-            <div class="content-box">
-                <h4>2 by 20GP FCL SAID TO CONTAIN<br>
-                    NATURCOMPLET-G SACO 25KG</h4><br>
-                <h4>HUMIC ACID FERTILIZER<br>
-                    INCOTERMS: FCA ZARAGOZA FACTORY<br>
-                    BANK NAME EBILAEAD-EMIRATES NBD BANK PJSC</h4>
-            </div>
-            <div class="fieldtext">
-                <div class="form-group-inline">
-                    <input type="text" class="form-input small-input w-12/12 rounded-lg block"
-                        placeholder="Enter a name for your template" />
+            @php
+                $bookingTempalte = App\Models\BookingTemplate::where(['booking_id' => $booking->id])->first();
+            @endphp
+            <form id="bookingTempalteForm" method="post">
+                @csrf
+                <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                <div class="content-box">
+                    <textarea id="address" name="address" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write address">{{ !empty($bookingTempalte) ? $bookingTempalte->address : '' }}</textarea>
+                    <span class="address_error text-red-500"></span>
                 </div>
-                <div class="form-group-btn">
-                    <a href="#" class="btn outline-btn">Create Template</a>
-                    <a href="#" class="btn dark-btn">Open Template</a>
+                <div class="fieldtext">
+                    <div class="form-group-inline">
+                        <input type="text" name="name" value="{{ !empty($bookingTempalte) ? $bookingTempalte->name : '' }}" class="form-input small-input w-12/12 rounded-lg block template_name" placeholder="Enter a name for your template" />
+                        <span class="name_error text-red-500"></span>
+                    </div>
+                    <div class="form-group-btn">
+                        <button class="btn create_template default-button-v2">Create Template</button>
+                        <button class="btn default-button-v2">Open Template</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 

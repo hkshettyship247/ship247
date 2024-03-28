@@ -14,6 +14,15 @@
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
             })(window, document, "clarity", "script", "j8vcxubafz");
     </script>
+	<style>
+		.notification {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			z-index: 9999;
+			min-width: 250px;
+		}
+	</style>
 	@yield('style')
 </head>
 <body>
@@ -890,6 +899,45 @@
         // $('.user-link').click(function(){
         //     $('.user-dropdown').toggle();
         // });
+		// jQuery function to show success notification
+		function showSuccessNotification(message) {
+			var html = `
+				<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded notification" role="alert">
+					<strong class="font-bold">Success!</strong>
+					<span class="block sm:inline">${message}</span>
+					<button class="close-btn absolute top-0 bottom-0 right-0 px-4 py-3">
+						<svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 1 1-1.697 1.697L10 11.697l-2.651 2.849a1.2 1.2 0 1 1-1.697-1.697L8.303 10 5.652 7.151a1.2 1.2 0 1 1 1.697-1.697L10 8.303l2.651-2.849a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.849z"/></svg>
+					</button>
+				</div>
+			`;
+			$('body').append(html);
+			// Remove the notification after 5 seconds
+			setTimeout(function() {
+				$('.notification').remove();
+			}, 5000);
+		}
+
+		// jQuery function to show error notification
+		function showErrorNotification(message) {
+			var html = `
+			<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded notification" role="alert">
+				<strong class="font-bold">Error!</strong>
+				<span class="block sm:inline">${message}</span>
+				<button class="close-btn absolute top-0 bottom-0 right-0 px-4 py-3">
+				<svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 1 1-1.697 1.697L10 11.697l-2.651 2.849a1.2 1.2 0 1 1-1.697-1.697L8.303 10 5.652 7.151a1.2 1.2 0 1 1 1.697-1.697L10 8.303l2.651-2.849a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.849z"/></svg>
+				</button>
+			</div>
+			`;
+			$('body').append(html);
+			// Remove the notification after 5 seconds
+			setTimeout(function() {
+			$('.notification').remove();
+			}, 5000);
+		}
+		$(document).on('click', '.close-btn', function() {
+			$(this).closest('.notification').remove();
+		});
+		
         $("body").click(function (e) {
             if (e.target.className !== "user-link") {
                 $(".user-dropdown").hide();

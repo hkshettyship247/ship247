@@ -120,6 +120,7 @@ Route::middleware(['auth', 'shared_view_data'])->group(function () {
         Route::get('/booking-party-address', [BookingsController::class, 'partyAddressForm'])->name('booking.party_address');
         Route::get('/booking-party-company-address', [BookingsController::class, 'partyCompanyAddressForm'])->name('booking.party_company_address');
         Route::post('/booking-party-company-address', [BookingsController::class, 'partyCompanyAddress'])->name('booking.party_company_address');
+        Route::post('/booking-template', [BookingsController::class, 'bookingTemplate'])->name('booking.template');
 
         Route::get('/bookings/{paymentID}/invoice', [InvoicesController::class, 'getBookingInvoice'])->name('booking.invoice');
         Route::get('/payment-details/{paymentID}', [InvoicesController::class, 'getPaymentDetails'])->name('payment.details');

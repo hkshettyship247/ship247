@@ -13,6 +13,7 @@ use App\Models\BookingAddon;
 use Illuminate\Http\Request;
 use App\Models\ContainerSizes;
 use App\Models\BookingDocument;
+use App\Models\BookingTemplate;
 use App\Models\PartyCompanyAdress;
 use App\Services\MarineTrafficAPI;
 use Illuminate\Support\Facades\DB;
@@ -418,7 +419,7 @@ class BookingsController extends Controller
         return redirect()->back()->with('message', 'Data saved successfully!');
     }
 
-    public function partyCompanyAddress (Request $request)
+    public function partyCompanyAddress(Request $request)
     {
         // Validate the incoming request
         $request->validate([
@@ -440,6 +441,31 @@ class BookingsController extends Controller
 
         return redirect()->back()->with('message', 'Data saved successfully!');
     }
+
+    public function bookingTemplate(Request $request)
+    {
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+        ]);
+
+        $booking = Booking::findOrFail($request->booking_id);
+        $bookingTemplate = BookingTemplate::where('booking_id', $booking->id)->first();
+
+        if (empty($partyAdress)) {
+            $bookingTemplate = new BookingTemplate();
+        }
+
+        $bookingTemplate->booking_id = $booking->id;
+        $bookingTemplate->name = $validatedData['name'];
+        $bookingTemplate->address = $validatedData['address'];
+        $bookingTemplate->active = 1;
+        $bookingTemplate->save();
+
+        return response()->json(['success' => true, 'message' => 'Data saved successfully!', 'booking_template' => $bookingTemplate]);
+    }
+
 
     public function partyAddressForm(Request $request)
     {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\BookingParty;
 use App\Models\BookingDocument;
+use App\Models\BookingTemplate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -56,6 +57,11 @@ class Booking extends Model
     public function bookingParties()
     {
         return $this->hasMany(BookingParty::class, 'booking_id', 'id');
+    }
+
+    public function bookingTemplates()
+    {
+        return $this->hasMany(BookingTemplate::class, 'booking_id', 'id');
     }
 
     public static function scacList()
