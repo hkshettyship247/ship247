@@ -172,10 +172,10 @@
                                         <span class="value">{{'$'.number_format($landSchedule->land_freight, 2)}}</span>
                                     </div>
 									
-									<div>
+									{{--<div>
                                         <span class="head">Our Charges</span>
                                         <span class="value">{{'$'.number_format($landSchedule->our_charges, 2)}}</span>
-                                    </div>
+                                    </div>--}}
                                 </div>
                             </div>
 
