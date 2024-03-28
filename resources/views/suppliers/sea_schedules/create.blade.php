@@ -85,7 +85,7 @@
                                 @enderror
                             </div>
 							
-							<div class="form-field">
+							{{--<div class="form-field">
                                 <label for="our_charges" class="form-label">Our Charges</label>
                                 <input type="number" id="our_charges" name="our_charges" required
                                        class="form-input small-input mt-2 w-full block"
@@ -93,7 +93,11 @@
                                 @error('our_charges')
                                 <span>{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div>--}}
+							
+							 <input type="hidden" id="our_charges" name="our_charges"
+                                       class="form-input small-input mt-2 w-full block"
+                                       value="0">
 
                             <div class="form-field">
                                 <label for="destination_id" class="form-label">Destination</label>
